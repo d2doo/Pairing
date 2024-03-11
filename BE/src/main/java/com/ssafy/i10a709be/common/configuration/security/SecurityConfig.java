@@ -1,4 +1,4 @@
-package com.ssafy.i10a709be.common.configuration;
+package com.ssafy.i10a709be.common.configuration.security;
 
 import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
