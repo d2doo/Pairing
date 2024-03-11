@@ -32,7 +32,6 @@ pipeline {
             steps{
                 sh 'ls -l'
                 sh 'ls -l FE/'
-                sh 'ls -l FE/out'
                 sh 'tar -cvf febuild.tar FE/**'
                 sh 'ls -l'
                 script{
