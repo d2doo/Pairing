@@ -14,7 +14,7 @@ pipeline {
 
     stages {
 
-        stage('Build BE && ') {
+        stage('Build BE') {
             steps {
                 script {
 
@@ -22,7 +22,7 @@ pipeline {
                         sh 'chmod +x gradlew'
                         sh 'ls -l'
 
-                        sh './gradlew clean build spotlessApply'
+                        sh './gradlew clean build'
                         sh 'jq --version'
                         sh 'cd build/libs && ls -al'
                         
