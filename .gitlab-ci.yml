@@ -1,0 +1,146 @@
+stages:
+  - dev_layer
+  - integrated_layer
+  - deploy_layer
+
+merge_be_dev:
+  stage: dev_layer
+  rules:
+    - exists:
+        - origin/BE
+    - changes:
+        - origin/BE/**
+    - when: manual
+  script:
+    - git config --global user.email "wntjrdbs@gmail.com"
+    - git config --global user.name "윤주석"
+    - git remote -v
+    - git remote remove origin
+    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
+
+    - git fetch 
+    - git checkout develop
+    - git pull origin develop
+    - |
+      if [ -f "Jenkinsfile" ]; then 
+        git rm Jenkinsfile
+        git commit -m "delete jenkins file"
+        git push origin develop
+      else 
+        echo "Jenkinsfile이 없습니다. " 
+      fi
+    - git merge origin/BE --no-edit
+    - git push origin develop
+  tags: 
+    - BE
+    - dev
+
+
+merge_fe_dev:
+  stage: dev_layer
+  rules:
+    - exists:
+        - origin/FE
+    - changes:
+        - origin/FE/**
+    - when: manual
+  script:
+    - git config --global user.email "wntjrdbs@gmail.com"
+    - git config --global user.name "윤주석"
+    - git remote -v
+    - git remote remove origin
+    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
+    
+    - git fetch 
+    - git checkout develop
+    - git pull origin develop
+    - |
+      if [ -f "Jenkinsfile" ]; then 
+        git rm Jenkinsfile
+        git commit -m "delete jenkins file"
+        git push origin develop
+      else 
+        echo "Jenkinsfile이 없습니다." 
+      fi
+    - git merge origin/FE --no-edit
+    - git push origin develop
+
+  tags: 
+    - FE
+    - dev
+
+merge_be_main:
+  stage: deploy_layer
+  script:
+    - git config --global user.email "wntjrdbs@gmail.com"
+    - git config --global user.name "윤주석"
+    - git remote -v
+    - git remote remove origin
+    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
+
+    - git fetch 
+    - git checkout main
+    - git pull origin main
+    
+
+    - git config --list
+    - |
+      if [ -f "Jenkinsfile" ]; then 
+        git rm Jenkinsfile
+        git commit -m "delete jenkins file"
+        git push origin main
+      else 
+        echo "Jenkinsfile이 없습니다." 
+      fi
+    - git merge -X theirs origin/develop --no-edit
+    - git push origin main
+    - >
+      curl -v -X POST
+      -H "Content-Type: application/json"
+      -d '{"isBe": true}'
+      "https://ssafycontrol.shop/control/dev/deploy"
+
+
+  needs: ['merge_be_dev']
+  tags:
+    - main
+    - deploy
+
+
+merge_fe_main:
+  stage: deploy_layer
+  script:
+    - git config --global user.email "wntjrdbs@gmail.com"
+    - git config --global user.name "윤주석"
+    - git remote -v
+    - git remote remove origin
+    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
+
+    - git fetch 
+    - git checkout main
+    - git pull origin main
+    
+
+    - git config --list
+    - |
+      if [ -f "Jenkinsfile" ]; then 
+        git rm Jenkinsfile
+        git commit -m "delete jenkins file"
+        git push origin main
+      else 
+        echo "Jenkinsfile이 없습니다." 
+      fi
+    - git merge -X theirs origin/develop --no-edit
+    - git push origin main
+    
+    - >
+      curl -X POST
+      -H "Content-Type: application/json"
+      -d '{"isBe": false}'
+      "https://ssafycontrol.shop/control/dev/deploy"
+
+  needs: ['merge_fe_dev']
+  tags:
+    - main
+    - deploy
+
