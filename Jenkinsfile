@@ -16,16 +16,9 @@ pipeline {
                         sh 'npm -v'
                         sh 'rm -rf node_modules'
                         // sh 'rm package-lock.json'
-                        sh 'npm install'
-
-                        sh 'cat src/components/landingPage/joinModal1/EmailConfirmButton.jsx'
-
-			            sh 'npm install --global yarn'
-                        sh 'npm install --global vite'
-                        sh 'yarn global add create-vite'
-                        sh 'yarn add vite --dev'
-                        sh 'yarn install'
-                        sh 'yarn build'
+			            sh 'npm install --global pnpm'
+                        sh 'pnpm i'
+                        sh 'pnpm run build'
                         
 
                         
@@ -39,7 +32,7 @@ pipeline {
             steps{
                 sh 'ls -l'
                 sh 'ls -l FE/'
-                sh 'ls -l FE/dist'
+                sh 'ls -l FE/out'
                 sh 'tar -cvf febuild.tar FE/**'
                 sh 'ls -l'
                 script{
