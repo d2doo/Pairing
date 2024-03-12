@@ -18,6 +18,7 @@ public class CommonExceptionHandler {
         return ResponseEntity.status(e.getErrorCode().getHttpStatus())
                 .body(ErrorResponse.createErrorResponse(e.getErrorCode(), request.getRequestURI()));
     }
+
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ErrorResponse> handleInternalServerException(
             InternalServerException e, HttpServletRequest request) {
@@ -39,7 +40,8 @@ public class CommonExceptionHandler {
                         )
                 );
     }
-
-
-
 }
+
+
+
+
