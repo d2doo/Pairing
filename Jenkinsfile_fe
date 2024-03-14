@@ -7,6 +7,9 @@ pipeline {
 
     stages {
         stage('Build FE') {
+	    when {
+                expression { env.GIT_BRANCH == 'dev' }
+            }
             steps {
                 script {
                     // FE 폴더로 이동
@@ -29,6 +32,9 @@ pipeline {
     
 
     stage('Send Artifact'){
+	    when {
+                expression { env.GIT_BRANCH == 'dev' }
+            }
             steps{
                 sh 'ls -l'
                 sh 'ls -l FE/'
@@ -52,13 +58,14 @@ pipeline {
             }
             
         }
-        stage('Auto CI By Git-lab CI-CD'){
-            steps{
-                script{
-                    sh 'echo manual Auto CI Start'
-                    sh 'curl "https://ssafycontrol.shop/control/dev/fe"'
+        stage('Continuous Delivery'){
+	    when {
+                expression { env.GIT_BRANCH == 'main' }
+            }
+            steps {
+                script {
+                    sh '''curl -X POST -H "Content-Type: application/json" -d '{"isBe": false}' "https://ssafycontrol.shop/control/dev/deploy"'''
                 }
-
             }
         }
     }
