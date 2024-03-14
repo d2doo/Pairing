@@ -2,38 +2,22 @@
 module.exports = {
   darkMode: ["class"],
   content: [
-    "./pages/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-    "./app/**/*.{ts,tsx}",
-    "./src/**/*.{ts,tsx}",
+    './pages/**/*.{ts,tsx}',
+    './components/**/*.{ts,tsx}',
+    './app/**/*.{ts,tsx}',
+    './src/**/*.{ts,tsx}',
   ],
   prefix: "",
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
     extend: {
-      boxShadow: {
-        "3xl": "0 4px 4px 0 rgba(0, 0, 0, 0.25)",
-        "4xl": "0 1px 2px rgba(0, 0, 0, 0.25)",
-      },
-      container: {
-        center: true,
-        padding: "2rem",
-        screens: {
-          "2xl": "1400px",
-        },
-      },
-      fontFamily: {
-        "NEXON Lv2 Gothic Light": ["Nexon"],
-        chab: ["Chab"],
-      },
       colors: {
-        blue1: "#A2BDF2",
-        blue2: "#B6D0F2",
-        blue3: "#C4D5F5",
-        gray1: "#C9C9C9",
-        black1: "#2B3136",
-        white1: "#FFFFFF",
-        white2: "#F2F2F2",
-        purple1: "#A0ACF2",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -90,4 +74,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-};
+}
