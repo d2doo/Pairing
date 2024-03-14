@@ -1,6 +1,5 @@
 stages:
   - dev_layer
-  - integrated_layer
   - deploy_layer
 
 merge_be_dev:
