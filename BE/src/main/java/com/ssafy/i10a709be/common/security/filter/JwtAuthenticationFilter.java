@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Collections;
+import javax.security.sasl.AuthenticationException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,13 +29,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = request.getHeader("Authorization");
-        String uuid = jwtValidator.isValidAccessToken(accessToken);
 
         // access token이 유효한 경우만 Authentication 객체 생성
-        if (null != accessToken && null != uuid) {
-            GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-            Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uuid, null, Collections.singletonList(authority)));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+        if (null != accessToken) {
+            String uuid = jwtValidator.isValidAccessToken(accessToken);
+            if (null != uuid) {
+                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uuid, null, Collections.singletonList(authority)));
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+            } else{
+                throw new AuthenticationException();
+            }
         }
 
         filterChain.doFilter(request, response);
