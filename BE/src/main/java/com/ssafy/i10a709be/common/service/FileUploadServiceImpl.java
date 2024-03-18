@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,11 +13,14 @@ import javax.imageio.ImageIO;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.common.exception.CustomErrorCode;
 import com.ssafy.i10a709be.common.exception.CustomException;
 import com.ssafy.i10a709be.common.exception.InternalServerCaughtException;
 import com.ssafy.i10a709be.common.exception.InternalServerException;
+import com.ssafy.i10a709be.common.repository.FileRepository;
 import com.ssafy.i10a709be.common.util.ImageUtils;
+import jakarta.persistence.PersistenceException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +34,7 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     private static final String IMAGE_CONTENT_TYPE_PREFIX = "image";
     private final AmazonS3Client amazonS3Client;
+    private final FileRepository fileRepository;
 
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
@@ -41,6 +46,8 @@ public class FileUploadServiceImpl implements FileUploadService {
             return null;
         }
         validateIsClientSendImageFile(multipartFile);
+
+
         return uploadFiles(multipartFile, false);
     }
 
@@ -72,12 +79,35 @@ public class FileUploadServiceImpl implements FileUploadService {
         File uploadFile =
                 convert(multipartFile, resize) // 파일 변환할 수 없으면 에러
                         .orElseThrow(() -> new InternalServerException("MultipartFile -> File 변환 실패", this));
-        return upload(uploadFile);
+
+        return upload(uploadFile, multipartFile.getContentType());
     }
 
-    private String upload(File uploadFile) {
+    private void saveFiles(File uploadFile, String fileName, String ext) {
+        String originFileName = uploadFile.getName();
+        Files fileEntity = Files.builder()
+                .name( originFileName )
+                .source( fileName )
+                .fileType( ext )
+                .createAt(LocalDateTime.now())
+                .build();
+        try{
+            Files saved = fileRepository.save( fileEntity );
+            log.info(String.valueOf(saved.getFileId()) +"번 파일 저장 성공");
+        }catch( PersistenceException e ){
+            log.error( "파일 저장 간 에러 발생 : " + e.getMessage() );
+            throw new InternalServerException( "파일 저장 간 에러가 발생했습니다.", this );
+        }
+
+
+    }
+
+    private String upload(File uploadFile, String contentType) {
         String fileName = "upload/" + UUID.randomUUID(); // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
+
+        //파일 DB에 정보 저장
+        saveFiles( uploadFile, uploadImageUrl, contentType );
         removeNewFile(uploadFile);
         return uploadImageUrl;
     }
