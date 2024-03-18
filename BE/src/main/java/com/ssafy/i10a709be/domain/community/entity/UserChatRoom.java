@@ -7,13 +7,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDateTime;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter @Builder
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserChatRoom {
     @Id @GeneratedValue
     private long userChatRoomId;
@@ -27,4 +29,9 @@ public class UserChatRoom {
     private Member member;
 
     LocalDateTime lastAccessTime;
+
+    public void updateChatRoom(ChatRoom chatRoom) {
+        this.chatRoom = chatRoom;
+        chatRoom.getUserChatRooms().add(this);
+    }
 }

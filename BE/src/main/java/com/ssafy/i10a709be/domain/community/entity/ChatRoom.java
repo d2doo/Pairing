@@ -12,14 +12,16 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Entity
 @Getter @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
+@AllArgsConstructor
 public class ChatRoom {
     @Id @GeneratedValue
     private long chatRoomId;
@@ -36,8 +38,8 @@ public class ChatRoom {
     private ChatRoomStatus status;
 
     @OneToMany(mappedBy = "chatRoom")
-    private List<Chat> chats = new ArrayList<>();
+    private final List<Chat> chats = new ArrayList<>();
 
     @OneToMany(mappedBy = "chatRoom")
-    private List<UserChatRoom> userChatRooms = new ArrayList<>();
+    private final List<UserChatRoom> userChatRooms = new ArrayList<>();
 }
