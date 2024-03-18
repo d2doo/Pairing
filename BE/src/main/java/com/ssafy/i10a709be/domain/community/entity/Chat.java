@@ -13,13 +13,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Getter @Setter @Builder
-@AllArgsConstructor
+@Getter @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Chat {
     @Id @GeneratedValue
     private long chatId;
