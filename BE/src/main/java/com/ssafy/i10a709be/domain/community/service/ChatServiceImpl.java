@@ -1,5 +1,6 @@
 package com.ssafy.i10a709be.domain.community.service;
 
+import com.ssafy.i10a709be.common.exception.InternalServerException;
 import com.ssafy.i10a709be.domain.community.dto.ChatRoomCreateDto;
 import com.ssafy.i10a709be.domain.community.dto.ChatRoomDeleteDto;
 import com.ssafy.i10a709be.domain.community.entity.ChatRoom;
@@ -12,6 +13,8 @@ import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.swing.text.html.Option;
 
 @Service
 @RequiredArgsConstructor
@@ -51,4 +54,12 @@ public class ChatServiceImpl implements ChatService {
     public void deleteChatRoom(ChatRoomDeleteDto chatRoomDeleteDto) {
 
     }
+
+    @Override
+    public Optional<ChatRoom> findChatRoomByChatRoomIdAndChats(Long chatRoomId) {
+        Optional<ChatRoom> findChatRoom = chatRoomRepository.findChatRoomByChatRoomIdAndChats( chatRoomId );
+        return Optional.of( findChatRoom ).orElseThrow( () -> new InternalServerException("해당하는 채팅방이 없습니다.", this));
+    }
+
+
 }
