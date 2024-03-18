@@ -7,23 +7,21 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
-import org.hibernate.annotations.SQLDelete;
-import org.hibernate.annotations.SQLRestriction;
-import org.hibernate.annotations.SQLSelect;
+import org.hibernate.annotations.*;
 
 @Entity
-@Getter @Setter
+@Getter
 @NoArgsConstructor
 @SQLDelete(sql = "UPDATE member SET is_deleted = true WHERE member_id = ?")
 @SQLRestriction("is_deleted = false")
 public class Member {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
+    @UuidGenerator
+    private String memberId;
 
     @Column(nullable = false)
     private String email;
@@ -42,9 +40,18 @@ public class Member {
 
     @Column(nullable = false)
     @ColumnDefault("30")
-    private Integer score;
+    private Integer score = 30;
 
     private String refreshToken;
 
     private Boolean isDeleted = Boolean.FALSE;
+
+    @Builder
+
+    public Member(String email, OAuthProvider provider, String nickname, String profileImage) {
+        this.email = email;
+        this.provider = provider;
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+    }
 }

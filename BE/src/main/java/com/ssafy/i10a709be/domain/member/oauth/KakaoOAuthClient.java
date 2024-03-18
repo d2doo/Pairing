@@ -1,8 +1,12 @@
 package com.ssafy.i10a709be.domain.member.oauth;
 
+import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
 import com.ssafy.i10a709be.domain.member.exception.TokenInvalidException;
 import com.ssafy.i10a709be.domain.member.exception.TokenMissingException;
+
 import java.util.Map;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
@@ -10,7 +14,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
-public class KakaoOAuthClient implements OAuthClient{
+@Slf4j
+public class KakaoOAuthClient implements OAuthClient {
     @Value("${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private String redirectUri;
     @Value("${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
@@ -56,7 +61,7 @@ public class KakaoOAuthClient implements OAuthClient{
     }
 
     @Override
-    public String getMemberInfo(String accessToken) {
+    public MemberLoginResDto getMemberInfo(String accessToken) {
         WebClient webClient = WebClient.create();
 
         try {
@@ -68,10 +73,20 @@ public class KakaoOAuthClient implements OAuthClient{
                     .block();
 
             if (response != null) {
-                Map<String, Object> properties = (Map<String, Object>) response.get("properties");
-                if (properties != null) {
-                    return (String) properties.get("nickname");
-                }
+                Map<String, Object> kakaoAccount = (Map<String, Object>) response.get("kakao_account");
+                Map<String, Object> profile = (Map<String, Object>) kakaoAccount.get("profile");
+                String nickname = (String) profile.get("nickname");
+                String email = (String) kakaoAccount.get("email");
+                String profileImageUrl = (String) profile.get("profile_image_url");
+
+                MemberLoginResDto memberLoginResDto = MemberLoginResDto.builder()
+                        .nickname(nickname)
+                        .email(email)
+                        .profileImage(profileImageUrl)
+                        .build();
+
+                return memberLoginResDto;
+
             }
         } catch (Exception e) {
             throw new TokenInvalidException();
