@@ -23,7 +23,7 @@ public class ChatServiceImpl implements ChatService {
     private final UserChatRoomRepository userChatRoomRepository;
 
     @Override
-    public List<ChatRoom> findJoinedChatRooms(Long memberId) {
+    public List<ChatRoom> findJoinedChatRooms(String memberId) {
         List<ChatRoom> joinedChatRooms = chatRoomRepository.findByMemberId(memberId);
         return joinedChatRooms;
     }
@@ -44,7 +44,7 @@ public class ChatServiceImpl implements ChatService {
                 .capability(chatRoomCreateDto.getCapability())
                 .status(chatRoomCreateDto.getStatus())
                 .build();
-        List< UserChatRoom > userChatRooms = ChatUtils.convertMemberToUserChatRoom(chatRoomCreateDto.getJoinMembers(), chatRoom, chatRoomCreateDto.getCreateDate());
+        List<UserChatRoom> userChatRooms = ChatUtils.convertMemberToUserChatRoom(chatRoomCreateDto.getJoinMembers(), chatRoom, chatRoomCreateDto.getCreateDate());
         chatRoomRepository.save(chatRoom);
 
         return chatRoom.getChatRoomId();

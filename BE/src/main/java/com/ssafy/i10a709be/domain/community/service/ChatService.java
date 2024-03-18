@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ChatService {
-    List<ChatRoom> findJoinedChatRooms(Long memberId);
+    List<ChatRoom> findJoinedChatRooms(String memberId);
     Long createChatRoom(ChatRoomCreateDto chatRoomCreateDto);
     void deleteChatRoom(ChatRoomDeleteDto chatRoomDeleteDto);
 

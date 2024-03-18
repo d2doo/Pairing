@@ -9,10 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface ChatRoomRepository extends JpaRepository<ChatRoom, Long> {
     @Query("select crooms from ChatRoom crooms where crooms.member.memberId =: memberId")
-    List<ChatRoom> findByMemberId(Long memberId);
+    List<ChatRoom> findByMemberId(String memberId);
 
     @Query("select crooms from ChatRoom crooms join fetch crooms.chats where crooms.chatRoomId =: chatRoomId")
     Optional<ChatRoom> findChatRoomByChatRoomIdAndChats( Long chatRoomId );
-
-
 }

@@ -9,7 +9,6 @@ import lombok.Data;
 import lombok.Getter;
 
 @Getter
-@Data
 @AllArgsConstructor
 public class ChatRoomCreateDto {
     private List<Member> joinMembers;
