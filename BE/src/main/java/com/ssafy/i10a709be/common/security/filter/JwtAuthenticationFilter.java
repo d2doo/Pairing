@@ -28,17 +28,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String accessToken = request.getHeader("Authorization");
+        String header = request.getHeader("Authorization");
 
-        // access token이 유효한 경우만 Authentication 객체 생성
-        if (null != accessToken) {
-            String uuid = jwtValidator.isValidAccessToken(accessToken);
-            if (null != uuid) {
-                GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
-                Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uuid, null, Collections.singletonList(authority)));
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            } else{
-                throw new AuthenticationException();
+        if (header != null && header.startsWith("Bearer ")) {
+            String accessToken = header.substring(7);
+
+            // access token이 유효한 경우만 Authentication 객체 생성
+            if (null != accessToken) {
+                String uuid = jwtValidator.isValidAccessToken(accessToken);
+                if (null != uuid) {
+                    GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
+                    Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uuid, null, Collections.singletonList(authority)));
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                } else {
+                    throw new AuthenticationException();
+                }
             }
         }
 

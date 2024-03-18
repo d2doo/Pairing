@@ -9,6 +9,7 @@ import lombok.Setter;
 @Builder
 @Getter @Setter
 public class MemberLoginResDto {
+    private String memberId;
     private String email;
     private String nickname;
     private String profileImage;

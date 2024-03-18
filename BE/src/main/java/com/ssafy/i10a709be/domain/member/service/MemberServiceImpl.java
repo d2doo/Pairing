@@ -5,6 +5,7 @@ import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
 
     @Override
-    public int login(MemberLoginResDto memberLoginResDto) {
+    public MemberLoginResDto login(MemberLoginResDto memberLoginResDto) {
         Optional<Member> member = memberRepository.findByEmail(memberLoginResDto.getEmail());
         if (member.isEmpty()){
             memberRepository.save(Member.builder()
@@ -25,8 +26,22 @@ public class MemberServiceImpl implements MemberService{
                             .profileImage(memberLoginResDto.getProfileImage())
                             .provider(OAuthProvider.KAKAO)
                     .build());
+
+            member = memberRepository.findByEmail(memberLoginResDto.getEmail());
+        }
+        memberLoginResDto.setMemberId(member.get().getMemberId());
+
+        return memberLoginResDto;
+    }
+
+    @Override
+    public boolean removeMember(String memberId) {
+        Optional<Member> member = memberRepository.findById(memberId);
+        if(member.isPresent()){
+            memberRepository.delete(member.get());
+            return true;
         }
 
-        return 1;
+        return false;
     }
 }

@@ -30,20 +30,35 @@ public class MemberTest {
     @Autowired
     private OAuthClient kakaoOAuthClient;
 
+    private static final String email = "cqqudgjs@naver.com";
+
     /*
     https://kauth.kakao.com/oauth/authorize?client_id=5a1bf993c63b329bf6aeb64d1d0de64b&redirect_uri=https://j10a709.p.ssafy.io/auth/kakao&response_type=code
     매 Test마다 변경 필요
      */
-    private static final String kakaoProvider = "uC1cdpbM6tyP4HoIipwuoxJ-BQ-kLELN8MXxUd2zHniSqs2bRn2VdaOwM3MKKw0fAAABjk0Z5h1V7imzm104lw";
+//    private static final String kakaoProvider = "uC1cdpbM6tyP4HoIipwuoxJ-BQ-kLELN8MXxUd2zHniSqs2bRn2VdaOwM3MKKw0fAAABjk0Z5h1V7imzm104lw";
+//
+//    @Test
+//    @Transactional
+//    void login(){
+//        String accessToken = kakaoOAuthClient.getAccessToken(kakaoProvider);
+//        MemberLoginResDto memberLoginResDto = kakaoOAuthClient.getMemberInfo(accessToken);
+//
+//        memberService.login(memberLoginResDto);
+//        Optional<Member> member = memberRepository.findByEmail(memberLoginResDto.getEmail());
+//        member.ifPresent(value -> Assertions.assertThat(memberLoginResDto.getNickname()).isEqualTo(value.getNickname()));
+//    }
 
     @Test
     @Transactional
-    void login(){
-        String accessToken = kakaoOAuthClient.getAccessToken(kakaoProvider);
-        MemberLoginResDto memberLoginResDto = kakaoOAuthClient.getMemberInfo(accessToken);
+    void removeMember(){
+        memberRepository.findByEmail(email).ifPresent(member -> {
+            String memberId = member.getMemberId();
+            memberService.removeMember(memberId);
+        });
 
-        memberService.login(memberLoginResDto);
-        Optional<Member> member = memberRepository.findByEmail(memberLoginResDto.getEmail());
-        member.ifPresent(value -> Assertions.assertThat(memberLoginResDto.getNickname()).isEqualTo(value.getNickname()));
+        memberRepository.findByEmail(email).ifPresent(member ->{
+            Assertions.assertThat(member.getIsDeleted()).isEqualTo(true);
+        });
     }
 }
