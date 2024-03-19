@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             // access token이 유효한 경우만 Authentication 객체 생성
             if (null != accessToken) {
-                String uuid = jwtValidator.isValidAccessToken(accessToken);
+                String uuid = jwtValidator.isValidToken(accessToken);
                 if (null != uuid) {
                     GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
                     Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uuid, null, Collections.singletonList(authority)));

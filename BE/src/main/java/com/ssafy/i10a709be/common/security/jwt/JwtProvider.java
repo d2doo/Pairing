@@ -5,7 +5,9 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -15,19 +17,15 @@ public class JwtProvider {
     @Value("${spring.security.jwt.secret-key}")
     public String JWT_SECRETKEY;
 
-    public String generateToken(HttpServletResponse response, String uuid){
+    public List<String> generateToken(String uuid){
         String accessToken = createAccessToken(uuid);
         String refreshToken = createRefreshToken(uuid);
 
-        Cookie cookie = new Cookie("Authorization", refreshToken);
-        cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
+        List<String> tokens = new ArrayList<>();
+        tokens.add(accessToken);
+        tokens.add(refreshToken);
 
-        response.addCookie(cookie);
-
-        return accessToken;
+        return tokens;
     }
 
     private String createAccessToken(String uuid) {

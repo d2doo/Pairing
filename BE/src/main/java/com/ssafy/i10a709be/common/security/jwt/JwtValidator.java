@@ -19,7 +19,7 @@ public class JwtValidator {
     public String JWT_SECRETKEY;
 
 
-    public String isValidAccessToken(String token) {
+    public String isValidToken(String token) {
         SecretKey key = Keys.hmacShaKeyFor(JWT_SECRETKEY.getBytes(StandardCharsets.UTF_8));
         try {
             Jws<Claims> claims = Jwts.parser()

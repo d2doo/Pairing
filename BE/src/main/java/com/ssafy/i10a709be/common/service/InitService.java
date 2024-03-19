@@ -25,11 +25,9 @@ public class InitService {
                 .nickname("라이빵허")
                 .provider(OAuthProvider.KAKAO)
                 .build();
+        member.updateRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiNDhiZWY2MzYtZGZkNy00YmM3LTk4ZjUtNTIzMmM0MjZlYzAxIiwiaWF0IjoxNzEwODA2NTIwLCJleHAiOjE3MTE0MTEzMjB9.x67DUg4brARUkfCFT66t89lZqooj0cmWWxd0Lj9glpM");
         memberRepository.save( member );
         Member findMember = memberRepository.findByEmail("cqqudgjs@naver.com").get();
         log.info( findMember.getEmail() + " 테스트 데이터 등록 완료 id: " + member.getMemberId() + " ClassName: "+ this.getClass().getName() );
     }
-
-
-
 }

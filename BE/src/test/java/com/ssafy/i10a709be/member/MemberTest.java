@@ -9,6 +9,7 @@ import com.ssafy.i10a709be.domain.member.service.MemberService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,7 @@ public class MemberTest {
 
     @Test
     @Transactional
+    @DisplayName("멤버 삭제")
     void removeMember(){
         memberRepository.findByEmail(email).ifPresent(member -> {
             String memberId = member.getMemberId();
@@ -59,6 +61,15 @@ public class MemberTest {
 
         memberRepository.findByEmail(email).ifPresent(member ->{
             Assertions.assertThat(member.getIsDeleted()).isEqualTo(true);
+        });
+    }
+
+    @Test
+    @Transactional
+    void logout(){
+        memberRepository.findByEmail(email).ifPresent(member ->{
+            String memberId = member.getMemberId();
+            memberService.logout(memberId);
         });
     }
 }

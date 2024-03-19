@@ -47,11 +47,14 @@ public class Member {
     private Boolean isDeleted = Boolean.FALSE;
 
     @Builder
-
     public Member(String email, OAuthProvider provider, String nickname, String profileImage) {
         this.email = email;
         this.provider = provider;
         this.nickname = nickname;
         this.profileImage = profileImage;
+    }
+
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }
