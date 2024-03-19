@@ -23,7 +23,7 @@
 @font-face {
   font-family: "Gothic";
   font-weight: 400;
-  src: url("@/assets/fonts/NEXON Lv2 Gothic Gothic.ttf");
+  src: url("@/assets/fonts/NEXON Lv2 Gothic.ttf");
 }
 
 @font-face {
@@ -47,7 +47,7 @@
 @font-face {
   font-family: "GothicOTF";
   font-weight: 50;
-  src: url("@/assets/fonts/NEXON Lv2 Gothic OTF OTF.otf");
+  src: url("@/assets/fonts/NEXON Lv2 Gothic OTF.otf");
 }
 
 @font-face {

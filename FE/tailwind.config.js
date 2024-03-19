@@ -15,7 +15,7 @@ module.exports = {
         "4xl": "0 1px 2px rgba(0, 0, 0, 0.25)",
       },
       textShadow: {
-        default: "0px 1px 2px rgba(0, 0, 0, 0.25)",
+        default: "0px 4px 4px rgba(0, 0, 0, 0.3)",
         md: "0px 4px 4px rgba(0, 0, 0, 0.25)",
       },
       container: {
