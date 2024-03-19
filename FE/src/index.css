@@ -4,7 +4,7 @@
 
 @font-face {
   font-family: "GothicBold";
-  font-weight: 50;
+  font-weight: 400;
   src: url("@/assets/fonts/NEXON Lv2 Gothic Bold.ttf");
 }
 
@@ -22,7 +22,7 @@
 
 @font-face {
   font-family: "Gothic";
-  font-weight: 50;
+  font-weight: 400;
   src: url("@/assets/fonts/NEXON Lv2 Gothic Gothic.ttf");
 }
 
@@ -48,6 +48,12 @@
   font-family: "GothicOTF";
   font-weight: 50;
   src: url("@/assets/fonts/NEXON Lv2 Gothic OTF OTF.otf");
+}
+
+@font-face {
+  font-family: "Chab";
+  font-weight: 50;
+  src: url("@/assets/fonts/chab.ttf");
 }
 
 @layer base {

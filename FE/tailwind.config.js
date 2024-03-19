@@ -14,6 +14,10 @@ module.exports = {
         "3xl": "0 4px 4px 0 rgba(0, 0, 0, 0.25)",
         "4xl": "0 1px 2px rgba(0, 0, 0, 0.25)",
       },
+      textShadow: {
+        default: "0px 1px 2px rgba(0, 0, 0, 0.25)",
+        md: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      },
       container: {
         center: true,
         padding: "2rem",
@@ -22,8 +26,23 @@ module.exports = {
         },
       },
       fontFamily: {
-        "NEXON Lv2 Gothic Light": ["Nexon"],
-        chab: ["Chab"],
+        Gothic: ["Gothic"],
+        GothicBold: ["GothicBold"],
+        GothicMedium: ["GothicMedium"],
+        GothicLight: ["GothicLight"],
+        Chab: ["Chab"],
+      },
+      fontSize: {
+        logo: ["3rem", "3.2rem"],
+      },
+      backgroundImage: {
+        "text-gradient":
+          "linear-gradient(180deg, rgba(182, 208, 242, 0.75) 0%, rgba(160, 172, 242, 0.75) 100%)",
+        "bg-gradient":
+          "linear-gradient(0deg, rgba(255, 255, 255, 1) 0%, rgba(206, 220, 248, 1) 66%, rgba(162, 189, 242, 1) 100%)",
+      },
+      textFillColor: {
+        transparent: "transparent",
       },
       colors: {
         blue1: "#A2BDF2",
@@ -39,6 +58,7 @@ module.exports = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -89,5 +109,18 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/forms"),
+    function ({ addUtilities, theme }) {
+      const newUtilities = {};
+      Object.entries(theme("textShadow")).forEach(([key, value]) => {
+        const className = `.text-shadow-${key}`;
+        newUtilities[className] = {
+          textShadow: value,
+        };
+      });
+      addUtilities(newUtilities, ["responsive", "hover"]);
+    },
+  ],
 };

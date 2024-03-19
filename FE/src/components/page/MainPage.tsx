@@ -1,8 +1,7 @@
-import "./App.css";
 import Header from "@/components/Header.tsx";
 import MainLogo from "@/components/MainLogo";
 
-function App() {
+function MainPage() {
   return (
     <>
       <Header />
@@ -11,4 +10,4 @@ function App() {
   );
 }
 
-export default App;
+export default MainPage;
