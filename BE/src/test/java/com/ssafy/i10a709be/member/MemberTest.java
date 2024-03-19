@@ -21,6 +21,7 @@ import java.util.Optional;
 
 
 @SpringBootTest
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class MemberTest {
     @Autowired
     private MemberService memberService;
