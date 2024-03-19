@@ -34,6 +34,7 @@ module.exports = {
       },
       fontSize: {
         logo: ["3rem", "3.2rem"],
+        xxs: ["0.5625rem", "0.625rem"],
       },
       backgroundImage: {
         "text-gradient":
