@@ -34,8 +34,6 @@ pipeline {
 
                         sh 'echo Auto Control CD Start'
                         sh 'ls -al'
-                        sh 'ls -al BE/build'
-                        sh 'cd BE/build/libs && ls -al'
 
 
                         sshPublisher(
