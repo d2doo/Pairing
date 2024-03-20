@@ -99,9 +99,7 @@ pipeline {
                                 sh 'echo Auto CI Done Auto Control CD start'
 
                                 sh 'ls -l'
-                                sh 'ls -l FE/'
                                 sh 'tar -cvf febuild.tar FE/**'
-                                sh 'ls -l'
 
                                 sshPublisher(
                                     publishers: [
