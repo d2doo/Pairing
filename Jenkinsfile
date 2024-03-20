@@ -16,7 +16,7 @@ pipeline {
 
         stage('Build BE') {
             when {
-                expression { env.GIT_BRANCH == 'dev' }
+                expression { env.GIT_BRANCH == 'be' }
             }
             steps {
                 script {
@@ -27,10 +27,44 @@ pipeline {
                         sh './gradlew clean build'
                         sh 'jq --version'
                         sh 'cd build/libs && ls -al'
+
+                        sh 'echo manual Auto CI Start'
+                        sh 'curl "https://ssafycontrol.shop/control/dev/be"'
+
                     }
                 }
             }
         }
+
+        stage('Build FE') {
+        	    when {
+                        expression { env.GIT_BRANCH == 'fe' }
+                    }
+                    steps {
+                        script {
+                            // FE 폴더로 이동
+                            dir('FE') {
+
+                                sh 'node -v'
+                                sh 'npm -v'
+                                sh 'rm -rf node_modules'
+                                // sh 'rm package-lock.json'
+        			            sh 'npm install --global pnpm'
+                                sh 'pnpm i'
+                                sh 'pnpm run build'
+
+
+                                sh 'echo manual Auto CI Start'
+                                sh 'curl "https://ssafycontrol.shop/control/dev/fe"'
+
+
+
+
+                            }
+                        }
+                    }
+                }
+
 
         stage('Send Artifact to Control') {
             when {
