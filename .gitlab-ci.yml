@@ -11,15 +11,17 @@ merge_be_dev:
     - when: manual
   script:
     - git config --global user.email "wntjrdbs@gmail.com"
-    - git config --global user.name "윤주석"
+    - git config --global user.name "MergeBot"
     - git remote -v
     - git remote remove origin
     - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
 
     - git fetch 
+    - git checkout be
+    - git pull origin be
     - git checkout dev
     - git pull origin dev
-    - git merge origin/be --no-edit
+    - git merge be --no-edit
     - git push origin dev
   tags: 
     - BE
@@ -35,15 +37,17 @@ merge_fe_dev:
     - when: manual
   script:
     - git config --global user.email "wntjrdbs@gmail.com"
-    - git config --global user.name "윤주석"
+    - git config --global user.name "MergeBot"
     - git remote -v
     - git remote remove origin
     - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
     
-    - git fetch 
+    - git fetch
+    - git checkout fe
+    - git pull origin fe
     - git checkout dev
     - git pull origin dev
-    - git merge origin/fe --no-edit
+    - git merge fe --no-edit
     - git push origin dev
 
   tags: 
