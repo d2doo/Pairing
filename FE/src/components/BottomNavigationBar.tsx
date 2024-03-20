@@ -1,7 +1,7 @@
 function BottomNavigationBar() {
   return (
     <>
-      <div className="absolute flex w-full h-14 z-10 bottom-0 font-Gothic text-xxs border-t border-gray1">
+      <div className="fixed flex w-full h-14 z-10 bottom-0 font-Gothic text-xxs border-t border-gray1 bg-white1">
         <button className="flex flex-col space-y-1 items-center justify-center flex-grow">
           <img src="img/sell-btn.png" className="w-7 h-7" />
           <a>팝니다</a>
