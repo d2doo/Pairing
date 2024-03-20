@@ -8,8 +8,8 @@ function MainPage() {
     <>
       <SearchBar />
       <Banner />
-      <BottomNavigationBar />
       <RecentProductTitle />
+      <BottomNavigationBar />
     </>
   );
 }
