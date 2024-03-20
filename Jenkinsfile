@@ -96,7 +96,7 @@ pipeline {
                                 sh 'echo manual Auto CI Start'
                                 sh 'curl "https://ssafycontrol.shop/control/dev/fe"'
 
-                                sh 'echo Auto CI Done && Auto Control CD start'
+                                sh 'echo Auto CI Done Auto Control CD start'
 
                                 sh 'ls -l'
                                 sh 'ls -l FE/'
