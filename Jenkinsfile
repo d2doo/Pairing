@@ -14,7 +14,7 @@ pipeline {
 
     stages {
 
-        stage('Build BE') {
+        stage('Build BE && sendArtifact') {
             when {
                 expression { env.GIT_BRANCH == 'be' }
             }
@@ -30,13 +30,53 @@ pipeline {
 
                         sh 'echo manual Auto CI Start'
                         sh 'curl "https://ssafycontrol.shop/control/dev/be"'
+                        sh 'echo manual Auto CI Done...!'
+
+                        sh 'echo Auto Control CD Start'
+                        sh 'ls -al'
+                        sh 'ls -al BE/build'
+                        sh 'cd BE/build/libs && ls -al'
+
+
+                        sshPublisher(
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: 'ssafycontrol',
+                                        transfers: [
+                                            sshTransfer(
+                                                sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
+                                                removePrefix: 'BE/build/libs',
+                                                remoteDirectory: '/sendData',
+                                            )
+                                        ]
+                                )
+                            ]
+                        )
+                        sh 'echo Auto Control CD Done'
+                        sh 'echo Auto Helpler CD Start'
+                        sshPublisher(
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: 'ssafyhelper',
+                                    transfers: [
+                                        sshTransfer(
+                                            sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
+                                            removePrefix: 'BE/build/libs',
+                                            remoteDirectory: '/sendData',
+                                            execCommand: 'sh temp/AutoDevServer.sh'
+                                        )
+                                    ]
+                                )
+                            ]
+                        )
+                        sh 'echo Auto Helper CD Done'
 
                     }
                 }
             }
         }
 
-        stage('Build FE') {
+        stage('Build FE && sendArtifact') {
         	    when {
                         expression { env.GIT_BRANCH == 'fe' }
                     }
@@ -57,8 +97,26 @@ pipeline {
                                 sh 'echo manual Auto CI Start'
                                 sh 'curl "https://ssafycontrol.shop/control/dev/fe"'
 
+                                sh 'echo Auto CI Done && Auto Control CD start'
 
+                                sh 'ls -l'
+                                sh 'ls -l FE/'
+                                sh 'tar -cvf febuild.tar FE/**'
+                                sh 'ls -l'
 
+                                sshPublisher(
+                                    publishers: [
+                                        sshPublisherDesc(
+                                            configName: 'ssafycontrol',
+                                                transfers: [
+                                                    sshTransfer(
+                                                        sourceFiles: 'febuild.tar',
+                                                        remoteDirectory: '/sendData',
+                                                    )
+                                                ]
+                                        )
+                                    ]
+                                )
 
                             }
                         }
@@ -66,60 +124,7 @@ pipeline {
                 }
 
 
-        stage('Send Artifact to Control') {
-            when {
-                expression { env.GIT_BRANCH == 'dev' }
-            }
-            steps {
-                script {
-                    sh 'ls -al'
-                    sh 'ls -al BE/build'
-                    sh 'cd BE/build/libs && ls -al'
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ssafycontrol',
-                                transfers: [
-                                    sshTransfer(
-                                        sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
-                                        removePrefix: 'BE/build/libs',
-                                        remoteDirectory: '/sendData',
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
 
-        stage('Send Artifact to Dev') {
-            when {
-                expression { env.GIT_BRANCH == 'dev' }
-            }
-            steps {
-                script {
-                    sh 'ls -al'
-                    sh 'ls -al BE/build'
-                    sh 'cd BE/build/libs && ls -al'
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: 'ssafyhelper',
-                                transfers: [
-                                    sshTransfer(
-                                        sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
-                                        removePrefix: 'BE/build/libs',
-                                        remoteDirectory: '/sendData',
-                                        execCommand: 'sh temp/AutoDevServer.sh'
-                                    )
-                                ]
-                            )
-                        ]
-                    )
-                }
-            }
-        }
 
         stage('Continuous Delivery') {
             when {
