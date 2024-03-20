@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         jdk 'A408_BE_Build'
+        nodejs 'A408_FE_Build'
     }
     environment {
         CONTAINER_NAME = "auto-dev-server"
