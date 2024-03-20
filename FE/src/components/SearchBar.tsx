@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 
 function MainLogo() {
   // 폼을 참조하기 위한 ref 생성
   const formRef = useRef<HTMLFormElement>(null);
+  const [inputText, setInputText] = useState("");
+  
 
   // 검색 버튼(이미지) 클릭 시 폼을 제출하는 함수
   const handleSubmit = () => {
@@ -12,10 +14,10 @@ function MainLogo() {
   };
 
   // 실제 검색 로직을 수행하는 함수
-  const handleSearch = (event) => {
+  const handleSearch = (event: React.FormEvent) => {
     event.preventDefault(); // 폼의 기본 제출 동작을 방지
     // 여기에 검색 로직을 구현, 예: console.log(event.target.searchInput.value);
-    console.log("검색어: ", event.target.searchInput.value);
+    console.log("검색어: ", inputText);
   };
 
   return (
@@ -35,6 +37,10 @@ function MainLogo() {
             type="search"
             className="box-border border-none flex-grow h-11 font-['GothicOTFMedium'] text-xs"
             placeholder="찾고있는 물건을 입력해보세요."
+            value={inputText}
+            onChange={(e) => {
+              setInputText(e.target.value);
+            }}
           />
           <img
             src="img/search-btn.png"
