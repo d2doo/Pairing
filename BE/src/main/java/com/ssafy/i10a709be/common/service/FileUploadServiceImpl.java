@@ -89,7 +89,6 @@ public class FileUploadServiceImpl implements FileUploadService {
                 .name( originFileName )
                 .source( fileName )
                 .fileType( ext )
-                .createAt(LocalDateTime.now())
                 .build();
         try{
             Files saved = fileRepository.save( fileEntity );

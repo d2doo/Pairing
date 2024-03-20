@@ -7,21 +7,18 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Files {
+public class Files extends BaseEntity {
 
     @Id
     @GeneratedValue( strategy = GenerationType.IDENTITY )
     private Long fileId;
     private String source;
     private String name;
-    private LocalDateTime createAt;
     @Column(name = "type")
     private String fileType;
 
