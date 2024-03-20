@@ -14,7 +14,7 @@ merge_be_dev:
     - git config --global user.name "윤주석"
     - git remote -v
     - git remote remove origin
-    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
+    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
 
     - git fetch 
     - git checkout dev
@@ -38,7 +38,7 @@ merge_fe_dev:
     - git config --global user.name "윤주석"
     - git remote -v
     - git remote remove origin
-    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
+    - git remote add origin "https://wntjrdbs:3WmDBHzqBCQzswYaBMp5@lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709.git"
     
     - git fetch 
     - git checkout dev
