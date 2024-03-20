@@ -1,0 +1,60 @@
+{
+  "products": [
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품", "왼쪽"],
+      "productId": "1",
+      "productTitle": "에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟에어팟",
+      "totalPrice": 100000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["오른쪽", "왼쪽"],
+      "productId": "2",
+      "productTitle": "버즈",
+      "totalPrice": 60000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품"],
+      "productId": "3",
+      "productTitle": "합침",
+      "totalPrice": 60000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품"],
+      "productId": "3",
+      "productTitle": "합침",
+      "totalPrice": 60000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품"],
+      "productId": "3",
+      "productTitle": "합침",
+      "totalPrice": 60000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품"],
+      "productId": "3",
+      "productTitle": "합침",
+      "totalPrice": 60000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품"],
+      "productId": "3",
+      "productTitle": "합침",
+      "totalPrice": 60000
+    },
+    {
+      "thumbnailUrl": "img/extra-banner-img.png",
+      "category": ["조합제품"],
+      "productId": "3",
+      "productTitle": "합침",
+      "totalPrice": 60000
+    }
+  ]
+}
