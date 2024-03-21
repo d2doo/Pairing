@@ -1,26 +1,36 @@
 package com.ssafy.i10a709be.domain.product.service;
 
-import com.ssafy.i10a709be.domain.member.entity.Member;
-import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
-import com.ssafy.i10a709be.domain.product.dto.ProductSaveReqDto;
-import com.ssafy.i10a709be.domain.product.entity.Category;
-import com.ssafy.i10a709be.domain.product.entity.Product;
+import com.ssafy.i10a709be.domain.product.dto.UnitUpdateRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.Unit;
-import com.ssafy.i10a709be.domain.product.repository.CategoryRepository;
 import com.ssafy.i10a709be.domain.product.repository.UnitRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class UnitServiceImpl implements UnitService {
 
     private final UnitRepository unitRepository;
-    private final MemberRepository memberRepository;
-    private final CategoryRepository categoryRepository;
 
-//    @Override
-//    public Unit
+    @Override
+    public Unit findUnitById(Long unitId) {
+        return unitRepository.findById(unitId).orElseThrow(IllegalArgumentException::new);
+    }
+
+    @Override
+    @Transactional
+    public Unit updateUnitById(String memberId, Long unitId, UnitUpdateRequestDto unitUpdateRequestDto) {
+        Unit unit = unitRepository.findByUnitIdAndMember_MemberId(unitId, memberId).orElseThrow(IllegalArgumentException::new);
+
+        unit.updateDetails(
+                unitUpdateRequestDto.isCombinable(),
+                unitUpdateRequestDto.getUnitDescription(),
+                unitUpdateRequestDto.getPrice(),
+                unitUpdateRequestDto.getAge(),
+                unitUpdateRequestDto.getStatus()
+        );
+
+        return unit;
+    }
 }
