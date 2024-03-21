@@ -4,8 +4,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import javax.imageio.ImageIO;
@@ -14,10 +12,7 @@ import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ssafy.i10a709be.common.entity.Files;
-import com.ssafy.i10a709be.common.exception.CustomErrorCode;
-import com.ssafy.i10a709be.common.exception.CustomException;
-import com.ssafy.i10a709be.common.exception.InternalServerCaughtException;
-import com.ssafy.i10a709be.common.exception.InternalServerException;
+import com.ssafy.i10a709be.common.exception.*;
 import com.ssafy.i10a709be.common.repository.FileRepository;
 import com.ssafy.i10a709be.common.util.ImageUtils;
 import jakarta.persistence.PersistenceException;
@@ -40,42 +35,22 @@ public class FileUploadServiceImpl implements FileUploadService {
     private String bucket;
 
     @Override
-    public String uploadFile(MultipartFile multipartFile) {
+    public Files uploadFile(MultipartFile multipartFile) {
 
         if (isEmpty(multipartFile)) {
-            return null;
+            throw new MultiPartFileNotFoundException("제공된 파일이 없습니다",this);
         }
-        validateIsClientSendImageFile(multipartFile);
 
 
         return uploadFiles(multipartFile, false);
     }
 
-    @Override
-    public String uploadFile(MultipartFile multipartFile, boolean resize) {
-        if (isEmpty(multipartFile)) {
-            return null;
-        }
-        validateIsClientSendImageFile(multipartFile);
-        return uploadFiles(multipartFile, resize);
-    }
-
-    @Override
-    public boolean isExistsImgSrc(String imgSrc) {
-        String imageObjectName = getImageObjectName(imgSrc);
-        return amazonS3Client.doesObjectExist(bucket, imageObjectName);
-    }
 
     private boolean isEmpty(MultipartFile multipartFile) {
         return multipartFile == null || multipartFile.isEmpty();
     }
 
-    private void validateIsClientSendImageFile(MultipartFile multipartFile) {
-        if (!Objects.requireNonNull(multipartFile.getContentType()).contains(IMAGE_CONTENT_TYPE_PREFIX))
-            throw new CustomException(CustomErrorCode.FILE_IS_NOT_IMAGE_TYPE);
-    }
-
-    private String uploadFiles(MultipartFile multipartFile, boolean resize) {
+    private Files uploadFiles(MultipartFile multipartFile, boolean resize) {
         File uploadFile =
                 convert(multipartFile, resize) // 파일 변환할 수 없으면 에러
                         .orElseThrow(() -> new InternalServerException("MultipartFile -> File 변환 실패", this));
@@ -83,7 +58,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         return upload(uploadFile, multipartFile.getContentType());
     }
 
-    private void saveFiles(File uploadFile, String fileName, String ext) {
+    private Files saveFiles(File uploadFile, String fileName, String ext) {
         String originFileName = uploadFile.getName();
         Files fileEntity = Files.builder()
                 .name( originFileName )
@@ -93,6 +68,7 @@ public class FileUploadServiceImpl implements FileUploadService {
         try{
             Files saved = fileRepository.save( fileEntity );
             log.info(String.valueOf(saved.getFileId()) +"번 파일 저장 성공");
+            return saved;
         }catch( PersistenceException e ){
             log.error( "파일 저장 간 에러 발생 : " + e.getMessage() );
             throw new InternalServerException( "파일 저장 간 에러가 발생했습니다.", this );
@@ -101,14 +77,15 @@ public class FileUploadServiceImpl implements FileUploadService {
 
     }
 
-    private String upload(File uploadFile, String contentType) {
+    private Files upload(File uploadFile, String contentType) {
         String fileName = "upload/" + UUID.randomUUID(); // S3에 저장된 파일 이름
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
 
         //파일 DB에 정보 저장
-        saveFiles( uploadFile, uploadImageUrl, contentType );
+        Files saved = saveFiles( uploadFile, uploadImageUrl, contentType );
         removeNewFile(uploadFile);
-        return uploadImageUrl;
+
+        return saved;
     }
 
     // S3로 업로드
@@ -166,14 +143,6 @@ public class FileUploadServiceImpl implements FileUploadService {
         return Optional.ofNullable(filename)
                 .filter(f -> f.contains("."))
                 .map(f -> f.substring(filename.lastIndexOf(".") + 1))
-                .orElseThrow(() -> new InternalServerException("파일 이름이 비었습니다", this));
-    }
-
-    private String getImageObjectName(String imgSrc) {
-        return "upload/"
-                + Optional.ofNullable(imgSrc)
-                .filter(f -> f.contains("/"))
-                .map(f -> f.substring(imgSrc.lastIndexOf("/") + 1))
                 .orElseThrow(() -> new InternalServerException("파일 이름이 비었습니다", this));
     }
 }
