@@ -52,6 +52,13 @@ public class CommonExceptionHandler {
                         )
                 );
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Void> handleIllegalArgumentException(
+            Exception e, HttpServletRequest request) {
+        log.warn("Illegal Argument!", e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
 }
 
 

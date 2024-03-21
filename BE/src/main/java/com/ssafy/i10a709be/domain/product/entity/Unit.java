@@ -2,6 +2,7 @@ package com.ssafy.i10a709be.domain.product.entity;
 
 import com.ssafy.i10a709be.common.entity.BaseEntity;
 import com.ssafy.i10a709be.domain.member.entity.Member;
+import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -54,10 +55,20 @@ public class Unit extends BaseEntity {
 
     private Integer age;
 
+    private String status;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "unit", cascade = CascadeType.PERSIST)
     private List<Part> parts = new ArrayList<>();
 
     public void updateProduct(Product product) {
         this.product = product;
+    }
+
+    public void updateDetails(boolean isCombinable, String unitDescription, int price, int age, String status) {
+        this.isCombinable = isCombinable;
+        this.unitDescription = unitDescription;
+        this.price = price;
+        this.age = age;
+        this.status = status;
     }
 }
