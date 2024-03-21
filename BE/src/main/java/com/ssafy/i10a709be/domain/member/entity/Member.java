@@ -1,6 +1,7 @@
 package com.ssafy.i10a709be.domain.member.entity;
 
 //import com.ssafy.i10a709be.common.entity.BaseEntity;
+import com.ssafy.i10a709be.domain.member.dto.MemberUpdateRequestDto;
 import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,6 +53,13 @@ public class Member {
         this.provider = provider;
         this.nickname = nickname;
         this.profileImage = profileImage;
+    }
+
+    public void updateDetails(MemberUpdateRequestDto memberUpdateRequestDto) {
+        this.nickname = memberUpdateRequestDto.getNickname();
+        this.profileImage = memberUpdateRequestDto.getProfileImage();
+        this.address = memberUpdateRequestDto.getAddress();
+        this.phoneNumber = memberUpdateRequestDto.getPhoneNumber();
     }
 
     public void updateRefreshToken(String refreshToken) {

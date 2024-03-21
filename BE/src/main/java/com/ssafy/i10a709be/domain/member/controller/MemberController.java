@@ -1,8 +1,7 @@
 package com.ssafy.i10a709be.domain.member.controller;
 
 import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
-import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
-import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
+import com.ssafy.i10a709be.domain.member.dto.*;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.oauth.OAuthClient;
 import com.ssafy.i10a709be.domain.member.service.MemberService;
@@ -28,6 +27,21 @@ import java.util.Map;
 public class MemberController {
     private final MemberService memberService;
     private final OAuthClient kakaoOAuthClient;
+
+    @GetMapping
+    public ResponseEntity<MemberResponseDto> findMember(@AuthenticationPrincipal String memberId) {
+        return ResponseEntity.ok(MemberResponseDto.fromEntity(memberService.findMemberById(memberId)));
+    }
+
+    @GetMapping("/{memberId}")
+    public ResponseEntity<MemberSummaryResponseDto> findMemberById(@PathVariable String memberId) {
+        return ResponseEntity.ok(MemberSummaryResponseDto.fromEntity(memberService.findMemberById(memberId)));
+    }
+
+    @PatchMapping
+    public ResponseEntity<MemberResponseDto> updateMemberDetails(@AuthenticationPrincipal String memberId, @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
+        return ResponseEntity.ok(MemberResponseDto.fromEntity(memberService.updateMemberDetails(memberId, memberUpdateRequestDto)));
+    }
 
     @PostMapping("/login/kakao")
     public ResponseEntity<MemberLoginResDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) {

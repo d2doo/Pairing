@@ -6,16 +6,18 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class MemberDetailResponseDto {
+public class MemberSummaryResponseDto {
     private String memberId;
     private String nickname;
     private String profileImage;
+    private Integer score;
 
-    public static MemberDetailResponseDto fromEntity(Member member) {
-        return MemberDetailResponseDto.builder()
+    public static MemberSummaryResponseDto fromEntity(Member member) {
+        return MemberSummaryResponseDto.builder()
                 .memberId(member.getMemberId())
                 .nickname(member.getNickname())
                 .profileImage(member.getProfileImage())
+                .score(member.getScore())
                 .build();
     }
 }

@@ -1,6 +1,6 @@
 package com.ssafy.i10a709be.domain.product.dto;
 
-import com.ssafy.i10a709be.domain.member.dto.MemberDetailResponseDto;
+import com.ssafy.i10a709be.domain.member.dto.MemberSummaryResponseDto;
 import com.ssafy.i10a709be.domain.product.entity.Unit;
 import java.util.List;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class UnitFindDto {
     private int age;
 
     public static UnitFindDto fromEntity(Unit unit){
-        MemberDetailResponseDto memberDetailDto = MemberDetailResponseDto.fromEntity(unit.getMember());
+        MemberSummaryResponseDto memberDetailDto = MemberSummaryResponseDto.fromEntity(unit.getMember());
 
         return UnitFindDto.builder()
                 .memberId(memberDetailDto.getMemberId())
