@@ -4,12 +4,14 @@ import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
 import com.ssafy.i10a709be.common.exception.InternalServerException;
 import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
 import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
+import com.ssafy.i10a709be.domain.member.dto.MemberUpdateRequestDto;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
@@ -61,18 +63,25 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public Optional<Member> findMemberById(String memberId) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
-        return Optional.of(member);
+    public Member findMemberById(String memberId) {
+        return memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
     }
 
     @Override
     public Member findMemberByEmail(String email) {
         Optional<Member> findMember = memberRepository.findByEmail( email );
         return Optional.of( findMember ).get().orElseThrow( () -> { throw new InternalServerException( "email에 해당하는 회원을 찾을 수 없습니다", this );}) ;
-     }
+    }
 
+    @Override
+    @Transactional
+    public Member updateMemberDetails(String memberId, MemberUpdateRequestDto memberUpdateRequestDto) {
+        Member member = findMemberById(memberId);
 
+        member.updateDetails(memberUpdateRequestDto);
+
+        return member;
+    }
 
     @Override
     public void logout(String memberId) {
