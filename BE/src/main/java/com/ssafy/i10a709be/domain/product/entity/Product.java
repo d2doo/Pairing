@@ -43,7 +43,27 @@ public class Product extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Unit> units = new ArrayList<>();
 
+    public void updateStatus( ProductStatus status ){
+
+        this.status = status;
+    }
+
     public void modifyTitle(String title) {
         this.title = title;
+    }
+
+    //테스트용 toString작성
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productId=" + productId +
+                ", member=" + member +
+                ", title='" + title + '\'' +
+                ", status=" + status +
+                ", maxAge=" + maxAge +
+                ", totalPrice=" + totalPrice +
+                ", units=" + units +
+                '}';
     }
 }

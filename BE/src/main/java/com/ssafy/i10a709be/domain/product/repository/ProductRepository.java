@@ -7,10 +7,15 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
+
+    @Query("select p from Product p join fetch p.units where p.productId = :productId")
+    Product findProductByProductIdAndUnits( @Param(value = "productId") Long productId );
+
     @Query("select p from Product p " +
             "where p.member.memberId = :memberId " +
             "AND p.productId = :productId " +
             "AND (p.status = 'ON_SELL' " +
             "OR p.status = 'PENDING')")
     Optional<Product> deleteProductById(@Param(value = "productId") Long productId, @Param(value = "memberId") String memberId);
+
 }

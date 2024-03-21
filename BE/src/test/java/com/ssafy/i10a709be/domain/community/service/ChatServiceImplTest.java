@@ -55,10 +55,10 @@ class ChatServiceImplTest {
         joinMembers.add( member2 );
         joinMembers.add( member3 );
 
-        Long value = chatService.createChatRoom( new ChatRoomCreateDto( joinMembers, member1.getMemberId(), "temp", 10, ChatRoomStatus.active, LocalDateTime.now() ) );
+        Long value = chatService.createChatRoom( new ChatRoomCreateDto( joinMembers, member1.getMemberId(), "temp", 10, ChatRoomStatus.active ) );
         assertNotNull( value );
 
-        ChatRoom chatRoom = chatService.findById( value );
+        ChatRoom chatRoom = chatService.findChatRoomById( value );
         assertNotNull( chatRoom );
 
         List<UserChatRoom> userChatRooms = chatRoom.getUserChatRooms();

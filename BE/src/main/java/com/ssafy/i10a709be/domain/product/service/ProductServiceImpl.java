@@ -28,6 +28,7 @@ public class ProductServiceImpl implements ProductService {
     private final PartTypeRepository partTypeRepository;
     private final CategoryRepository categoryRepository;
 
+    //단일 파츠 및 유닟 및 상품 생성
     @Override
     @Transactional
     public Product saveProduct(String memberId, ProductSaveReqDto request) {
@@ -52,6 +53,7 @@ public class ProductServiceImpl implements ProductService {
                     .unitDescription(request.getUnit().getUnitDescription())
                     .price(request.getUnit().getPrice())
                     .age(request.getUnit().getAge())
+                    .isConfirmed( true )
                     .build();
 
             product.getUnits().add(unit);
@@ -83,6 +85,7 @@ public class ProductServiceImpl implements ProductService {
         throw new IllegalArgumentException();
     }
 
+    //합의시 일때 실행되는 로직
     @Override
     public Product composeUnits(Unit unit, List<Long> targets) {
         Product product = Product.builder()
@@ -90,12 +93,14 @@ public class ProductServiceImpl implements ProductService {
                 .status(ProductStatus.PENDING)
                 .build();
 
+        // 본인이 애초에 합의를 열었기에 true에서 바꿀 필요가 없다.
         unit.updateProduct(product);
         product.getUnits().add(unit);
 
-        for (Long targetUnitId : targets) {
+        for (Long targetUnitId : targets){
             unitRepository.findById(targetUnitId).ifPresent(
                     targetUnit -> {
+                        targetUnit.setIsConfirmed( false ); // 나머지 친구들은 거절
                         targetUnit.updateProduct(product);
                         product.getUnits().add(targetUnit);
                     }
