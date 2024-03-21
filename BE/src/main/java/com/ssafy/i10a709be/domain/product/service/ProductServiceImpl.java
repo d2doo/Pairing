@@ -113,6 +113,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> findAllProduct(String nickname, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+        return productRepository.findProductsByDynamicQuery(nickname, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+    }
+
+    @Override
     public Product findProduct(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
@@ -133,7 +138,6 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     public void deleteProduct(String memberId, Long productId) {
         Product product = productRepository.deleteProductById(productId, memberId).orElseThrow(() -> new IllegalArgumentException("해당상품이 존재하지않습니다."));
-
         List<Unit> units = product.getUnits();
         product.softDeleted(Boolean.TRUE);
 

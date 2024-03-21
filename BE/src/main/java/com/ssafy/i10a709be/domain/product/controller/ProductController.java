@@ -4,6 +4,8 @@ import com.ssafy.i10a709be.domain.product.dto.ProductFindResDto;
 import com.ssafy.i10a709be.domain.product.dto.ProductSaveReqDto;
 import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.service.ProductService;
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -35,6 +37,26 @@ public class ProductController {
         }
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ProductFindResDto>> findAllProduct(
+            @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) String productStatus,
+            @RequestParam(required = false) Integer startPrice,
+            @RequestParam(required = false) Integer endPrice,
+            @RequestParam(required = false) Integer maxAge,
+            @RequestParam(required = false) String keyword
+    ) {
+
+
+        List<Product> products = productService.findAllProduct(nickname, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+
+        List<ProductFindResDto> productFindResDtos = products.stream()
+                .map(ProductFindResDto::fromEntity).toList();
+
+        return ResponseEntity.ok().body(productFindResDtos);
     }
 
     @GetMapping("/{productId}")

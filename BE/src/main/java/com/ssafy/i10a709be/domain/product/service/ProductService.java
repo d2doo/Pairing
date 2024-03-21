@@ -11,6 +11,8 @@ public interface ProductService {
 
     Product composeUnits(Unit unit, List<Long> targets);
 
+    List<Product> findAllProduct(String nickname, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword);
+
     Product findProduct(Long productId);
 
     String modifyProduct(Long productId, String productTitle);
