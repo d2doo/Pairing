@@ -1,5 +1,5 @@
 import SearchBar from "@/components/SearchBar";
-import Banner from "@/components/Banner";
+import Banner from "@/components/banner";
 import ProductTypeC from "@/components/ProductTypeC";
 import RecentProductTitle from "@/components/RecentProductTitle";
 import BottomNavigationBar from "@/components/BottomNavigationBar";

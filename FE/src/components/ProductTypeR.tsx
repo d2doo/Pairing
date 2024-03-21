@@ -12,6 +12,7 @@ interface productInterface {
 function Product({
   thumbnailUrl,
   category,
+  productId,
   productTitle,
   totalPrice,
 }: productInterface) {
@@ -20,8 +21,11 @@ function Product({
       <div>
         <img src={thumbnailUrl} className="object-cover size-32 pb-1" />
         <div className="flex flex-row space-x-px pb-0.5">
-          {category.map((temp) => (
-            <div className="flex items-center justify-center w-12 h-4 rounded-full border border-blue1 ">
+          {category.map((temp, index) => (
+            <div
+              key={index}
+              className="flex items-center justify-center w-12 h-4 rounded-full border border-blue1 "
+            >
               <p className="font-Gothic text-xxs">{temp}</p>
             </div>
           ))}
@@ -49,14 +53,14 @@ function Products() {
     <>
       <div className="flex flex-wrap px-7 ">
         <div className="grid gap-x-10 gap-y-7 grid-cols-2">
-          {product.map((temp: productInterface) => (
+          {product.map((item: productInterface, index) => (
             <Product
-              key={temp.productId}
-              thumbnailUrl={temp.thumbnailUrl}
-              category={temp.category}
-              productId={temp.productId}
-              productTitle={temp.productTitle}
-              totalPrice={temp.totalPrice}
+              key={index}
+              thumbnailUrl={item.thumbnailUrl}
+              category={item.category}
+              productId={item.productId}
+              productTitle={item.productTitle}
+              totalPrice={item.totalPrice}
             />
           ))}
         </div>
