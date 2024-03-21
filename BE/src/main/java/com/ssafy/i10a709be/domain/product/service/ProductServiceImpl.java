@@ -93,7 +93,7 @@ public class ProductServiceImpl implements ProductService {
         unit.updateProduct(product);
         product.getUnits().add(unit);
 
-        for (Long targetUnitId : targets){
+        for (Long targetUnitId : targets) {
             unitRepository.findById(targetUnitId).ifPresent(
                     targetUnit -> {
                         targetUnit.updateProduct(product);
@@ -105,5 +105,42 @@ public class ProductServiceImpl implements ProductService {
         productRepository.save(product);
 
         return product;
+    }
+
+    @Override
+    public Product findProduct(Long productId) {
+        return productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+    }
+
+    @Override
+    @Transactional
+    public String modifyProduct(Long productId, String productTitle) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 상품이 존재하지 않습니다."));
+
+        product.modifyTitle(productTitle);
+
+        return product.getTitle();
+    }
+
+    @Override
+    @Transactional
+    public void deleteProduct(String memberId, Long productId) {
+        Product product = productRepository.deleteProductById(productId, memberId).orElseThrow(() -> new IllegalArgumentException("해당상품이 존재하지않습니다."));
+
+        List<Unit> units = product.getUnits();
+        product.softDeleted(Boolean.TRUE);
+
+        // 단일 판매일 경우와 묶음 판매일 경우 로직 상이
+        if (units.size() == 1) {
+            units.get(0).softDeleted(Boolean.TRUE);
+        } else {
+            for (Unit unit : units) {
+                Product originalProduct = productRepository.findById(unit.getOriginalProductId())
+                        .orElseThrow(() -> new IllegalArgumentException("문제가 계속될 시 wntjrdbs@gmail.com으로 연락주세요."));
+                unit.updateProduct(originalProduct);
+            }
+        }
     }
 }

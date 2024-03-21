@@ -10,4 +10,10 @@ public interface ProductService {
     Product saveProduct(String memberId, ProductSaveReqDto request);
 
     Product composeUnits(Unit unit, List<Long> targets);
+
+    Product findProduct(Long productId);
+
+    String modifyProduct(Long productId, String productTitle);
+
+    void deleteProduct(String memebrId, Long productId);
 }

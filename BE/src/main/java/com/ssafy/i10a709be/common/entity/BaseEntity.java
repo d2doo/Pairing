@@ -24,4 +24,8 @@ public class BaseEntity {
     private LocalDateTime modifiedAt;
 
     private Boolean isDeleted = Boolean.FALSE;
+
+    public void softDeleted(Boolean deleted) {
+        isDeleted = deleted;
+    }
 }
