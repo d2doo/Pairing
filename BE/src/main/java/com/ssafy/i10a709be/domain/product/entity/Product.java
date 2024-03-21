@@ -33,6 +33,7 @@ public class Product extends BaseEntity {
 
     private String title;
 
+    @Enumerated(EnumType.STRING)
     private ProductStatus status;
 
     private Integer maxAge;
@@ -41,4 +42,8 @@ public class Product extends BaseEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Unit> units = new ArrayList<>();
+
+    public void modifyTitle(String title) {
+        this.title = title;
+    }
 }
