@@ -5,7 +5,6 @@ function MainLogo() {
   // 폼을 참조하기 위한 ref 생성
   const formRef = useRef<HTMLFormElement>(null);
   const [inputText, setInputText] = useState("");
-  
 
   // 검색 버튼(이미지) 클릭 시 폼을 제출하는 함수
   const handleSubmit = () => {
@@ -35,7 +34,7 @@ function MainLogo() {
           <Input
             name="searchInput" // 폼 제출 시 값을 참조하기 위한 name 속성 추가
             type="search"
-            className="box-border border-none flex-grow h-11 font-['GothicOTFMedium'] text-xs"
+            className="box-border border-none flex-grow h-11 font-GothicMedium text-xs"
             placeholder="찾고있는 물건을 입력해보세요."
             value={inputText}
             onChange={(e) => {
