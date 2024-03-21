@@ -19,6 +19,18 @@ public class CommonExceptionHandler {
                 .body(ErrorResponse.createErrorResponse(e.getErrorCode(), request.getRequestURI()));
     }
 
+    @ExceptionHandler(MultiPartFileNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMultiPartFileNotFoundException(
+            Exception e, HttpServletRequest request) {
+        log.warn("MultiPartFileNotFound Exception 발생!!", e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                CustomErrorCode.FILE_NOT_PROVIDED, request.getRequestURI()
+                        )
+                );
+    }
+
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ErrorResponse> handleInternalServerException(
             InternalServerException e, HttpServletRequest request) {

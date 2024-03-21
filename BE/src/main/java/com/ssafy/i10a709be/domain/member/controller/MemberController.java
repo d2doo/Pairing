@@ -3,6 +3,7 @@ package com.ssafy.i10a709be.domain.member.controller;
 import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
 import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
 import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
+import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.oauth.OAuthClient;
 import com.ssafy.i10a709be.domain.member.service.MemberService;
 import jakarta.servlet.http.Cookie;
@@ -78,4 +79,20 @@ public class MemberController {
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    // 채팅 테스트 로그인 서비스
+    @GetMapping("/chat/test/login")
+    public ResponseEntity<MemberLoginResDto> memberTestLogin(){
+        Member findMember = memberService.findMemberByEmail( "cqqudgjs@naver.com");
+
+        MemberLoginResDto returnDto = MemberLoginResDto.builder()
+                .email("cqqudgjs@naver.com")
+                .memberId(findMember.getMemberId())
+                .profileImage(null)
+                .nickname(findMember.getNickname())
+                .build();
+
+        return ResponseEntity.ok( returnDto );
+    }
+
 }

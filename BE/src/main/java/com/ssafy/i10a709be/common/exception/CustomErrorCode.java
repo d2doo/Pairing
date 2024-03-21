@@ -21,7 +21,12 @@ public enum CustomErrorCode implements ErrorCode{
     TOKEN_ERROR(
             HttpStatus.UNAUTHORIZED,
             "토큰 정보가 올바르지 않습니다."
+    ),
+    FILE_NOT_PROVIDED(
+            HttpStatus.BAD_REQUEST,
+            "파일이 제공되지 않았습니다."
     );
+
 
     private final HttpStatus httpStatus;
     private final String errorMessage;

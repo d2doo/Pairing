@@ -42,9 +42,12 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://i10a709.p.ssafy.io","https://ssafyhelper.shop"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "https://i10a709.p.ssafy.io","https://ssafyhelper.shop","chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo"));
+//        config.setAllowedOriginPatterns( Arrays.asList( "/**" ) );
+//        config.addAllowedOrigin("chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo");
         config.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "PATCH"));
         config.setAllowCredentials(true);
+//        config.setAllowedOriginPatterns( Arrays.asList( "/**" ) );
         config.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-requested-with"));
         config.setMaxAge(1800L);
 

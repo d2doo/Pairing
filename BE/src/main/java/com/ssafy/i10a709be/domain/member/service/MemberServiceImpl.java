@@ -1,6 +1,7 @@
 package com.ssafy.i10a709be.domain.member.service;
 
 import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
+import com.ssafy.i10a709be.common.exception.InternalServerException;
 import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
 import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
 import com.ssafy.i10a709be.domain.member.entity.Member;
@@ -58,6 +59,20 @@ public class MemberServiceImpl implements MemberService{
 
         return false;
     }
+
+    @Override
+    public Optional<Member> findMemberById(String memberId) {
+        Member member = memberRepository.findById(memberId).orElseThrow(() -> new IllegalArgumentException("해당 회원을 찾을 수 없습니다."));
+        return Optional.of(member);
+    }
+
+    @Override
+    public Member findMemberByEmail(String email) {
+        Optional<Member> findMember = memberRepository.findByEmail( email );
+        return Optional.of( findMember ).get().orElseThrow( () -> { throw new InternalServerException( "email에 해당하는 회원을 찾을 수 없습니다", this );}) ;
+     }
+
+
 
     @Override
     public void logout(String memberId) {
