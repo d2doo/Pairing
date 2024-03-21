@@ -25,6 +25,10 @@ public enum CustomErrorCode implements ErrorCode{
     FILE_NOT_PROVIDED(
             HttpStatus.BAD_REQUEST,
             "파일이 제공되지 않았습니다."
+    ),
+    FORBIDDEN(
+            HttpStatus.FORBIDDEN,
+            "권한이 없습니다."
     );
 
 

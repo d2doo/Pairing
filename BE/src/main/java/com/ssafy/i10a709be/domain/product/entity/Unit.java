@@ -16,7 +16,7 @@ import java.util.List;
 public class Unit extends BaseEntity {
 
     @Builder
-    public Unit(Member member, Product product, Long originalProductId, Category category, Boolean isCombinable, String unitDescription, Integer price, Integer age) {
+    public Unit(Member member, Product product, Long originalProductId, Category category, Boolean isCombinable, String unitDescription, Integer price, Integer age, Boolean isConfirmed) {
         this.member = member;
         this.product = product;
         this.originalProductId = originalProductId;
@@ -25,6 +25,7 @@ public class Unit extends BaseEntity {
         this.unitDescription = unitDescription;
         this.price = price;
         this.age = age;
+        this.isConfirmed = isConfirmed;
     }
 
     @Id
@@ -55,10 +56,14 @@ public class Unit extends BaseEntity {
 
     private Integer age;
 
+    @Setter
+    private Boolean isConfirmed;
+    
     private String status;
 
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "unit", cascade = CascadeType.PERSIST)
-    private List<Part> parts = new ArrayList<>();
+    private final List<Part> parts = new ArrayList<>();
 
     public void updateProduct(Product product) {
         this.product = product;
