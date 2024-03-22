@@ -1,7 +1,7 @@
 function Header() {
   return (
     <>
-      <div className="flex items-center w-full h-12 text-base text-black1 px-4 border-b border-gray1 font-GothicMedium">
+      <div className="flex h-12 w-full items-center border-b border-gray1 px-4 font-GothicMedium text-base text-black1">
         페이지 이름이지롱
       </div>
     </>

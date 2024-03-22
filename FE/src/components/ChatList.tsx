@@ -5,20 +5,20 @@ function ChatList() {
     <>
       <Link
         to="/chat/room"
-        className="flex justify-start items-center space-x-3 w-full h-24 border-b border-black1 px-4"
+        className="flex h-24 w-full items-center justify-start space-x-3 border-b border-black1 px-4"
       >
         {/* 임시 이미지 -> 후에 결합 어떻게 할건지도 생각해봐야함. */}
         <img
           src="/img/extra.png"
           alt="profile_err"
-          className="object-cover size-20"
+          className="size-20 object-cover"
         />
         <div className="flex-col justify-center">
-          <div className="flex space-x-2 text-black1 text-sm font-GothicLight">
+          <div className="flex space-x-2 font-GothicLight text-sm text-black1">
             <div>제목 컨테이너</div>
-            <div className="text-gray1 text-xs flex items-center">대화날짜</div>
+            <div className="flex items-center text-xs text-gray1">대화날짜</div>
           </div>
-          <div className="text-gray1 text-xs font-GothicLight">
+          <div className="font-GothicLight text-xs text-gray1">
             마지막 대화내용 여기 나와야 돼ㅐㅐㅐㅐ
           </div>
         </div>

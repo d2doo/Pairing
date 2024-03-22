@@ -3,11 +3,11 @@ function Login() {
   return (
     <>
       <div className="justify-center">
-        <div className="grid mb-9">
-          <a className="text-logo font-Chab text-white1 text-shadow-default">
+        <div className="mb-9 grid">
+          <a className="font-Chab text-logo text-white1 text-shadow-default">
             PAIRING
           </a>
-          <a className="text-black1 font-Gothic text-shadow-md">
+          <a className="font-Gothic text-black1 text-shadow-md">
             pairing mine, pairing yours
           </a>
         </div>
@@ -16,14 +16,14 @@ function Login() {
           <img
             src="img/kakao-login-btn.png"
             alt="kakao_err"
-            className="w-full h-full"
+            className="h-full w-full"
           />
         </button>
         <button type="button" className="">
           <img
             src="img/google-login-btn.png"
             alt="google_err"
-            className="w-full h-full"
+            className="h-full w-full"
           />
         </button>
       </div>
