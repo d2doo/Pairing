@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 @Builder
 public class UnitResponseDto {
-    private long unitId;
-    private long productId;
-    private long categoryId;
-    private boolean isCombinable;
+    private Long unitId;
+    private Long productId;
+    private Long categoryId;
+    private Boolean isCombinable;
     private String unitDescription;
-    private int price;
-    private int age;
+    private Integer price;
+    private Integer age;
     private String status;
 
     public static UnitResponseDto fromEntity(Unit unit) {

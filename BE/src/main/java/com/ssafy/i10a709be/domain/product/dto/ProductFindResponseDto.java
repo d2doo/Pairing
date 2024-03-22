@@ -9,21 +9,25 @@ import lombok.Data;
 @Data
 @Builder
 public class ProductFindResponseDto {
-    private long productId;
+    private Long productId;
     private MemberSummaryResponseDto leader;
     private String productTitle;
+    private String thumbnailUrl;
+    private CategoryDto category;
     private List<UnitFindDto> units;
-    private int totalPrice;
-    private int averageAge;
+    private Integer totalPrice;
+    private Integer maxAge;
 
     public static ProductFindResponseDto fromEntity(Product product){
         return ProductFindResponseDto.builder()
                 .productId(product.getProductId())
                 .leader(MemberSummaryResponseDto.fromEntity(product.getMember()))
                 .productTitle(product.getTitle())
+                .thumbnailUrl(product.getUnits().getFirst().getUnitImages().getFirst().getFiles().getSource())
+                .category(CategoryDto.fromEntityOnlyCategory(product.getUnits().getFirst().getCategory()))
                 .units(product.getUnits().stream().map(UnitFindDto::fromEntity).toList())
                 .totalPrice(product.getTotalPrice())
-                .averageAge(product.getMaxAge())
+                .maxAge(product.getMaxAge())
                 .build();
     }
 }

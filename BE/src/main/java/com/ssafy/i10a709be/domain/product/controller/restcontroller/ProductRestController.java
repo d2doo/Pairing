@@ -41,7 +41,9 @@ public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
+            @RequestParam(required = false) Boolean isCombined,
             @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) String memberId,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String productStatus,
             @RequestParam(required = false) Integer startPrice,
@@ -50,8 +52,7 @@ public class ProductRestController {
             @RequestParam(required = false) String keyword
     ) {
 
-
-        List<Product> products = productService.findAllProduct(nickname, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+        List<Product> products = productService.findAllProduct(isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
 
         List<ProductFindResponseDto> productFindResponseDtos = products.stream()
                 .map(ProductFindResponseDto::fromEntity).toList();

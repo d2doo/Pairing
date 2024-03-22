@@ -4,9 +4,9 @@ import lombok.Data;
 
 @Data
 public class UnitUpdateRequestDto {
-    private boolean isCombinable;
+    private Boolean isCombinable;
     private String unitDescription;
-    private int price;
-    private int age;
+    private Integer price;
+    private Integer age;
     private String status;
 }

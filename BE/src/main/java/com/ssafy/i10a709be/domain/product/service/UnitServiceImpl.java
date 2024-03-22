@@ -24,7 +24,7 @@ public class UnitServiceImpl implements UnitService {
         Unit unit = unitRepository.findByUnitIdAndMember_MemberId(unitId, memberId).orElseThrow(IllegalArgumentException::new);
 
         unit.updateDetails(
-                unitUpdateRequestDto.isCombinable(),
+                unitUpdateRequestDto.getIsCombinable(),
                 unitUpdateRequestDto.getUnitDescription(),
                 unitUpdateRequestDto.getPrice(),
                 unitUpdateRequestDto.getAge(),

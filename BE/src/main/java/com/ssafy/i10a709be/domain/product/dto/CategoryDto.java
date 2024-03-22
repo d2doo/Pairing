@@ -22,4 +22,12 @@ public class CategoryDto {
                 .partTypes(category.getPartTypes().stream().map(PartTypeDto::fromEntity).toList())
                 .build();
     }
+
+    public static CategoryDto fromEntityOnlyCategory(Category category) {
+        return CategoryDto.builder()
+                .categoryId(category.getCategoryId())
+                .mainCategory(category.getMainCategory())
+                .subCategory(category.getSubCategory())
+                .build();
+    }
 }

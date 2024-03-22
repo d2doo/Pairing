@@ -1,12 +1,8 @@
 package com.ssafy.i10a709be.domain.product.repository;
 
 import com.querydsl.core.BooleanBuilder;
-import com.querydsl.core.types.Predicate;
-import com.querydsl.core.types.dsl.BooleanExpression;
-import com.ssafy.i10a709be.domain.product.entity.Category;
 import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.entity.QProduct;
-import com.ssafy.i10a709be.domain.product.entity.QUnit;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +11,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
-public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
+public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product>{
 
     @Query("select p from Product p join fetch p.units where p.productId = :productId")
     Optional<Product> findProductAndUnitsByProductId( @Param(value = "productId") Long productId );
@@ -27,13 +23,23 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
             "OR p.status = 'PENDING')")
     Optional<Product> deleteProductById(@Param(value = "productId") Long productId, @Param(value = "memberId") String memberId);
 
-    default List<Product> findProductsByDynamicQuery(String nickname, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+    default List<Product> findProductsByDynamicQuery(Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
         QProduct product = QProduct.product;
 
         BooleanBuilder builder = new BooleanBuilder();
 
+        if (isCombined != null) {
+            if (isCombined) {
+                builder.and(product.units.size().goe(2));
+            } else {
+                builder.and(product.units.size().loe(1));
+            }
+        }
         if (nickname != null) {
             builder.and(product.member.nickname.eq(nickname));
+        }
+        if (memberId != null) {
+            builder.and(product.member.memberId.eq(memberId));
         }
         if (categoryId != null) {
             builder.and(product.units.any().category.categoryId.eq(categoryId));
