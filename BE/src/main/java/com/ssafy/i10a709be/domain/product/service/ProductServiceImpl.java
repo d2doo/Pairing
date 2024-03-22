@@ -118,8 +118,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAllProduct(String nickname, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
-        return productRepository.findProductsByDynamicQuery(nickname, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+    public List<Product> findAllProduct(Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+        return productRepository.findProductsByDynamicQuery(isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
     }
 
     @Override

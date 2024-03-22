@@ -1,6 +1,8 @@
 package com.ssafy.i10a709be.common.service;
 
 
+import com.ssafy.i10a709be.common.entity.Files;
+import com.ssafy.i10a709be.common.repository.FileRepository;
 import com.ssafy.i10a709be.domain.community.dto.ChatRoomCreateDto;
 import com.ssafy.i10a709be.domain.community.enums.ChatRoomStatus;
 import com.ssafy.i10a709be.domain.community.repository.ChatRoomRepository;
@@ -32,7 +34,9 @@ public class InitService {
     private final ChatRoomRepository chatRoomRepository;
     private final PartRepository partRepository;
     private final UnitRepository unitRepository;
+    private final UnitImagesRepository unitImagesRepository;
     private final ProductRepository productRepository;
+    private final FileRepository fileRepository;
 
     @PostConstruct
     @Transactional
@@ -105,6 +109,7 @@ public class InitService {
                 .maxAge(1)
                 .totalPrice(10000)
                 .build();
+        testP.softDeleted(true);
 
         Product testP2 = Product.builder()
                 .title("test2")
@@ -193,6 +198,48 @@ public class InitService {
         partRepository.save(testPart);
         partRepository.save(testPart2);
         partRepository.save(testPart3);
+
+        Files files1 = Files.builder()
+                .name("test file")
+                .source("가나다라마바사")
+                .build();
+
+
+        Files files2 = Files.builder()
+                .name("test file")
+                .source("가나다라마바사")
+                .build();
+
+
+        Files files3 = Files.builder()
+                .name("test file")
+                .source("가나다라마바사")
+                .build();
+
+        fileRepository.save(files1);
+        fileRepository.save(files2);
+        fileRepository.save(files3);
+
+        UnitImages unitImages = UnitImages.builder()
+                .files(files1)
+                .unit(testU)
+                .build();
+
+
+        UnitImages unitImages2 = UnitImages.builder()
+                .files(files2)
+                .unit(testU2)
+                .build();
+
+
+        UnitImages unitImages3 = UnitImages.builder()
+                .files(files3)
+                .unit(testU3)
+                .build();
+
+        unitImagesRepository.save(unitImages);
+        unitImagesRepository.save(unitImages2);
+        unitImagesRepository.save(unitImages3);
 
         log.info( findMember.getEmail() + " 테스트 데이터 등록 완료" );
     }

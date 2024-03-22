@@ -1,5 +1,6 @@
 package com.ssafy.i10a709be.domain.product.dto;
 
+import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.domain.member.dto.MemberSummaryResponseDto;
 import com.ssafy.i10a709be.domain.product.entity.Unit;
 import java.util.List;
@@ -11,15 +12,21 @@ import lombok.Data;
 public class UnitFindDto {
     private String memberId;
     private String nickname;
-    List<PartTypeDto> positions;
-    private int age;
+    private Integer score;
+    private List<String> unitImages;
+    private List<PartTypeDto> positions;
+    private Integer age;
 
     public static UnitFindDto fromEntity(Unit unit){
-        MemberSummaryResponseDto memberDetailDto = MemberSummaryResponseDto.fromEntity(unit.getMember());
+        MemberSummaryResponseDto memberSummaryResponseDto = MemberSummaryResponseDto.fromEntity(unit.getMember());
 
         return UnitFindDto.builder()
-                .memberId(memberDetailDto.getMemberId())
-                .nickname(memberDetailDto.getNickname())
+                .memberId(memberSummaryResponseDto.getMemberId())
+                .nickname(memberSummaryResponseDto.getNickname())
+                .score(memberSummaryResponseDto.getScore())
+                .unitImages(unit.getUnitImages().stream().map(files ->{
+                    return files.getFiles().getSource();
+                }).toList())
                 .positions(unit.getParts().stream().map(part -> {
                     return PartTypeDto.fromEntity(part.getPartType());
                 }).toList())

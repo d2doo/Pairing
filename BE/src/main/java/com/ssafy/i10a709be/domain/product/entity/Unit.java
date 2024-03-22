@@ -1,6 +1,7 @@
 package com.ssafy.i10a709be.domain.product.entity;
 
 import com.ssafy.i10a709be.common.entity.BaseEntity;
+import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import jakarta.persistence.*;
@@ -66,11 +67,14 @@ public class Unit extends BaseEntity {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "unit", cascade = CascadeType.PERSIST)
     private final List<Part> parts = new ArrayList<>();
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "unit", cascade = CascadeType.PERSIST)
+    private final List<UnitImages> unitImages = new ArrayList<>();
+
     public void updateProduct(Product product) {
         this.product = product;
     }
 
-    public void updateDetails(boolean isCombinable, String unitDescription, int price, int age, String status) {
+    public void updateDetails(Boolean isCombinable, String unitDescription, int price, int age, String status) {
         this.isCombinable = isCombinable;
         this.unitDescription = unitDescription;
         this.price = price;
