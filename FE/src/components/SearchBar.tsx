@@ -5,7 +5,6 @@ function MainLogo() {
   // 폼을 참조하기 위한 ref 생성
   const formRef = useRef<HTMLFormElement>(null);
   const [inputText, setInputText] = useState("");
-  
 
   // 검색 버튼(이미지) 클릭 시 폼을 제출하는 함수
   const handleSubmit = () => {
@@ -22,20 +21,20 @@ function MainLogo() {
 
   return (
     <>
-      <nav className="w-full h-14 flex items-center justify-around mx-auto bg-blue1">
-        <div className="flex justify-center items-center my-6">
+      <nav className="mx-auto flex h-14 w-full items-center justify-around bg-blue1">
+        <div className="my-6 flex items-center justify-center">
           <img src="img/favicon-btn.png" alt="favicon_err" />
         </div>
         {/* form 태그 추가 및 ref, onSubmit 이벤트 핸들러 연결 */}
         <form
           ref={formRef}
           onSubmit={handleSearch}
-          className="flex items-center w-64 place-content-around rounded-full box-border border-none bg-white1 bg-opacity-70 px-4 w-64"
+          className="box-border flex w-64 place-content-around items-center rounded-full border-none bg-white1 bg-opacity-70 px-4"
         >
           <Input
             name="searchInput" // 폼 제출 시 값을 참조하기 위한 name 속성 추가
             type="search"
-            className="box-border border-none flex-grow h-11 font-['GothicOTFMedium'] text-xs"
+            className="box-border h-11 flex-grow border-none font-GothicMedium text-xs"
             placeholder="찾고있는 물건을 입력해보세요."
             value={inputText}
             onChange={(e) => {

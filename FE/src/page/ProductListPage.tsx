@@ -26,8 +26,8 @@ function ProductListPage() {
   }
   return (
     <>
-      <Tabs defaultValue="individual" className="w-full p-0 m-0 font-Gothic">
-        <TabsList className="grid w-full grid-cols-2 p-0 m-0 text-black1 border-b-black1 border-b">
+      <Tabs defaultValue="individual" className="m-0 w-full p-0 font-Gothic">
+        <TabsList className="m-0 grid w-full grid-cols-2 border-b border-b-black1 p-0 text-black1">
           <TabsTrigger
             value="individual"
             className="h-full
@@ -45,13 +45,13 @@ function ProductListPage() {
         </TabsList>
         <TabsContent value="individual">
           <Tabs defaultValue="전체" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 p-0 mb-2 border-b-gray1 border-b">
+            <TabsList className="mb-2 grid w-full grid-cols-4 border-b border-b-gray1 p-0">
               {categoryList.map((category, index) => (
                 <TabsTrigger
                   key={index}
                   value={category}
                   className="h-full
-                 data-[state=active]:text-black1 data-[state=active]:border-b-black1 data-[state=active]:border-b-2"
+                 data-[state=active]:border-b-2 data-[state=active]:border-b-black1 data-[state=active]:text-black1"
                 >
                   {category}
                 </TabsTrigger>
@@ -60,11 +60,11 @@ function ProductListPage() {
             {categoryList.map((category, index) => (
               <TabsContent key={index} value={category}>
                 {category === "전체" ? (
-                  <p className="flex items-center font-GothicLight text-xs pl-7 pb-3">
+                  <p className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                     전체
                   </p>
                 ) : (
-                  <div className="flex items-center font-GothicLight text-xs pl-7 pb-3">
+                  <div className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                     <p className="pr-3">
                       {category}&nbsp;&nbsp;&nbsp;&nbsp;{">"}
                     </p>
@@ -72,7 +72,7 @@ function ProductListPage() {
                       defaultValue="전체"
                       onValueChange={(value) => clickSelectType(value)}
                     >
-                      <SelectTrigger className="w-20 h-5">
+                      <SelectTrigger className="h-5 w-20">
                         <SelectValue placeholder="전체" />
                       </SelectTrigger>
                       <SelectContent>
@@ -92,13 +92,13 @@ function ProductListPage() {
         </TabsContent>
         <TabsContent value="combine">
           <Tabs defaultValue="전체" className="w-full">
-            <TabsList className="grid w-full grid-cols-4 p-0 mb-2 border-b-gray1 border-b">
+            <TabsList className="mb-2 grid w-full grid-cols-4 border-b border-b-gray1 p-0">
               {categoryList.map((category, index) => (
                 <TabsTrigger
                   key={index}
                   value={category}
                   className="h-full
-                 data-[state=active]:text-black1 data-[state=active]:border-b-black1 data-[state=active]:border-b-2"
+                 data-[state=active]:border-b-2 data-[state=active]:border-b-black1 data-[state=active]:text-black1"
                 >
                   {category}
                 </TabsTrigger>
@@ -107,11 +107,11 @@ function ProductListPage() {
             {categoryList.map((category, index) => (
               <TabsContent key={index} value={category}>
                 {category === "전체" ? (
-                  <p className="flex items-center font-GothicLight text-xs pl-7 pb-3">
+                  <p className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                     전체
                   </p>
                 ) : (
-                  <div className="flex items-center font-GothicLight text-xs pl-7 pb-3">
+                  <div className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                     <p className="pr-3">
                       {category}&nbsp;&nbsp;&nbsp;&nbsp;{">"}
                     </p>
@@ -119,7 +119,7 @@ function ProductListPage() {
                       defaultValue="전체"
                       onValueChange={(value) => clickSelectType(value)}
                     >
-                      <SelectTrigger className="w-20 h-5">
+                      <SelectTrigger className="h-5 w-20">
                         <SelectValue placeholder="전체" />
                       </SelectTrigger>
                       <SelectContent>
