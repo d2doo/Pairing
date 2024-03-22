@@ -29,7 +29,7 @@ function MainLogo() {
         <form
           ref={formRef}
           onSubmit={handleSearch}
-          className="box-border flex w-64 w-64 place-content-around items-center rounded-full border-none bg-white1 bg-opacity-70 px-4"
+          className="box-border flex w-64 place-content-around items-center rounded-full border-none bg-white1 bg-opacity-70 px-4"
         >
           <Input
             name="searchInput" // 폼 제출 시 값을 참조하기 위한 name 속성 추가
