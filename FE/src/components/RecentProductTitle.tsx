@@ -1,10 +1,10 @@
 function RecentProductTitle() {
   return (
     <>
-      <div className="p-8 pt-14 flex justify-between items-center">
-        <hr className="h-1 w-1/4 border-1 border-black1 border-solid bg-black1" />
-        <div className="font-['GothicOTF'] px-3">최근 조합된 제품</div>
-        <hr className="h-1 w-1/4 border-1 border-black1 border-solid bg-black1" />
+      <div className="flex items-center justify-between p-8 pt-14">
+        <hr className="border-1 h-1 w-1/4 border-solid border-black1 bg-black1" />
+        <div className="px-3 font-['GothicOTF']">최근 조합된 제품</div>
+        <hr className="border-1 h-1 w-1/4 border-solid border-black1 bg-black1" />
       </div>
     </>
   );

@@ -19,18 +19,18 @@ function Product({
   return (
     <>
       <div>
-        <img src={thumbnailUrl} className="object-cover size-32 pb-1" />
+        <img src={thumbnailUrl} className="size-32 object-cover pb-1" />
         <div className="flex flex-row space-x-px pb-0.5">
           {category.map((temp, index) => (
             <div
               key={index}
-              className="flex items-center justify-center w-12 h-4 rounded-full border border-blue1 "
+              className="flex h-4 w-12 items-center justify-center rounded-full border border-blue1 "
             >
               <p className="font-Gothic text-xxs">{temp}</p>
             </div>
           ))}
         </div>
-        <p className="font-Gothic text-xs pb-0.5 truncate">{productTitle}</p>
+        <p className="truncate pb-0.5 font-Gothic text-xs">{productTitle}</p>
         <p className="font-GothicBold text-xs">{totalPrice}원</p>
       </div>
     </>
@@ -52,7 +52,7 @@ function Products() {
   return (
     <>
       <div className="flex flex-wrap px-7 ">
-        <div className="grid gap-x-10 gap-y-7 grid-cols-2">
+        <div className="grid grid-cols-2 gap-x-10 gap-y-7">
           {product.map((item: productInterface, index) => (
             <Product
               key={index}
