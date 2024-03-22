@@ -15,10 +15,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 import org.springframework.data.repository.query.Param;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepository extends JpaRepository<Product, Long>, QuerydslPredicateExecutor<Product> {
 
     @Query("select p from Product p join fetch p.units where p.productId = :productId")
-    Product findProductByProductIdAndUnits( @Param(value = "productId") Long productId );
+    Optional<Product> findProductAndUnitsByProductId( @Param(value = "productId") Long productId );
 
     @Query("select p from Product p " +
             "where p.member.memberId = :memberId " +

@@ -1,8 +1,10 @@
 package com.ssafy.i10a709be.domain.product.service;
 
+import com.ssafy.i10a709be.common.exception.InternalServerException;
+import com.ssafy.i10a709be.common.exception.NoAuthorizationException;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
-import com.ssafy.i10a709be.domain.product.dto.ProductSaveReqDto;
+import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.*;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import com.ssafy.i10a709be.domain.product.repository.CategoryRepository;
@@ -28,10 +30,12 @@ public class ProductServiceImpl implements ProductService {
     private final PartTypeRepository partTypeRepository;
     private final CategoryRepository categoryRepository;
 
+
+    //TODO 1차 개발 끝나면 해당 로직 세분화를 시켜서 재사용성을 높히자.
     //단일 파츠 및 유닟 및 상품 생성
     @Override
     @Transactional
-    public Product saveProduct(String memberId, ProductSaveReqDto request) {
+    public Product saveProduct(String memberId, ProductSaveRequestDto request) {
         Optional<Member> member = memberRepository.findById(memberId);
         Optional<Category> category = categoryRepository.findById(request.getUnit().getCategoryId());
 
@@ -92,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
                 .member(unit.getMember())
                 .status(ProductStatus.PENDING)
                 .build();
-
+        
         // 본인이 애초에 합의를 열었기에 true에서 바꿀 필요가 없다.
         unit.updateProduct(product);
         product.getUnits().add(unit);
@@ -100,6 +104,7 @@ public class ProductServiceImpl implements ProductService {
         for (Long targetUnitId : targets){
             unitRepository.findById(targetUnitId).ifPresent(
                     targetUnit -> {
+                        targetUnit.getProduct().softDeleted(true);//targetUnit의 원래 product의 isdeleted는 true로 바껴야함
                         targetUnit.setIsConfirmed( false ); // 나머지 친구들은 거절
                         targetUnit.updateProduct(product);
                         product.getUnits().add(targetUnit);
@@ -151,5 +156,44 @@ public class ProductServiceImpl implements ProductService {
                 unit.updateProduct(originalProduct);
             }
         }
+    }
+    //Compose 생성 로직
+    @Transactional
+    @Override
+    public Long createAfterCompose(String memberId, Long productId, ProductSaveRequestDto productSaveRequestDto) {
+        Member member = memberRepository.findById( memberId ).orElseThrow( () -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
+        Product product = productRepository.findProductAndUnitsByProductId( productId ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
+        product.softDeleted( true );
+        product.updateStatus(ProductStatus.PENDING);
+        Unit unit = unitRepository.findUnitByProduct_ProductIdAndMember_MemberId( productId, memberId );
+        // 권한 체크
+        if( member.getMemberId() != product.getMember().getMemberId() ) throw new NoAuthorizationException( "잘못된 요청입니다.", this );
+        // 재사용
+        Product newProduct = Product.builder()
+                .member(member)
+                .title(productSaveRequestDto.getProductTitle())
+                .status(ProductStatus.ON_SELL)
+                .maxAge(productSaveRequestDto.getUnit().getAge())
+                .totalPrice(productSaveRequestDto.getUnit().getPrice())
+                .build();
+
+        newProduct.getUnits().add( unit );
+        unit.updateProduct( newProduct );
+
+        Product saved = productRepository.save(newProduct);
+        
+        for (Long targetUnitId : productSaveRequestDto.getTargetUnits()){
+            unitRepository.findById(targetUnitId).ifPresent(
+                    targetUnit -> {
+                        targetUnit.getProduct().softDeleted(true);//targetUnit의 원래 product의 isdeleted는 true로 바껴야함
+                        targetUnit.setIsConfirmed( false ); // 나머지 친구들은 거절
+                        targetUnit.updateProduct(newProduct);
+                        newProduct.getUnits().add(targetUnit);
+                    }
+            );
+        }
+//        composeUnits( unit, productSaveRequestDto.getTargetUnits());
+
+        return saved.getProductId();
     }
 }

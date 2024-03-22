@@ -34,7 +34,7 @@ public class DealServiceImpl implements DealService{
 //        for( Unit unit : findUnit.getProduct().getUnits() ){
 //            if()
 //        }
-        Product p = productRepository.findProductByProductIdAndUnits( productId );
+        Product p = productRepository.findProductAndUnitsByProductId( productId ).orElseThrow( () -> new OriginalProductNotFoundException("찾으시는 상품이 없습니다.",this));
         for( Unit unit: p.getUnits() ) {
             if( !unit.getIsConfirmed() ){
                 return;
@@ -47,7 +47,7 @@ public class DealServiceImpl implements DealService{
 
     @Override
     public void rejectConfirm(Long productId, String memberId) {
-        Product p = productRepository.findProductByProductIdAndUnits( productId );
+        Product p = productRepository.findProductAndUnitsByProductId( productId ).orElseThrow( () -> new OriginalProductNotFoundException("찾으시는 상품이 없습니다.",this));
 
         boolean flag = false;
         for( Unit unit: p.getUnits() ){

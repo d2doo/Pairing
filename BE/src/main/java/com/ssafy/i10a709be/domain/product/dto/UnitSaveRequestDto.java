@@ -1,11 +1,13 @@
 package com.ssafy.i10a709be.domain.product.dto;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
+@Builder
 @Data
-public class UnitSaveReqDto {
+public class UnitSaveRequestDto {
     private Long categoryId;
     private Boolean isCombinable;
     private String unitDescription;

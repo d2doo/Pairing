@@ -1,4 +1,4 @@
-package com.ssafy.i10a709be.domain.product.controller;
+package com.ssafy.i10a709be.domain.product.controller.restcontroller;
 
 import com.ssafy.i10a709be.domain.product.dto.UnitResponseDto;
 import com.ssafy.i10a709be.domain.product.dto.UnitUpdateRequestDto;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/unit")
-public class UnitController {
+public class UnitRestController {
     private final UnitService unitService;
 
     @GetMapping("/{unitId}")
