@@ -1,5 +1,16 @@
-// import "./LoginPage.css";
+import KakaoLoginButtonImage from '@/assets/images/kakao-login-btn.png';
+import GoogleLoginButtonImage from '@/assets/images/google-login-btn.png';
+
 function Login() {
+
+  const kakaoLogin = () => {
+    location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${
+      import.meta.env.VITE_KAKAO_CLIENT_ID
+    }&redirect_uri=${
+      import.meta.env.VITE_REDIRECT_URI_BASE + '/kakao'
+    }&response_type=code`;
+  };
+
   return (
     <>
       <div className="justify-center">
@@ -12,16 +23,16 @@ function Login() {
           </a>
         </div>
 
-        <button type="button" className="mb-3">
+        <button type="button" className="mb-3" onClick={kakaoLogin}>
           <img
-            src="img/kakao-login-btn.png"
+            src={KakaoLoginButtonImage}
             alt="kakao_err"
             className="h-full w-full"
           />
         </button>
         <button type="button" className="">
           <img
-            src="img/google-login-btn.png"
+            src={GoogleLoginButtonImage}
             alt="google_err"
             className="h-full w-full"
           />

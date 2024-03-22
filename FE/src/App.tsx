@@ -1,12 +1,13 @@
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LoginPage from "./page/LoginPage";
-import MainPage from "./page/MainPage";
-import ChatPage from "./page/ChatPage";
-import ChatRoom from "./page/ChatRoomPage";
+import LoginPage from "@/pages/LoginPage";
+import MainPage from "@/pages/MainPage";
+import ChatPage from "@/pages/ChatPage";
+import ChatRoom from "@/pages/ChatRoomPage";
 import ChatList from "./components/ChatList";
 import SalePage from "./page/SalePage";
 import SaleMain from "./components/SaleMain";
+import {KakaoAuthCallback} from "@/pages/auth/KakaoAuthCallback.tsx";
 function App() {
   return (
     <>
@@ -24,6 +25,8 @@ function App() {
           </Route>
           <Route path="/" element={<MainPage />} />
           <Route path="/login" element={<LoginPage />} />
+
+          <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
         </Routes>
       </BrowserRouter>
       {/* Routing 정의 끝 */}
