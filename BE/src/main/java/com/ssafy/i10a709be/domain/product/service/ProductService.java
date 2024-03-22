@@ -1,13 +1,13 @@
 package com.ssafy.i10a709be.domain.product.service;
 
-import com.ssafy.i10a709be.domain.product.dto.ProductSaveReqDto;
+import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.entity.Unit;
 
 import java.util.List;
 
 public interface ProductService {
-    Product saveProduct(String memberId, ProductSaveReqDto request);
+    Product saveProduct(String memberId, ProductSaveRequestDto request);
 
     Product composeUnits(Unit unit, List<Long> targets);
 
@@ -20,4 +20,5 @@ public interface ProductService {
     void deleteProduct(String memebrId, Long productId);
 
 
+    Long createAfterCompose(String memberId, Long productId ,ProductSaveRequestDto productSaveRequestDto);
 }

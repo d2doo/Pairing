@@ -1,4 +1,4 @@
-package com.ssafy.i10a709be.domain.member.controller;
+package com.ssafy.i10a709be.domain.member.controller.restcontroller;
 
 import com.ssafy.i10a709be.common.security.jwt.JwtValidator;
 import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class JwtController {
+public class JwtRestController {
     private final JwtService jwtService;
     private final JwtValidator jwtValidator;
 

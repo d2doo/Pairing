@@ -118,4 +118,5 @@ class DealServiceImplTest {
         }).isInstanceOf(NoAuthorizationException.class);
 
     }
+
 }

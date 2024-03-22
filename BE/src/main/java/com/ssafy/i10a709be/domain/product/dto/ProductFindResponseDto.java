@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class ProductFindResDto {
+public class ProductFindResponseDto {
     private long productId;
     private MemberSummaryResponseDto leader;
     private String productTitle;
@@ -16,8 +16,8 @@ public class ProductFindResDto {
     private int totalPrice;
     private int averageAge;
 
-    public static ProductFindResDto fromEntity(Product product){
-        return ProductFindResDto.builder()
+    public static ProductFindResponseDto fromEntity(Product product){
+        return ProductFindResponseDto.builder()
                 .productId(product.getProductId())
                 .leader(MemberSummaryResponseDto.fromEntity(product.getMember()))
                 .productTitle(product.getTitle())

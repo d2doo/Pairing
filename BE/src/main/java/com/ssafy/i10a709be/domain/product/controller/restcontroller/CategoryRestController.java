@@ -1,20 +1,17 @@
-package com.ssafy.i10a709be.domain.product.controller;
+package com.ssafy.i10a709be.domain.product.controller.restcontroller;
 
 import com.ssafy.i10a709be.domain.product.dto.CategoryDto;
-import com.ssafy.i10a709be.domain.product.entity.Category;
-import com.ssafy.i10a709be.domain.product.repository.CategoryRepository;
 import com.ssafy.i10a709be.domain.product.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/category")
 @RequiredArgsConstructor
-public class CategoryController {
+public class CategoryRestController {
 
     private final CategoryService categoryService;
 

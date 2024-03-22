@@ -1,7 +1,6 @@
 package com.ssafy.i10a709be.domain.deal.controller.restcontroller;
 
 
-import com.ssafy.i10a709be.domain.deal.dto.ConfirmRequestDto;
 import com.ssafy.i10a709be.domain.deal.service.DealService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -28,4 +27,5 @@ public class DealRestController {
         dealService.rejectConfirm( productId, memberId );
         return ResponseEntity.ok().build();
     }
+
 }

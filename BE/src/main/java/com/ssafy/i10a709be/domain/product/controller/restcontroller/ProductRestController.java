@@ -1,11 +1,11 @@
-package com.ssafy.i10a709be.domain.product.controller;
+package com.ssafy.i10a709be.domain.product.controller.restcontroller;
 
-import com.ssafy.i10a709be.domain.product.dto.ProductFindResDto;
-import com.ssafy.i10a709be.domain.product.dto.ProductSaveReqDto;
+import com.ssafy.i10a709be.domain.product.dto.ProductFindResponseDto;
+import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.service.ProductService;
 import java.util.List;
-import java.util.stream.Collectors;
+
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +24,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/product")
 @RequiredArgsConstructor
 @Slf4j
-public class ProductController {
+public class ProductRestController {
 
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Void> saveProduct(@AuthenticationPrincipal String memberId, @RequestBody ProductSaveReqDto productSaveReqDto) {
+    public ResponseEntity<Void> saveProduct(@AuthenticationPrincipal String memberId, @RequestBody ProductSaveRequestDto productSaveRequestDto) {
         try {
-            Product product = productService.saveProduct(memberId, productSaveReqDto);
+            Product product = productService.saveProduct(memberId, productSaveRequestDto);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
@@ -40,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ProductFindResDto>> findAllProduct(
+    public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
             @RequestParam(required = false) String nickname,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String productStatus,
@@ -53,17 +53,16 @@ public class ProductController {
 
         List<Product> products = productService.findAllProduct(nickname, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
 
-        List<ProductFindResDto> productFindResDtos = products.stream()
-                .map(ProductFindResDto::fromEntity).toList();
+        List<ProductFindResponseDto> productFindResponseDtos = products.stream()
+                .map(ProductFindResponseDto::fromEntity).toList();
 
-        return ResponseEntity.ok().body(productFindResDtos);
+        return ResponseEntity.ok().body(productFindResponseDtos);
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductFindResDto> findProduct(@PathVariable Long productId, @AuthenticationPrincipal String memberId) {
+    public ResponseEntity<ProductFindResponseDto> findProduct(@PathVariable Long productId, @AuthenticationPrincipal String memberId) {
         Product product = productService.findProduct(productId);
-
-        return ResponseEntity.ok().body(ProductFindResDto.fromEntity(product));
+        return ResponseEntity.ok().body(ProductFindResponseDto.fromEntity(product));
     }
 
     @PatchMapping("/{productId}")
@@ -75,6 +74,18 @@ public class ProductController {
     public ResponseEntity<Void> deleteProduct(@AuthenticationPrincipal String memberId, @PathVariable Long productId){
         productService.deleteProduct(memberId, productId);
 
+        return ResponseEntity.ok().build();
+    }
+
+    //TODO compsoe Patch 만들기
+    @PatchMapping("/compose/{productId}")
+    public ResponseEntity<Void> createAfterCompose( @AuthenticationPrincipal String memberId, @PathVariable Long productId, ProductSaveRequestDto productSaveRequestDto){
+        try {
+            //MEMO 일단은 반환하지말고 추후에 프론트에서 필요해지면 반환할 것.
+            Long saveId = productService.createAfterCompose( memberId, productId, productSaveRequestDto );
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok().build();
     }
 }
