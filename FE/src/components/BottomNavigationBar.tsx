@@ -3,11 +3,16 @@ import { Link } from "react-router-dom";
 function BottomNavigationBar() {
   return (
     <>
-      <div className="fixed bottom-0 z-10 flex h-14 w-full border-t border-gray1 bg-white1 font-Gothic text-xxs">
-        <button className="flex flex-grow flex-col items-center justify-center space-y-1">
-          <img src="/img/sell-btn.png" className="h-7 w-7" />
-          <a>팝니다</a>
-        </button>
+      <div className="fixed bottom-0 z-10 flex h-14 w-full border-t border-gray1 bg-white1 font-Gothic text-xxs ">
+        <Link
+          to="/new"
+          className="flex flex-grow flex-col items-center justify-center space-y-1"
+        >
+          <button>
+            <img src="/img/sell-btn.png" className="h-7 w-7" />
+            <a>팝니다</a>
+          </button>
+        </Link>
         <button className="flex flex-grow flex-col items-center justify-center space-y-1">
           <img src="/img/buy-btn.png" className="flex h-7 w-7" />
           <a>삽니다</a>
