@@ -2,11 +2,8 @@ package com.ssafy.i10a709be.domain.member.service;
 
 import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
 import com.ssafy.i10a709be.common.exception.InternalServerException;
-import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
-import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
 import com.ssafy.i10a709be.domain.member.dto.MemberUpdateRequestDto;
 import com.ssafy.i10a709be.domain.member.entity.Member;
-import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -27,25 +24,16 @@ public class MemberServiceImpl implements MemberService{
         유저 확인 후 해당 유저의 UUID를 이용해 Access Token과 Refresh Token을 발급해 return
      */
     @Override
-    public MemberTokenDto login(MemberLoginResDto memberLoginResDto) {
-        Optional<Member> member = memberRepository.findByEmail(memberLoginResDto.getEmail());
-        if (member.isEmpty()){
-            memberRepository.save(Member.builder()
-                            .email(memberLoginResDto.getEmail())
-                            .nickname(memberLoginResDto.getNickname())
-                            .profileImage(memberLoginResDto.getProfileImage())
-                            .provider(OAuthProvider.KAKAO)
-                    .build());
+    public List<String> login(Member member) {
+        Optional<Member> originalMember = memberRepository.findByEmail(member.getEmail());
+        originalMember.orElseThrow(()-> new RuntimeException());  // exception 수정 예정
 
-            member = memberRepository.findByEmail(memberLoginResDto.getEmail());
-        }
-        List<String> tokens = jwtProvider.generateToken(member.get().getMemberId());
-        member.get().updateRefreshToken(tokens.get(1));
+        memberRepository.save(member);
 
-        return MemberTokenDto.builder()
-                .accessToken(tokens.get(0))
-                .refreshToken(tokens.get(1))
-                .build();
+        List<String> tokens = jwtProvider.generateToken(member.getMemberId());
+        member.updateRefreshToken(tokens.get(1));
+
+        return tokens;
     }
 
     /*

@@ -1,7 +1,6 @@
 package com.ssafy.i10a709be.domain.member.service;
 
 import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
-import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -14,16 +13,13 @@ public class JwtServiceImpl implements JwtService{
     private final MemberRepository memberRepository;
 
     @Override
-    public MemberTokenDto refresh(String memberId) {
+    public List<String> refresh(String memberId) {
         List<String> tokens = jwtProvider.generateToken(memberId);
 
         memberRepository.findById(memberId).ifPresent(member ->{
             member.updateRefreshToken(tokens.get(1));
         });
 
-        return MemberTokenDto.builder()
-                .accessToken(tokens.get(0))
-                .refreshToken(tokens.get(1))
-                .build();
+        return tokens;
     }
 }

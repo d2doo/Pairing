@@ -1,7 +1,7 @@
 package com.ssafy.i10a709be.member;
 
 
-import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
+import com.ssafy.i10a709be.domain.member.dto.MemberSummaryResponseDto;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.oauth.OAuthClient;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
@@ -44,11 +44,11 @@ public class MemberTest {
 //    @Transactional
 //    void login(){
 //        String accessToken = kakaoOAuthClient.getAccessToken(kakaoProvider);
-//        MemberLoginResDto memberLoginResDto = kakaoOAuthClient.getMemberInfo(accessToken);
+//        MemberSummaryResponseDto memberSummaryResponseDto = kakaoOAuthClient.getMemberInfo(accessToken);
 //
-//        memberService.login(memberLoginResDto);
-//        Optional<Member> member = memberRepository.findByEmail(memberLoginResDto.getEmail());
-//        member.ifPresent(value -> Assertions.assertThat(memberLoginResDto.getNickname()).isEqualTo(value.getNickname()));
+//        memberService.login(memberSummaryResponseDto);
+//        Optional<Member> member = memberRepository.findByEmail(memberSummaryResponseDto.getEmail());
+//        member.ifPresent(value -> Assertions.assertThat(memberSummaryResponseDto.getNickname()).isEqualTo(value.getNickname()));
 //    }
 
     @Test
