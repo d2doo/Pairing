@@ -8,6 +8,9 @@ import com.ssafy.i10a709be.domain.member.service.MemberService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -39,15 +42,13 @@ public class MemberRestController {
     }
 
     @PostMapping("/login/kakao")
-    public ResponseEntity<MemberLoginResDto> kakaoLogin(@RequestParam String code, HttpServletResponse response) {
+    public ResponseEntity<Map<String, Object>> kakaoLogin(@RequestParam String code, HttpServletResponse response) {
         String accessToken = kakaoOAuthClient.getAccessToken(code);
-        MemberLoginResDto memberLoginResDto = kakaoOAuthClient.getMemberInfo(accessToken);
+        Member member = kakaoOAuthClient.getMemberInfo(accessToken);
 
-        MemberTokenDto memberTokenDto = memberService.login(memberLoginResDto);
+        List<String> tokens = memberService.login(member);
 
-        response.addHeader("Authorization", "Bearer " + memberTokenDto.getAccessToken());
-
-        Cookie cookie = new Cookie("Authorization", memberTokenDto.getRefreshToken());
+        Cookie cookie = new Cookie("Authorization", tokens.get(1));
         cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
@@ -55,7 +56,11 @@ public class MemberRestController {
 
         response.addCookie(cookie);
 
-        return ResponseEntity.status(HttpStatus.OK).body(memberLoginResDto);
+        Map<String, Object> map = new HashMap<>();
+        map.put("member", MemberSummaryResponseDto.fromEntity(member));
+        map.put("accessToken", "Bearer " + tokens.get(0));
+
+        return ResponseEntity.status(HttpStatus.OK).body(map);
     }
 
     @DeleteMapping
@@ -91,11 +96,10 @@ public class MemberRestController {
 
     // 채팅 테스트 로그인 서비스
     @GetMapping("/chat/test/login")
-    public ResponseEntity<MemberLoginResDto> memberTestLogin(){
+    public ResponseEntity<MemberSummaryResponseDto> memberTestLogin(){
         Member findMember = memberService.findMemberByEmail( "cqqudgjs@naver.com");
 
-        MemberLoginResDto returnDto = MemberLoginResDto.builder()
-                .email("cqqudgjs@naver.com")
+        MemberSummaryResponseDto returnDto = MemberSummaryResponseDto.builder()
                 .memberId(findMember.getMemberId())
                 .profileImage(null)
                 .nickname(findMember.getNickname())

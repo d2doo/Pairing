@@ -1,7 +1,7 @@
 package com.ssafy.i10a709be.domain.member.service;
 
-import com.ssafy.i10a709be.domain.member.dto.MemberTokenDto;
+import java.util.List;
 
 public interface JwtService {
-    MemberTokenDto refresh(String memberId);
+    List<String> refresh(String memberId);
 }

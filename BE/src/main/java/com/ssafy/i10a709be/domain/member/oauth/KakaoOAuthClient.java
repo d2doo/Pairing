@@ -1,6 +1,8 @@
 package com.ssafy.i10a709be.domain.member.oauth;
 
-import com.ssafy.i10a709be.domain.member.dto.MemberLoginResDto;
+import com.ssafy.i10a709be.domain.member.dto.MemberSummaryResponseDto;
+import com.ssafy.i10a709be.domain.member.entity.Member;
+import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
 import com.ssafy.i10a709be.domain.member.exception.TokenInvalidException;
 import com.ssafy.i10a709be.domain.member.exception.TokenMissingException;
 
@@ -61,7 +63,7 @@ public class KakaoOAuthClient implements OAuthClient {
     }
 
     @Override
-    public MemberLoginResDto getMemberInfo(String accessToken) {
+    public Member getMemberInfo(String accessToken) {
         WebClient webClient = WebClient.create();
 
         try {
@@ -79,14 +81,12 @@ public class KakaoOAuthClient implements OAuthClient {
                 String email = (String) kakaoAccount.get("email");
                 String profileImageUrl = (String) profile.get("profile_image_url");
 
-                MemberLoginResDto memberLoginResDto = MemberLoginResDto.builder()
-                        .nickname(nickname)
+                return Member.builder()
                         .email(email)
+                        .nickname(nickname)
+                        .provider(OAuthProvider.KAKAO)
                         .profileImage(profileImageUrl)
                         .build();
-
-                return memberLoginResDto;
-
             }
         } catch (Exception e) {
             throw new TokenInvalidException();
