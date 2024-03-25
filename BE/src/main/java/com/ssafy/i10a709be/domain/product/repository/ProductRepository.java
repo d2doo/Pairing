@@ -6,6 +6,8 @@ import com.ssafy.i10a709be.domain.product.entity.QProduct;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import java.util.List;
 import java.util.Optional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
@@ -23,11 +25,14 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
             "OR p.status = 'PENDING')")
     Optional<Product> deleteProductById(@Param(value = "productId") Long productId, @Param(value = "memberId") String memberId);
 
-    default List<Product> findProductsByDynamicQuery(Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+    default Page<Product> findProductsByDynamicQuery(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
         QProduct product = QProduct.product;
 
         BooleanBuilder builder = new BooleanBuilder();
 
+        if (productId != null) {
+            builder.and(product.productId.gt(productId));
+        }
         if (isCombined != null) {
             if (isCombined) {
                 builder.and(product.units.size().goe(2));
@@ -60,6 +65,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
             builder.and(product.title.contains(keyword));
         }
 
-        return (List<Product>) findAll(builder);
+        return findAll(builder, pageable);
     }
 }

@@ -13,6 +13,8 @@ import com.ssafy.i10a709be.domain.product.repository.ProductRepository;
 import com.ssafy.i10a709be.domain.product.repository.UnitRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -118,8 +120,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> findAllProduct(Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
-        return productRepository.findProductsByDynamicQuery(isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+    public Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+        return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
     }
 
     @Override
