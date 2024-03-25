@@ -8,6 +8,10 @@ import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,6 +45,9 @@ public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
+            @RequestParam int page,
+            @RequestParam int size,
+            @RequestParam Long productId,
             @RequestParam(required = false) Boolean isCombined,
             @RequestParam(required = false) String nickname,
             @RequestParam(required = false) String memberId,
@@ -51,8 +58,8 @@ public class ProductRestController {
             @RequestParam(required = false) Integer maxAge,
             @RequestParam(required = false) String keyword
     ) {
-
-        List<Product> products = productService.findAllProduct(isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("productId"));
+        Page<Product> products = productService.findAllProduct(pageable, productId,isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
 
         List<ProductFindResponseDto> productFindResponseDtos = products.stream()
                 .map(ProductFindResponseDto::fromEntity).toList();
