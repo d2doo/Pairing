@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { products } from "@/assets/dummydata/products.json";
+import { Link } from "react-router-dom";
 
 interface productInterface {
   thumbnailUrl: string;
@@ -18,7 +19,7 @@ function Product({
 }: productInterface) {
   return (
     <>
-      <div>
+      <Link to={"/product/" + productId} key={productId}>
         <img src={thumbnailUrl} className="size-32 object-cover pb-1" />
         <div className="flex flex-row space-x-px pb-0.5">
           {category.map((temp, index) => (
@@ -32,7 +33,7 @@ function Product({
         </div>
         <p className="truncate pb-0.5 font-Gothic text-xs">{productTitle}</p>
         <p className="font-GothicBold text-xs">{totalPrice}원</p>
-      </div>
+      </Link>
     </>
   );
 }
