@@ -103,10 +103,15 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "doong-sil": {
+          from: { "margin-top": "0px" },
+          to: { "margin-top": "10px" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "doong-sil": "doong-sil 0.4s linear 0s infinite alternate",
       },
     },
   },

@@ -1,55 +1,44 @@
 import { Link } from "react-router-dom";
 
+const navigationMenus = [
+  {
+    icon: "/img/buy-btn.png",
+    url: "/category",
+    text: "삽니다",
+  },
+  {
+    icon: "/img/sell-btn.png",
+    url: "/new",
+    text: "팝니다",
+  },
+  {
+    icon: "/img/message-btn.png",
+    url: "/chat",
+    text: "채팅",
+  },
+  {
+    icon: "/img/mypage-btn.png",
+    url: "/mypage",
+    text: "마이",
+  },
+];
+
 function BottomNavigationBar() {
   return (
     <>
-      <div className="fixed bottom-0 z-10 flex h-14 w-full border-t border-gray1 bg-white1 font-Gothic text-xxs ">
-        <Link
-          to="/new"
-          className="flex flex-grow flex-col items-center justify-center space-y-1"
-        >
-          <button>
-            <img src="/img/sell-btn.png" className="h-7 w-7" />
-            <a>팝니다</a>
-          </button>
-        </Link>
-
-        <Link
-          to="/category"
-          className="flex flex-grow flex-col items-center justify-center space-y-1"
-        >
-          <button className="flex flex-grow flex-col items-center justify-center space-y-1">
-            <img src="/img/buy-btn.png" className="flex h-7 w-7" />
-            <a>삽니다</a>
-          </button>
-        </Link>
-        <Link
-          to="/"
-          className="flex flex-grow flex-col items-center justify-center space-y-1"
-        >
-          <button>
-            <img src="/img/home-btn.png" className="h-6 w-7" />
-            <a>홈</a>
-          </button>
-        </Link>
-        <Link
-          to="/chat"
-          className="flex flex-grow flex-col items-center justify-center space-y-1"
-        >
-          <button>
-            <img src="/img/message-btn.png" className="h-7 w-7" />
-            <a>채팅</a>
-          </button>
-        </Link>
-        <Link
-          to="/login"
-          className="flex flex-grow flex-col items-center justify-center space-y-1"
-        >
-          <button>
-            <img src="/img/mypage-btn.png" className="h-7 w-7" />
-            <a>마이</a>
-          </button>
-        </Link>
+      <div className="flex h-14 w-full border-t border-gray1 bg-white1 font-Gothic text-xxs">
+        {navigationMenus.map((element) => (
+          <Link
+            key={element.text}
+            to={element.url}
+            className="flex flex-grow flex-col justify-center"
+          >
+            <button className="flex animate-doong-sil flex-col items-center space-y-1">
+              <img src={element.icon} className="h-7 w-7" />
+              <span>{element.text}</span>
+            </button>
+          </Link>
+        ))}
       </div>
     </>
   );
