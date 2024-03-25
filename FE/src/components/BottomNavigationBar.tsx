@@ -13,10 +13,16 @@ function BottomNavigationBar() {
             <a>팝니다</a>
           </button>
         </Link>
-        <button className="flex flex-grow flex-col items-center justify-center space-y-1">
-          <img src="/img/buy-btn.png" className="flex h-7 w-7" />
-          <a>삽니다</a>
-        </button>
+
+        <Link
+          to="/category"
+          className="flex flex-grow flex-col items-center justify-center space-y-1"
+        >
+          <button className="flex flex-grow flex-col items-center justify-center space-y-1">
+            <img src="/img/buy-btn.png" className="flex h-7 w-7" />
+            <a>삽니다</a>
+          </button>
+        </Link>
         <Link
           to="/"
           className="flex flex-grow flex-col items-center justify-center space-y-1"
