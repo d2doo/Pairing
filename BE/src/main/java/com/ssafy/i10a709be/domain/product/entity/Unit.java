@@ -82,7 +82,6 @@ public class Unit extends BaseEntity {
         this.status = status;
     }
 
-
     @Override
     public String toString() {
         return "Unit{" +

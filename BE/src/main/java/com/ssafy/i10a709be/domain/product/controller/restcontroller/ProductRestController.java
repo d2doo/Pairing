@@ -47,7 +47,7 @@ public class ProductRestController {
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
             @RequestParam int page,
             @RequestParam int size,
-            @RequestParam Long productId,
+            @RequestParam(required = false) Long productId,
             @RequestParam(required = false) Boolean isCombined,
             @RequestParam(required = false) String nickname,
             @RequestParam(required = false) String memberId,
