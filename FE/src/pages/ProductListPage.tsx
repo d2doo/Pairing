@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import ProductTypeR from "@/components/ProductTypeR";
+import ProductDetailPage from "./ProductDetailPage";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   Select,
@@ -14,20 +16,26 @@ const subList1: string[] = ["전체", "케이스", "왼쪽", "오른쪽"];
 // const subList2: string[] = ["전체", "케이스", "왼쪽"];
 
 function ProductListPage() {
-  const [selectType, setSetlectType] = useState(String);
-
+  const navigate = useNavigate();
+  const [isCombined, setIsCombined] = useState(false);
+  const [selectType, setSetlectType] = useState("");
+  // const param = useParams();
   useEffect(() => {
     console.log(selectType);
   }, [selectType]);
-
   async function clickSelectType(type: string) {
     await setSetlectType(type);
     console.log(type);
   }
+
+  const handleTabClick = (tabName: string) => {
+    navigate(`/category/${tabName}`);
+  };
+
   return (
     <>
       <Tabs defaultValue="individual" className="m-0 w-full p-0 font-Gothic">
-        <TabsList className="m-0 grid w-full grid-cols-2 border-b border-b-black1 p-0 text-black1">
+        <TabsList className="m-0 grid w-full grid-cols-2  border-b border-b-black1 p-0 text-black1">
           <TabsTrigger
             value="individual"
             className="h-full
@@ -58,7 +66,11 @@ function ProductListPage() {
               ))}
             </TabsList>
             {categoryList.map((category, index) => (
-              <TabsContent key={index} value={category}>
+              <TabsContent
+                key={index}
+                value={category}
+                // onClick={() => handleTabClick(category)}
+              >
                 {category === "전체" ? (
                   <p className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                     전체
@@ -68,7 +80,15 @@ function ProductListPage() {
                     <p className="pr-3">
                       {category}&nbsp;&nbsp;&nbsp;&nbsp;{">"}
                     </p>
-                    <Select
+
+                    <select className=" m-1 h-5 w-20 py-0.5 pl-1 text-xs">
+                      {subList1.map((sub, index) => (
+                        <option className="" key={index} value={sub}>
+                          <p>{sub}</p>
+                        </option>
+                      ))}
+                    </select>
+                    {/* <Select
                       defaultValue="전체"
                       onValueChange={(value) => clickSelectType(value)}
                     >
@@ -82,7 +102,7 @@ function ProductListPage() {
                           </SelectItem>
                         ))}
                       </SelectContent>
-                    </Select>
+                    </Select> */}
                   </div>
                 )}
                 <ProductTypeR />
@@ -105,7 +125,11 @@ function ProductListPage() {
               ))}
             </TabsList>
             {categoryList.map((category, index) => (
-              <TabsContent key={index} value={category}>
+              <TabsContent
+                key={index}
+                value={category}
+                // onClick={() => handleTabClick(category)}
+              >
                 {category === "전체" ? (
                   <p className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                     전체
@@ -115,11 +139,18 @@ function ProductListPage() {
                     <p className="pr-3">
                       {category}&nbsp;&nbsp;&nbsp;&nbsp;{">"}
                     </p>
-                    <Select
+                    <select className="m-1 flex h-5 w-20 rounded-xl py-0.5 pl-1 ">
+                      {subList1.map((sub, index) => (
+                        <option className="" key={index} value={sub}>
+                          {sub}
+                        </option>
+                      ))}
+                    </select>
+                    {/* <Select
                       defaultValue="전체"
                       onValueChange={(value) => clickSelectType(value)}
                     >
-                      <SelectTrigger className="h-5 w-20">
+                      <SelectTrigger className="h-5 w-20 ">
                         <SelectValue placeholder="전체" />
                       </SelectTrigger>
                       <SelectContent>
@@ -129,7 +160,7 @@ function ProductListPage() {
                           </SelectItem>
                         ))}
                       </SelectContent>
-                    </Select>
+                    </Select> */}
                   </div>
                 )}
                 <ProductTypeR />
