@@ -13,6 +13,7 @@ public class UnitSaveRequestDto {
     private String unitDescription;
     private Integer price;
     private Integer age;
+    private List<Long> images;
     private String status;
     private List<Long> partTypeIds;
 }

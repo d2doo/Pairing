@@ -7,10 +7,7 @@ import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.*;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
-import com.ssafy.i10a709be.domain.product.repository.CategoryRepository;
-import com.ssafy.i10a709be.domain.product.repository.PartTypeRepository;
-import com.ssafy.i10a709be.domain.product.repository.ProductRepository;
-import com.ssafy.i10a709be.domain.product.repository.UnitRepository;
+import com.ssafy.i10a709be.domain.product.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -31,7 +28,7 @@ public class ProductServiceImpl implements ProductService {
     private final MemberRepository memberRepository;
     private final PartTypeRepository partTypeRepository;
     private final CategoryRepository categoryRepository;
-
+    private final UnitImagesRepository unitImagesRepository;
 
     //TODO 1차 개발 끝나면 해당 로직 세분화를 시켜서 재사용성을 높히자.
     //단일 파츠 및 유닟 및 상품 생성
@@ -61,6 +58,10 @@ public class ProductServiceImpl implements ProductService {
                     .age(request.getUnit().getAge())
                     .isConfirmed( true )
                     .build();
+
+            for (Long imageId : request.getUnit().getImages()) {
+                unit.getUnitImages().add(unitImagesRepository.findById(imageId).orElseThrow(() -> new IllegalArgumentException("이미지가 존재하지 않습니다.")));
+            }
 
             product.getUnits().add(unit);
 

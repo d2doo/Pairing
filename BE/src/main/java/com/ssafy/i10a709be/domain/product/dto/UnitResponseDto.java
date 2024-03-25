@@ -4,6 +4,8 @@ import com.ssafy.i10a709be.domain.product.entity.Unit;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class UnitResponseDto {
@@ -14,6 +16,7 @@ public class UnitResponseDto {
     private String unitDescription;
     private Integer price;
     private Integer age;
+    private List<String> images;
     private String status;
 
     public static UnitResponseDto fromEntity(Unit unit) {
@@ -25,6 +28,7 @@ public class UnitResponseDto {
                 .unitDescription(unit.getUnitDescription())
                 .price(unit.getPrice())
                 .age(unit.getAge())
+                .images(unit.getUnitImages().stream().map(unitImage -> unitImage.getFiles().getSource()).toList())
                 .status(unit.getStatus())
                 .build();
     }
