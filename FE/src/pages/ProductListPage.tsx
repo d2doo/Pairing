@@ -18,13 +18,13 @@ const subList1: string[] = ["전체", "케이스", "왼쪽", "오른쪽"];
 function ProductListPage() {
   const navigate = useNavigate();
   const [isCombined, setIsCombined] = useState(false);
-  const [selectType, setSetlectType] = useState("");
+  const [selectType, setSelectType] = useState("");
   // const param = useParams();
   useEffect(() => {
     console.log(selectType);
   }, [selectType]);
   async function clickSelectType(type: string) {
-    await setSetlectType(type);
+    await setSelectType(type);
     console.log(type);
   }
 
