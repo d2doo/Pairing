@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 
-function MainLogo() {
+function SearchBar() {
   // 폼을 참조하기 위한 ref 생성
   const formRef = useRef<HTMLFormElement>(null);
   const [inputText, setInputText] = useState("");
@@ -56,4 +56,4 @@ function MainLogo() {
   );
 }
 
-export default MainLogo;
+export default SearchBar;
