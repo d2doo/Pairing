@@ -1,9 +1,8 @@
 import Login from "@/components/Login";
-import "./LoginPage.css";
 function LoginPage() {
   return (
     <>
-      <div id="loginPage" className="flex items-center bg-bg-gradient ">
+      <div id="loginPage" className="flex items-center bg-bg-gradient min-h-screen text-center">
         <Login />
       </div>
     </>

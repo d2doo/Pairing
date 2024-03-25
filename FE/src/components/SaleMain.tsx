@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
@@ -46,7 +47,9 @@ function SalePage() {
           <DialogContent>
             <DialogHeader>
               <DialogTitle>이전에 등록한 제품을 조립하려면?</DialogTitle>
-              <DialogDescription>동료 찾아 조립하기</DialogDescription>
+              <DialogDescription>
+                <Link to="/new/unit-lists">동료 찾아 조립하기</Link>
+              </DialogDescription>
             </DialogHeader>
             <DialogHeader>
               <DialogTitle>새로 처음부터 조립하려면?</DialogTitle>
