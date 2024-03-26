@@ -51,6 +51,21 @@ pipeline {
                                 )
                             ]
                         )
+                        sshPublisher(
+                            publishers: [
+                                sshPublisherDesc(
+                                    configName: 'ssafymain',
+                                        transfers: [
+                                            sshTransfer(
+                                                sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
+                                                removePrefix: 'BE/build/libs',
+                                                remoteDirectory: '/sendData',
+                                            )
+                                        ]
+                                )
+                            ]
+                        )
+
                         sh 'echo Auto Control CD Done'
                         sh 'echo Auto Helpler CD Start'
                         sshPublisher(
