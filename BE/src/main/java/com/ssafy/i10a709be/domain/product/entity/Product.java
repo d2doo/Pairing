@@ -16,7 +16,8 @@ import org.hibernate.annotations.Where;
 @Entity
 @Getter
 @NoArgsConstructor
-@SQLRestriction("is_deleted = false")
+//@SQLRestriction("is_deleted = false")
+// TODO 합의 거절시 아예 안가져오기에 soft delete가 되버리면 원상복구를 못시킴.
 public class Product extends BaseEntity {
     @Builder
     public Product(Member member, String title, ProductStatus status, Integer maxAge, Integer totalPrice) {
