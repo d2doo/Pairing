@@ -60,6 +60,7 @@ pipeline {
                                                 sourceFiles: 'build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
                                                 removePrefix: 'build/libs',
                                                 remoteDirectory: '/sendData',
+                                                execCommand: 'sh infra/AutoDevServer.sh'
                                             )
                                         ]
                                 )
@@ -77,7 +78,6 @@ pipeline {
                                             sourceFiles: 'build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
                                             removePrefix: 'build/libs',
                                             remoteDirectory: '/sendData',
-                                            execCommand: 'sh temp/AutoDevServer.sh'
                                         )
                                     ]
                                 )
