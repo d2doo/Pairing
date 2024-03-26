@@ -3,11 +3,16 @@ package com.ssafy.i10a709be.domain.member.entity;
 //import com.ssafy.i10a709be.common.entity.BaseEntity;
 import com.ssafy.i10a709be.domain.member.dto.MemberUpdateRequestDto;
 import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
+import com.ssafy.i10a709be.domain.notification.entity.Notification;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import java.util.List;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -46,6 +51,9 @@ public class Member {
     private String refreshToken;
 
     private Boolean isDeleted = Boolean.FALSE;
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    private List<Notification> notificationList;
 
     @Builder
     public Member(String email, OAuthProvider provider, String nickname, String profileImage) {

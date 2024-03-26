@@ -15,4 +15,5 @@ public class ChatRoomCreateDto {
     private String title;
     private Integer capability;
     private ChatRoomStatus status;
+    private Long productId;
 }

@@ -3,8 +3,10 @@ package com.ssafy.i10a709be.common.service;
 
 import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.common.repository.FileRepository;
+import com.ssafy.i10a709be.domain.community.dto.ChatMessageRequestDto;
 import com.ssafy.i10a709be.domain.community.dto.ChatRoomCreateDto;
 import com.ssafy.i10a709be.domain.community.enums.ChatRoomStatus;
+import com.ssafy.i10a709be.domain.community.enums.ChatType;
 import com.ssafy.i10a709be.domain.community.repository.ChatRoomRepository;
 import com.ssafy.i10a709be.domain.community.service.ChatService;
 import com.ssafy.i10a709be.domain.member.entity.Member;
@@ -72,10 +74,29 @@ public class InitService {
         memberList.add( member );
         memberList.add( member2 );
         memberList.add( member3 );
-        ChatRoomCreateDto dto = new ChatRoomCreateDto( memberList, member.getMemberId(), "테스트방", 3, ChatRoomStatus.active );
-        System.out.println( dto );
+        ChatRoomCreateDto dto = new ChatRoomCreateDto( memberList, member.getMemberId(), "테스트방", 3, ChatRoomStatus.active, 1L );
+
         chatService.createChatRoom( dto );
 
+        chatService.saveChatMessage( ChatMessageRequestDto.builder()
+                .content("하이용")
+                .memberId(member.getMemberId())
+                .fileId(null)
+                .type(ChatType.message)
+                .build(),1L);
+
+        chatService.saveChatMessage( ChatMessageRequestDto.builder()
+                .content("하이용2")
+                .memberId(member.getMemberId())
+                .fileId(null)
+                .type(ChatType.message)
+                .build(),1L);
+        chatService.saveChatMessage( ChatMessageRequestDto.builder()
+                .content("이게 최신이면 성공인데?")
+                .memberId(member2.getMemberId())
+                .fileId(null)
+                .type(ChatType.message)
+                .build(),1L);
 
         Category category = Category.builder()
                 .mainCategory("무선 이어폰")
@@ -109,7 +130,6 @@ public class InitService {
                 .maxAge(1)
                 .totalPrice(10000)
                 .build();
-        testP.softDeleted(true);
 
         Product testP2 = Product.builder()
                 .title("test2")

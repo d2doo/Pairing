@@ -19,4 +19,6 @@ public interface ChatService {
     List< Chat > findChatsByChatRoomId(Long roomId );
 
     List<UserChatRoom> findUserChatRoomsByChatRoomId(Long roomId);
+
+    Chat findLatestChatByChatRoomId(Long roomId);
 }
