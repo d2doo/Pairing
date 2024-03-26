@@ -1,5 +1,6 @@
 package com.ssafy.i10a709be.common.service;
 
+import com.ssafy.i10a709be.common.entity.Files;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface FileUploadService {
@@ -10,10 +11,7 @@ public interface FileUploadService {
      * @param multipartFile
      * @return source of image or null
      */
-    String uploadFile(MultipartFile multipartFile);
+    Files uploadFile(MultipartFile multipartFile);
 
-    String uploadFile(MultipartFile multipartFile, boolean resize);
-
-    boolean isExistsImgSrc(String imgSrc);
 }
 

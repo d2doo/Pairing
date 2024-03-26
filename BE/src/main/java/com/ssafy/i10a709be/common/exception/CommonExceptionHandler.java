@@ -19,6 +19,46 @@ public class CommonExceptionHandler {
                 .body(ErrorResponse.createErrorResponse(e.getErrorCode(), request.getRequestURI()));
     }
 
+    @ExceptionHandler(MultiPartFileNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleMultiPartFileNotFoundException(
+            Exception e, HttpServletRequest request) {
+        log.warn("MultiPartFileNotFound Exception 발생!!", e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                CustomErrorCode.FILE_NOT_PROVIDED, request.getRequestURI()
+                        )
+                );
+    }
+    @ExceptionHandler( OriginalProductNotFoundException.class )
+    public ResponseEntity<ErrorResponse> handleOriginalProductNotFoundException(
+            OriginalProductNotFoundException e, HttpServletRequest request){
+        log.info("유닛 product 복구간 에러 발생!! 발생 위치: {}\n", e.getFrom(), e.getCause());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                CustomErrorCode.INTERNAL_SERVER_ERROR, request.getRequestURI()));
+    }
+    @ExceptionHandler( CustomJpaPersistenceException.class )
+    public ResponseEntity<ErrorResponse> handleCustomJpaPersistenceException(
+            CustomJpaPersistenceException e, HttpServletRequest request){
+        log.info("Jpa 사용 간 에러 발생!! 발생 위치: {}\n", e.getFrom(), e.getCause());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                CustomErrorCode.INTERNAL_SERVER_ERROR, request.getRequestURI()));
+    }
+
+    @ExceptionHandler( NoAuthorizationException.class )
+    public ResponseEntity<ErrorResponse> handleNoAuthorizationException(
+            CustomJpaPersistenceException e, HttpServletRequest request){
+        log.info("Jpa 사용 간 에러 발생!! 발생 위치: {}\n", e.getFrom(), e.getCause());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                .body(
+                        ErrorResponse.createErrorResponse(
+                                CustomErrorCode.FORBIDDEN, request.getRequestURI()));
+    }
+
     @ExceptionHandler(InternalServerException.class)
     public ResponseEntity<ErrorResponse> handleInternalServerException(
             InternalServerException e, HttpServletRequest request) {
@@ -39,6 +79,12 @@ public class CommonExceptionHandler {
                                 CustomErrorCode.INTERNAL_SERVER_ERROR, request.getRequestURI()
                         )
                 );
+    }
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<Void> handleIllegalArgumentException(
+            Exception e, HttpServletRequest request) {
+        log.warn("Illegal Argument!", e);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 }
 
