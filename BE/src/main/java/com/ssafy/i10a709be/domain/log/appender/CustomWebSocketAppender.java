@@ -41,12 +41,12 @@ public class CustomWebSocketAppender extends UnsynchronizedAppenderBase<ILogging
 
     static{
         try {
-            session = client.execute( handler, "ws://localhost:8081/logs" ).get();
+            session = client.execute( handler, "ws://ssafycontrol.shop/logs" ).get();
         } catch (InterruptedException e) {
             log.info("ws 생성간 인터럽트 발생");
             log.debug( e.toString() );
         } catch (ExecutionException e) {
-            log.info("ws 생성간 에러 발생");
+            log.info("ws 생성간 에러 발생 " + e.toString());
             log.debug( e.toString() );
         }
     }
@@ -79,7 +79,7 @@ public class CustomWebSocketAppender extends UnsynchronizedAppenderBase<ILogging
 
     private void refreshSession() {
         try {
-            session = client.execute( handler, "ws://localhost:8081/logs" ).get();
+            session = client.execute( handler, "ws://ssafycontrol.shop/logs" ).get();
         }catch (ExecutionException e) {
             log.info("ws 세션 생성간 장애 발생");
             log.debug( e.toString() );
