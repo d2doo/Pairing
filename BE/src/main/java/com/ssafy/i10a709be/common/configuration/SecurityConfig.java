@@ -42,7 +42,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:3000", "https://j10a709.p.ssafy.io","https://ssafyhelper.shop","chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:3000", "https://j10a709.p.ssafy.io","https://ssafyhelper.shop","chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo","https://ssafycontrol.shop"));
 //        config.setAllowedOriginPatterns( Arrays.asList( "/**" ) );
 //        config.addAllowedOrigin("chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo");
         config.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "PATCH"));
