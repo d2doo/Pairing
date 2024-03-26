@@ -32,11 +32,7 @@ function App() {
             <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/chat" element={<ChatList />} />
-            <Route path="/chat/room" element={<ChatRoom />} />
-            <Route path="/product/:id" element={<ProductDetailPage />} />
-          </Route>
-          <Route element={<DefaultLayout headerType="searchBar" />}>
-            <Route path="/category" element={<ProductListPage />} />
+            <Route path="/chat/room/:roomId" element={<ChatRoom />} />
           </Route>
         </Routes>
       </BrowserRouter>
