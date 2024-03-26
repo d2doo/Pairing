@@ -43,8 +43,8 @@ pipeline {
                                     configName: 'ssafycontrol',
                                         transfers: [
                                             sshTransfer(
-                                                sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
-                                                removePrefix: 'BE/build/libs',
+                                                sourceFiles: 'build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
+                                                removePrefix: 'build/libs',
                                                 remoteDirectory: '/sendData',
                                             )
                                         ]
@@ -57,8 +57,8 @@ pipeline {
                                     configName: 'ssafymain',
                                         transfers: [
                                             sshTransfer(
-                                                sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
-                                                removePrefix: 'BE/build/libs',
+                                                sourceFiles: 'build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
+                                                removePrefix: 'build/libs',
                                                 remoteDirectory: '/sendData',
                                             )
                                         ]
@@ -74,8 +74,8 @@ pipeline {
                                     configName: 'ssafyhelper',
                                     transfers: [
                                         sshTransfer(
-                                            sourceFiles: 'BE/build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
-                                            removePrefix: 'BE/build/libs',
+                                            sourceFiles: 'build/libs/I10A709BE-0.0.1-SNAPSHOT.jar',
+                                            removePrefix: 'build/libs',
                                             remoteDirectory: '/sendData',
                                             execCommand: 'sh temp/AutoDevServer.sh'
                                         )
