@@ -5,11 +5,6 @@ interface MemberResponse extends MemberSummaryResponse {
     phoneNumber: string;
 }
 
-interface MemberLoginResponse {
-    accessToken: string;
-    memberInfo: MemberSummaryResponse;
-}
-
 interface MemberSummaryResponse {
     memberId: string;
     nickname: string;
@@ -17,4 +12,4 @@ interface MemberSummaryResponse {
     score: number;
 }
 
-export type { MemberResponse, MemberLoginResponse, MemberSummaryResponse };
+export type { MemberResponse, MemberSummaryResponse };
