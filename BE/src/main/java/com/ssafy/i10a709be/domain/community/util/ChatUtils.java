@@ -1,4 +1,4 @@
-package com.ssafy.i10a709be.domain.community.utils;
+package com.ssafy.i10a709be.domain.community.util;
 
 import com.ssafy.i10a709be.domain.community.entity.ChatRoom;
 import com.ssafy.i10a709be.domain.community.entity.UserChatRoom;

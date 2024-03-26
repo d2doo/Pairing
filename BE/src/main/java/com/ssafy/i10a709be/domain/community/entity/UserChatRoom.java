@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserChatRoom extends BaseEntity {
     @Id @GeneratedValue
-    private long userChatRoomId;
+    private Long userChatRoomId;
 
     @JoinColumn(name = "chat_room_id")
     @ManyToOne

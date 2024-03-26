@@ -81,6 +81,9 @@ dependencies {
     // https://mvnrepository.com/artifact/org.assertj/assertj-core
     //테스트를 위한 assertj import
     testImplementation("org.assertj:assertj-core:3.22.0")
+    // https://mvnrepository.com/artifact/com.google.guava/guava
+    implementation group: 'com.google.guava', name: 'guava', version: '33.1.0-jre'
+
 
 
 }

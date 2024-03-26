@@ -21,7 +21,7 @@ import org.hibernate.annotations.SQLRestriction;
 //@SQLRestriction("status = 'active'")
 public class ChatRoom extends BaseEntity {
     @Id @GeneratedValue
-    private long chatRoomId;
+    private Long chatRoomId;
 
     @ManyToOne
     @JoinColumn(name = "member_id")
@@ -29,7 +29,9 @@ public class ChatRoom extends BaseEntity {
 
     private String title;
 
-    private int capability;
+    private Integer capability;
+
+    private Long productId;
 
     @Enumerated(EnumType.STRING)
     private ChatRoomStatus status;

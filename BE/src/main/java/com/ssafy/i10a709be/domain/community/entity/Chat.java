@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Chat extends BaseEntity {
     @Id @GeneratedValue
-    private long chatId;
+    private Long chatId;
 
     @JoinColumn(name = "member_id")
     @ManyToOne
@@ -36,5 +36,5 @@ public class Chat extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private ChatType type;
 
-    private long fileId;
+    private Long fileId;
 }
