@@ -144,6 +144,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh '''curl -X POST -H "Content-Type: application/json" -d '{"isBe": false}' "https://ssafycontrol.shop/control/dev/deploy"'''
                     sh '''curl -X POST -H "Content-Type: application/json" -d '{"isBe": true}' "https://ssafycontrol.shop/control/dev/deploy"'''
                 }
             }
