@@ -11,6 +11,7 @@ import UnitLists from "@/components/SaleUnitLists";
 import FindUnit from "@/components/SaleFindUnit";
 import MyPage from "@/pages/MyPage";
 import DefaultLayout from "./components/DefaultLayout";
+import SaleUnit from "./components/SaleUnit";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route element={<DefaultLayout headerType="titleBar" />}>
             <Route path="/new/unit-lists" element={<UnitLists />} />
             <Route path="/new/product" element={<FindUnit />} />
+            <Route path="/new/unit" element={<SaleUnit />} />
           </Route>
           <Route element={<DefaultLayout hideFooter={true} />}>
             <Route path="/login" element={<LoginPage />} />
@@ -32,10 +34,11 @@ function App() {
             <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/chat" element={<ChatList />} />
-            <Route path="/chat/room" element={<ChatRoom />} />
+            <Route path="/chat/room/:roomId" element={<ChatRoom />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
           </Route>
           <Route element={<DefaultLayout headerType="searchBar" />}>
+            <Route path="/" element={<ProductListPage />} />
             <Route path="/category" element={<ProductListPage />} />
           </Route>
         </Routes>
