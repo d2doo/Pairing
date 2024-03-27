@@ -21,7 +21,7 @@ function SearchBar() {
 
   return (
     <>
-      <nav className="mx-auto flex h-14 w-full items-center justify-around bg-blue1">
+      <nav className="mx-auto flex h-14 w-full items-center justify-around">
         <div className="my-6 flex items-center justify-center">
           <img src="img/favicon-btn.png" alt="favicon_err" />
         </div>
@@ -29,7 +29,7 @@ function SearchBar() {
         <form
           ref={formRef}
           onSubmit={handleSearch}
-          className="box-border flex w-64 place-content-around items-center rounded-full border-none bg-white1 bg-opacity-70 px-4"
+          className="box-border flex w-2/3 place-content-around items-center rounded-full border-2 border-blue1 bg-white1 bg-opacity-70 px-4"
         >
           <Input
             name="searchInput" // 폼 제출 시 값을 참조하기 위한 name 속성 추가
@@ -48,9 +48,7 @@ function SearchBar() {
             onClick={handleSubmit} // 이미지 클릭 시 handleSubmit 함수 호출
           />
         </form>
-        <div>
-          <img src="img/notification-btn.png" alt="noti_err" />
-        </div>
+        <img src="img/notification-btn.png" alt="noti_err" className="size-7" />
       </nav>
     </>
   );
