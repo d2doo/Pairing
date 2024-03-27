@@ -13,6 +13,7 @@ import SaleProduct from "@/components/SaleProduct";
 import MyPage from "@/pages/MyPage";
 import DefaultLayout from "./components/DefaultLayout";
 import SaleUnit from "./components/SaleUnit";
+import {AuthRoute} from "@/components/AuthRoute.tsx";
 
 function App() {
   return (
@@ -20,23 +21,30 @@ function App() {
       {/* Routing 정의 시작 */}
       <BrowserRouter>
         <Routes>
-          <Route element={<DefaultLayout />}>
-            <Route path="/new" element={<SaleMain />} />
+          { /* 로그인이 필요한 페이지 */ }
+          <Route element={<AuthRoute />}>
+            <Route element={<DefaultLayout />}>
+              <Route path="/new" element={<SaleMain />} />
+            </Route>
+            <Route element={<DefaultLayout headerType="titleBar" />}>
+              <Route path="/new/unit-lists" element={<UnitLists />} />
+              <Route path="/new/product" element={<SaleProduct />} />
+              <Route path="/new/unit" element={<SaleUnit />} />
+            </Route>
+            <Route element={<DefaultLayout headerType="titleBar" />}>
+              <Route path="/mypage" element={<MyPage />} />
+              <Route path="/chat" element={<ChatList />} />
+              <Route path="/chat/room/:roomId" element={<ChatRoom />} />
+            </Route>
           </Route>
-          <Route element={<DefaultLayout headerType="titleBar" />}>
-            <Route path="/new/unit-lists" element={<UnitLists />} />
-            <Route path="/new/product" element={<SaleProduct />} />
-            <Route path="/new/unit" element={<SaleUnit />} />
-          </Route>
+
+          { /* 로그인이 필요없는 페이지 */ }
           <Route element={<DefaultLayout hideFooter={true} />}>
             <Route path="/login" element={<LoginPage />} />
           </Route>
           <Route element={<DefaultLayout headerType="titleBar" />}>
-            <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
-            <Route path="/mypage" element={<MyPage />} />
-            <Route path="/chat" element={<ChatList />} />
-            <Route path="/chat/room/:roomId" element={<ChatRoom />} />
             <Route path="/product/:id" element={<ProductDetailPage />} />
+            <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
           </Route>
           <Route element={<DefaultLayout headerType="searchBar" />}>
             <Route path="/" element={<ProductListPage />} />
