@@ -11,8 +11,10 @@ import * as Stomp from '@stomp/stompjs';
 type ParentHandler = (next: ChatRoomProduct) => void;
 function Chat( { parentHandler }: { parentHandler: ParentHandler } ){
   let memberId = useRef<string>('');
+  const baseUrl = 'https://ssafymain.shop/api'
   const getLoginTestMemberId = async () => {
-    const url = 'http://localhost:8080/member/chat/test/login';
+  
+    const url = `${baseUrl}/member/chat/test/login`;
     const value = await axios.get<MemberSummaryResponse>( url )
     .then( res => {
 
@@ -68,7 +70,7 @@ function Chat( { parentHandler }: { parentHandler: ParentHandler } ){
   }, [chat]);
   const getChatList = async () =>{
 
-    const chatInfo = await axios.get<ChatRoomDetail>( `http://localhost:8080/chat/room/detail/${roomId['roomId']}`);
+    const chatInfo = await axios.get<ChatRoomDetail>( `${baseUrl}/chat/room/detail/${roomId['roomId']}`);
     parentHandler( chatInfo.data.chatRoomProduct);
     chatInfo.data.chatList.forEach(element => {
       updateChatting( element );
@@ -84,9 +86,9 @@ function Chat( { parentHandler }: { parentHandler: ParentHandler } ){
 
   const StompSetting = () => {
 
-    let socket = new SockJS('http://localhost:8080/ws');
+    let socket = new SockJS(`${baseUrl}/ws`);
     stompClient.current = new Stomp.Client({
-      brokerURL: "http://localhost:8080/ws", // 이 옵션은 SockJS와 함께 사용할 때 필요 없습니다.
+      brokerURL: `${baseUrl}/ws`, // 이 옵션은 SockJS와 함께 사용할 때 필요 없습니다.
       webSocketFactory: () => socket, // SockJS 소켓을 사용하여 웹소켓을 생성하는 함수를 제공합니다.
       // 연결이 활성화되었을 때 실행할 콜백 함수입니다.
       reconnectDelay: 5000,
