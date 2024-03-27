@@ -12,18 +12,20 @@ function SalePage() {
   return (
     <>
       {/* 개별등록 */}
-      <div className="flex h-[calc((100vh-3.5rem)/2)] justify-evenly bg-white1 p-10">
-        <img
-          src="/img/extra-product-img.png"
-          alt="product_img_err"
-          className="w-1/2 object-cover"
-        />
-        <div className="mt-auto flex h-full flex-col justify-end py-5 font-GothicLight">
-          <p className="text-lg">개별등록</p>
-          <p className="text-xs">내 상품을 등록해보세요.</p>
-          <p className="text-md font-GothicMedium">개별 등록하러 가기 →</p>
+      <Link to={"/new/unit"}>
+        <div className="flex h-[calc((100vh-3.5rem)/2)] justify-evenly bg-white1 p-10">
+          <img
+            src="/img/extra-product-img.png"
+            alt="product_img_err"
+            className="w-1/2 object-cover"
+          />
+          <div className="mt-auto flex h-full flex-col justify-end py-5 font-GothicLight">
+            <p className="text-lg">개별등록</p>
+            <p className="text-xs">내 상품을 등록해보세요.</p>
+            <p className="text-md font-GothicMedium">개별 등록하러 가기 →</p>
+          </div>
         </div>
-      </div>
+      </Link>
 
       {/* 조립등록 */}
       <div className="h-[calc((100vh-3.5rem)/2)] bg-blue1 p-10">
