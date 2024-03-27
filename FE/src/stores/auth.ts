@@ -19,10 +19,10 @@ const useAuthStore = create<AuthState>(
         setAuth: (response: MemberLoginResponse) => {
             set({
                 accessToken: response.accessToken,
-                memberId: response.memberInfo.memberId,
-                nickname: response.memberInfo.nickname,
-                profileImage: response.memberInfo.profileImage,
-                score: response.memberInfo.score
+                memberId: response.member.memberId,
+                nickname: response.member.nickname,
+                profileImage: response.member.profileImage,
+                score: response.member.score
             });
         },
         setAccessToken: (accessToken: string) => {
