@@ -2,29 +2,12 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { MemberSummaryResponse } from "@/types/Member";
+import { ChatRoomResponse } from "@/types/Chat";
 
-interface ChatDto{
-  content:string,
-  createdAt:Date
-}
-
-interface ChatRoomDto{
-  chatRoomId:number,
-  title:string,
-  memberId: string,
-  nickname: string,
-  capability: number,
-  chatResponseDto: ChatDto
-}
-interface MemberLoginResponseDto{
-  memberId:string,
-  email:string,
-  nickname:string,
-  profileImage:string
-}
 
 function ChatList() {
-
+  const baseUrl = 'https://ssafymain.shop/api'
   let memberId:string;
   let navigate = useNavigate();
   const OpenChatRoom = ( roomId:number ) => {
@@ -42,8 +25,8 @@ function ChatList() {
   }
 
   const getLoginTestMemberId = async () => {
-      const url = 'http://localhost:8080/member/chat/test/login';
-      const value = await axios.get<MemberLoginResponseDto>( url )
+      const url = `${baseUrl}/member/chat/test/login`;
+      const value = await axios.get<MemberSummaryResponse>( url )
       .then( res => {
           let member = res['data'];
           return member['memberId'];
@@ -55,9 +38,9 @@ function ChatList() {
       memberId = await getLoginTestMemberId();
       console.log("memberId:", memberId)
         
-      const url = `http://localhost:8080/chat/room?memberId=${memberId}`
+      const url = `${baseUrl}/chat/room?memberId=${memberId}`
 
-      axios.get<ChatRoomDto[]>( url,).then( res => {
+      axios.get<ChatRoomResponse[]>( url,).then( res => {
           console.log( res['data'])
           res['data'].forEach(element => {
               let tag: JSX.Element =
