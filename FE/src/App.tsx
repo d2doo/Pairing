@@ -9,6 +9,7 @@ import ProductListPage from "@/pages/ProductListPage";
 import { KakaoAuthCallback } from "@/pages/auth/KakaoAuthCallback.tsx";
 import UnitLists from "@/components/SaleUnitLists";
 import FindUnit from "@/components/SaleFindUnit";
+import SaleProduct from "@/components/SaleProduct";
 import MyPage from "@/pages/MyPage";
 import DefaultLayout from "./components/DefaultLayout";
 import SaleUnit from "./components/SaleUnit";
@@ -24,7 +25,7 @@ function App() {
           </Route>
           <Route element={<DefaultLayout headerType="titleBar" />}>
             <Route path="/new/unit-lists" element={<UnitLists />} />
-            <Route path="/new/product" element={<FindUnit />} />
+            <Route path="/new/product" element={<SaleProduct />} />
             <Route path="/new/unit" element={<SaleUnit />} />
           </Route>
           <Route element={<DefaultLayout hideFooter={true} />}>
