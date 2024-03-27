@@ -7,7 +7,7 @@ interface MemberResponse extends MemberSummaryResponse {
 
 interface MemberLoginResponse {
   accessToken: string;
-  memberInfo: MemberSummaryResponse;
+  member: MemberSummaryResponse;
 }
 
 interface MemberSummaryResponse {

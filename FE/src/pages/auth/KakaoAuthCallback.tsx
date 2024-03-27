@@ -6,7 +6,7 @@ import {useAuthStore} from "@/stores/auth.ts";
 export const KakaoAuthCallback = () => {
     const navigate = useNavigate();
     const authStore = useAuthStore();
-    const localAxios = useLocalAxios();
+    const localAxios = useLocalAxios(false);
 
     useEffect(() => {
         const code = new URL(document.location.toString()).searchParams.get('code');
