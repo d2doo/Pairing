@@ -25,10 +25,15 @@ public class MemberServiceImpl implements MemberService{
      */
     @Override
     public List<String> login(Member member) {
-        Optional<Member> originalMember = memberRepository.findByEmail(member.getEmail());
-        originalMember.orElseThrow(()-> new RuntimeException());  // exception 수정 예정
-
-        memberRepository.save(member);
+        memberRepository.findByEmail(member.getEmail()).ifPresentOrElse(
+                existingMember -> {
+                    // 멤버가 이미 존재하는 경우 아무런 동작을 하지 않음
+                },
+                () -> {
+                    // 멤버가 존재하지 않는 경우에만 저장
+                    memberRepository.save(member);
+                }
+        );
 
         List<String> tokens = jwtProvider.generateToken(member.getMemberId());
         member.updateRefreshToken(tokens.get(1));

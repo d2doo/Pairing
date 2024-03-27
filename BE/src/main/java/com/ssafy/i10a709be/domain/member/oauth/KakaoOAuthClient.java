@@ -56,6 +56,7 @@ public class KakaoOAuthClient implements OAuthClient {
 
             accessToken = response.get("access_token");
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw new TokenMissingException();
         }
 
@@ -89,6 +90,7 @@ public class KakaoOAuthClient implements OAuthClient {
                         .build();
             }
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw new TokenInvalidException();
         }
 
