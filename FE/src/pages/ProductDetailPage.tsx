@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useParams } from "react-router-dom";
-import {ImageUploadManager} from "@/components/ImageUploadManager.tsx";
 
 interface Unit {
   memberId: string;
