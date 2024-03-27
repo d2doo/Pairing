@@ -33,7 +33,7 @@ function BottomNavigationBar() {
             to={element.url}
             className="flex flex-grow flex-col justify-center"
           >
-            <button className="flex animate-doong-sil flex-col items-center space-y-1">
+            <button className="flex flex-col items-center space-y-1">
               <img src={element.icon} className="h-7 w-7" />
               <span>{element.text}</span>
             </button>

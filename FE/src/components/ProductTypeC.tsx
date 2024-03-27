@@ -15,7 +15,7 @@ function ProductTypeC() {
             <Badge>라이브</Badge>
           </div>
           <div className="my-1 text-xs">버즈 라이브 왼쪽(조합ㄴㄴ)</div>
-          <div className="text-xs">₩ 30,000</div>
+          <div className="text-left text-xs">₩ 30,000</div>
         </div>
       </div>
     </>
