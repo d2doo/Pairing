@@ -105,7 +105,7 @@ module.exports = {
         },
         "doong-sil": {
           from: { "margin-top": "0px" },
-          to: { "margin-top": "10px" },
+          to: { "margin-top": "5px" },
         },
       },
       animation: {
