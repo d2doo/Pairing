@@ -1,0 +1,46 @@
+{
+  "productId": 1,
+  "leader": {
+    "memberId": "1",
+    "nickname": "d2doo",
+    "profileImage": "/img/extra-product-img.png"
+  },
+  "productTitle": "버즈2",
+  "units": [
+    {
+      "memberId": "1",
+      "nickname": "d2doo",
+      "positions": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        }
+      ],
+      "age": 7
+    },
+    {
+      "memberId": "2",
+      "nickname": "dkdo1205",
+      "positions": [
+        {
+          "partTypeId": 1,
+          "position": "본체"
+        }
+      ],
+      "age": 3
+    },
+    {
+      "memberId": "3",
+      "nickname": "kjy0349",
+      "positions": [
+        {
+          "partTypeId": 1,
+          "position": "오른쪽"
+        }
+      ],
+      "age": 6
+    }
+  ],
+  "totalPrice": 50000,
+  "averageAge": 1
+}
