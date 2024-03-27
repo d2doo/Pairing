@@ -2,7 +2,8 @@ import {useState} from "react";
 import {useAuthStore} from "@/stores/auth.ts";
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
-export const useLocalAxios = () => {
+export const useLocalAxios = (isAuthenticated: boolean = true) => {
+
     const authStore = useAuthStore();
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [refreshSubscribers, setRefreshSubscribers] = useState<((newAccessToken: string) => void)[]>([]);
@@ -19,7 +20,7 @@ export const useLocalAxios = () => {
 
     const refreshAccessToken = async () => {
         try {
-            const response = await axios.post<{ accessToken: string }>('/refresh');
+            const response = await axios.post<{ accessToken: string }>(`${import.meta.env.VITE_API_BASE_URL}/refresh`);
             const newAccessToken = response.data.accessToken;
             authStore.setAccessToken(newAccessToken);
             onRefreshed(newAccessToken);
@@ -37,8 +38,8 @@ export const useLocalAxios = () => {
 
     axiosInstance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
-            if (authStore.accessToken) {
-                config.headers!.Authorization = `Bearer ${authStore.accessToken}`;
+            if (isAuthenticated && authStore.accessToken) {
+                config.headers!.Authorization = authStore.accessToken;
             }
             return config;
         },
@@ -59,7 +60,7 @@ export const useLocalAxios = () => {
                                 resolve(newAccessToken);
                             });
                         });
-                        originalRequest.headers!.Authorization = `Bearer ${newAccessToken}`;
+                        originalRequest.headers!.Authorization = newAccessToken;
                         return axiosInstance(originalRequest);
                     } catch (error) {
                         return Promise.reject(error);
@@ -74,7 +75,7 @@ export const useLocalAxios = () => {
                     return Promise.reject(error);
                 }
 
-                originalRequest.headers!.Authorization = `Bearer ${authStore.accessToken}`;
+                originalRequest.headers!.Authorization = authStore.accessToken;
                 return axiosInstance(originalRequest);
             }
 
