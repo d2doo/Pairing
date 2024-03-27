@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-useNavigate;
-
 function Header() {
   const navigate = useNavigate();
   return (
