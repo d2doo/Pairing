@@ -114,7 +114,7 @@ pipeline {
                                 sh 'echo Auto CI Done Auto Control CD start'
 
                                 sh 'ls -l'
-                                sh 'cd .. && tar -cvf febuild.tar FE/**'
+                                sh 'cd .. && tar -cvf febuild.tar ../FE/**'
 
                                 sshPublisher(
                                     publishers: [
@@ -144,6 +144,7 @@ pipeline {
             }
             steps {
                 script {
+                    sh '''curl -X POST -H "Content-Type: application/json" -d '{"isBe": false}' "https://ssafycontrol.shop/control/dev/deploy"'''
                     sh '''curl -X POST -H "Content-Type: application/json" -d '{"isBe": true}' "https://ssafycontrol.shop/control/dev/deploy"'''
                 }
             }
