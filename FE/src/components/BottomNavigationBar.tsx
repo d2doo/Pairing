@@ -2,19 +2,14 @@ import { Link } from "react-router-dom";
 
 const navigationMenus = [
   {
-    icon: "/img/buy-btn.png",
-    url: "/category",
-    text: "삽니다",
-  },
-  {
-    icon: "/img/sell-btn.png",
-    url: "/new",
-    text: "팝니다",
-  },
-  {
     icon: "/img/message-btn.png",
     url: "/chat",
     text: "채팅",
+  },
+  {
+    icon: "/img/home-btn.png",
+    url: "/",
+    text: "홈",
   },
   {
     icon: "/img/mypage-btn.png",
