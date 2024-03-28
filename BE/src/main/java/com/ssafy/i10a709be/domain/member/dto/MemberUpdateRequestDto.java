@@ -12,6 +12,7 @@ public class MemberUpdateRequestDto {
     private String address;
     private String phoneNumber;
 
+
     public static MemberUpdateRequestDto fromEntity(Member member) {
         return MemberUpdateRequestDto.builder()
                 .nickname(member.getNickname())

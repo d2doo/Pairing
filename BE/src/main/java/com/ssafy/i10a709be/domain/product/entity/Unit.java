@@ -42,6 +42,7 @@ public class Unit extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Setter
     private Long originalProductId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -95,6 +96,7 @@ public class Unit extends BaseEntity {
                 ", isConfirmed=" + isConfirmed +
                 ", status='" + status + '\'' +
                 ", parts=" + parts +
+                ", product=" + product.getProductId() +
                 '}';
     }
 }

@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.Collections;
 import javax.security.sasl.AuthenticationException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,6 +22,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 @Component
+@Slf4j
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final AuthenticationManager authenticationManager;
@@ -36,6 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // access token이 유효한 경우만 Authentication 객체 생성
             if (null != accessToken) {
                 String uuid = jwtValidator.isValidToken(accessToken);
+                log.debug( uuid );
                 if (null != uuid) {
                     GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_USER");
                     Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(uuid, null, Collections.singletonList(authority)));

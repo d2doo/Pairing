@@ -28,41 +28,5 @@ class ChatServiceImplTest {
     private MemberRepository memberRepository;
 
 
-    @Test
-    void createChatRoom() {
-        Member member1 = Member.builder()
-                .email("cqqudgjs1@naver.com")
-                .nickname("라이빵허")
-                .provider(OAuthProvider.KAKAO)
-                .build();
-        memberRepository.save( member1 );
 
-        Member member2 = Member.builder()
-                .email("cqqudgjs2@naver.com")
-                .nickname("라이빵허")
-                .provider(OAuthProvider.KAKAO)
-                .build();
-        memberRepository.save( member2 );
-
-        Member member3 = Member.builder()
-                .email("cqqudgjs3@naver.com")
-                .nickname("라이빵허")
-                .provider(OAuthProvider.KAKAO)
-                .build();
-        memberRepository.save( member3 );
-        List<Member> joinMembers = new ArrayList<>();
-        joinMembers.add( member1 );
-        joinMembers.add( member2 );
-        joinMembers.add( member3 );
-
-//        Long value = chatService.createChatRoom( new ChatRoomCreateDto( joinMembers, member1.getMemberId(), "temp", 10, ChatRoomStatus.active ) );
-//        assertNotNull( value );
-
-//        ChatRoom chatRoom = chatService.findChatRoomById( value );
-//        assertNotNull( chatRoom );
-
-//        List<UserChatRoom> userChatRooms = chatRoom.getUserChatRooms();
-//        assertEquals( userChatRooms.size(), 3 );
-//        assertEquals( userChatRooms.get(0).getChatRoom().getChatRoomId(), chatRoom.getChatRoomId() );
-    }
 }
