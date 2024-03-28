@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 public class KafkaNotificationProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
-    public void sendNotificationToKafkaTopic(String memberId, NotificationRequestDto notificationRequest) {
-        String topicName = "notification-" + memberId;
+    public void sendNotificationToKafkaTopic(NotificationRequestDto notificationRequest) {
+        String topicName = notificationRequest.getTopicSubject() + "-notification";
         String payload = "";
         try {
             payload = objectMapper.writeValueAsString(notificationRequest);
