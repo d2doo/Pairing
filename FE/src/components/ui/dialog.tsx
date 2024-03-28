@@ -46,10 +46,11 @@ const DialogContent = React.forwardRef<
         <X className="h-4 w-4" />
         <span className="sr-only">Close</span>
       </DialogPrimitive.Close> */}
-      <DialogPrimitive.Close className="absolute bottom-3 right-1/2 flex h-8 w-14 translate-x-1/2 transform items-center justify-center border-2 border-blue1 p-2 text-sm opacity-70 outline-none ring-offset-background transition-opacity focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent">
-        <span>취소</span> {/* "X" 대신 "취소" 텍스트 사용 */}
+
+      {/* <DialogPrimitive.Close className="absolute bottom-3 right-1/2 flex h-8 w-14 translate-x-1/2 transform items-center justify-center border-2 border-blue1 p-2 text-sm opacity-70 outline-none ring-offset-background transition-opacity focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent">
+        <span>취소</span> 
         <span className="sr-only">Close</span>
-      </DialogPrimitive.Close>
+      </DialogPrimitive.Close> */}
     </DialogPrimitive.Content>
   </DialogPortal>
 ));
