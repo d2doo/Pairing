@@ -1,17 +1,19 @@
 import classNames from "classnames";
-import React, { ReactNode, useEffect, useState } from "react";
+import React, { ReactNode, useEffect, useState, useRef } from "react";
 import { useLocalAxios } from "@/utils/axios.ts";
 import { AxiosError, AxiosProgressEvent, AxiosResponse } from "axios";
 import { Progress } from "@/components/ui/progress.tsx";
 
-interface ImageUploaderProps {
+interface ChatImageUploaderProps {
   children?: ReactNode;
   className?: string;
-  onUploadRequested?: () => void;
+  onUploadRequested?: (preview: string) => void;
   onUploadComplete?: (response: AxiosResponse) => void;
   onError?: (error: Error | unknown) => void;
   onRemove?: () => void;
-  disabled?: boolean;
+  clear?: boolean;
+  // disabled?: boolean;
+  open?: boolean;
 }
 
 enum ImageUploadStatus {
@@ -21,7 +23,7 @@ enum ImageUploadStatus {
   COMPLETE,
 }
 
-export const ImageUploader = (props: ImageUploaderProps) => {
+export const ChatImageUploader = (props: ChatImageUploaderProps) => {
   const localAxios = useLocalAxios();
   const [selectedFile, setSelectedFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
@@ -29,12 +31,18 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     ImageUploadStatus.PENDING,
   );
   const [progress, setProgress] = useState<number>(0);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const handleOpenFileDialog = () => {
+    // 숨겨진 input 요소를 프로그래매틱하게 클릭하여 파일 선택 창을 연다
+    inputRef.current?.click();
+  };
 
   useEffect(() => {
     if (selectedFile) {
       const imageURL = URL.createObjectURL(selectedFile);
       setPreview(imageURL);
 
+      if (props.onUploadRequested) props.onUploadRequested(imageURL);
       return () => {
         // Unmount시 생성했던 URL 해제 (Memory Leak)
         URL.revokeObjectURL(imageURL);
@@ -42,12 +50,26 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     }
   }, [selectedFile]);
 
+  useEffect(() => {
+    if (props.open) {
+      inputRef.current?.click();
+    }
+  }, [props.open]);
+
+  useEffect(() => {
+    if (props.clear) {
+      setPreview(undefined);
+      setSelectedFile(undefined);
+      setUploadStatus(ImageUploadStatus.PENDING);
+      setProgress(0);
+    }
+  }, [props.clear]);
+
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     if (e.target.files) {
       setUploadStatus(ImageUploadStatus.UPLOADING);
-      if (props.onUploadRequested) props.onUploadRequested();
 
       const targetImage = e.target.files[0];
       setSelectedFile(targetImage);
@@ -81,20 +103,25 @@ export const ImageUploader = (props: ImageUploaderProps) => {
   return (
     <label
       className={classNames(
-        "border-gray relative flex h-14 w-14 flex-col items-center justify-center rounded-lg border-2 p-1",
+        "border-gray relative flex h-14 w-14 flex-col items-center justify-center rounded-lg border-2",
         props.className,
       )}
     >
       {(uploadStatus == ImageUploadStatus.COMPLETE ||
         uploadStatus == ImageUploadStatus.ERROR) && (
-        <button
-          className="material-symbols-outlined absolute right-0 top-0 rounded-md bg-red-600 px-1 py-0.5 text-xs font-bold text-white"
-          onClick={props.onRemove}
-        >
-          close
-        </button>
+        <>
+          <button
+            className="material-symbols-outlined absolute right-0 top-0 rounded-md bg-blue1 px-1 py-0.5 text-xs font-bold text-white"
+            onClick={props.onRemove}
+          >
+            close
+          </button>
+          <button onClick={handleOpenFileDialog} className="hidden"></button>
+        </>
       )}
-      {selectedFile && <img src={preview} className="h-full w-full" />}
+      {selectedFile && (
+        <img src={preview} className="h-full w-full object-scale-down" />
+      )}
       {!selectedFile && (
         <>
           <span className="material-symbols-outlined">photo_camera</span>
@@ -109,8 +136,8 @@ export const ImageUploader = (props: ImageUploaderProps) => {
           type="file"
           accept="image/*"
           hidden
-          disabled={props.disabled}
           onChange={onChangeImage}
+          ref={inputRef}
         />
       )}
     </label>
