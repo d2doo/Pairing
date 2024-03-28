@@ -19,19 +19,12 @@ public class ProductFindResponseDto {
     private Integer maxAge;
 
     public static ProductFindResponseDto fromEntity(Product product){
-        String thumbnailUrl = null;
-        if (product.getUnits() != null && !product.getUnits().isEmpty() &&
-                product.getUnits().getFirst().getUnitImages() != null && !product.getUnits().getFirst().getUnitImages().isEmpty() &&
-                product.getUnits().getFirst().getUnitImages().getFirst().getFiles() != null) {
-            thumbnailUrl = product.getUnits().getFirst().getUnitImages().getFirst().getFiles().getSource();
-        }
-
         return ProductFindResponseDto.builder()
                 .productId(product.getProductId())
                 .leader(MemberSummaryResponseDto.fromEntity(product.getMember()))
                 .productTitle(product.getTitle())
-                .thumbnailUrl(thumbnailUrl)
-                .category(CategoryDto.fromEntityOnlyCategory(product.getUnits().getFirst().getCategory()))
+                .thumbnailUrl(product.getUnits().getFirst().getUnitImages().getFirst().getFiles().getSource())
+                .category(CategoryDto.fromEntity(product.getUnits().getFirst().getCategory()))
                 .units(product.getUnits().stream().map(UnitFindDto::fromEntity).toList())
                 .totalPrice(product.getTotalPrice())
                 .maxAge(product.getMaxAge())
