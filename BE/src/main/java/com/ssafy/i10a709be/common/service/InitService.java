@@ -12,6 +12,7 @@ import com.ssafy.i10a709be.domain.community.service.ChatService;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.enums.OAuthProvider;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
+import com.ssafy.i10a709be.domain.notification.util.KafkaNotificationUtils;
 import com.ssafy.i10a709be.domain.product.entity.*;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import com.ssafy.i10a709be.domain.product.repository.*;
@@ -39,6 +40,7 @@ public class InitService {
     private final UnitImagesRepository unitImagesRepository;
     private final ProductRepository productRepository;
     private final FileRepository fileRepository;
+    private final KafkaNotificationUtils kafkaNotificationUtils;
 
     @PostConstruct
     @Transactional
@@ -261,6 +263,7 @@ public class InitService {
         unitImagesRepository.save(unitImages2);
         unitImagesRepository.save(unitImages3);
 
+        kafkaNotificationUtils.createTopic("product-notification", 1, (short)2);
         log.info( findMember.getEmail() + " 테스트 데이터 등록 완료" );
     }
 }

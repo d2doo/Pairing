@@ -10,9 +10,6 @@ import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +37,7 @@ public class KafkaChatConsumerService {
                     .fileId(chatMessage.getFileId())
                     .build();
             chatRepository.save(chat);
-            simpMessagingTemplate.convertAndSend("/chat-room/"+chatMessage.getRoomId(),objectMapper.writeValueAsString( ChatMessageResponseDto.fromEntity(chat)));
+            simpMessagingTemplate.convertAndSend("/chat-room/"+chatMessage.getRoomId(), objectMapper.writeValueAsString( ChatMessageResponseDto.fromEntity(chat)));
 
         } catch (Exception e){
             log.info(e.getMessage());

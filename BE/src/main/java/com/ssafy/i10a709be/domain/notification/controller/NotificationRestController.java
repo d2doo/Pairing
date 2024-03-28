@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class NotificationRestController {
     private final KafkaNotificationProducerService kafkaNotificationProducerService;
 
-    @MessageMapping("/notification/{memberId}")
-    public ResponseEntity<Void> sendNotificationToMember(@DestinationVariable String memberId, NotificationRequestDto notificationRequest) {
-        kafkaNotificationProducerService.sendNotificationToKafkaTopic(memberId, notificationRequest);
+    @MessageMapping("/notification")
+    public ResponseEntity<Void> sendNotificationToMember(NotificationRequestDto notificationRequest) {
+        kafkaNotificationProducerService.sendNotificationToKafkaTopic(notificationRequest);
         return ResponseEntity.ok().build();
     }
 }
