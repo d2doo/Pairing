@@ -3,10 +3,15 @@ package com.ssafy.i10a709be.domain.product.controller.restcontroller;
 import com.ssafy.i10a709be.domain.product.dto.ProductFindResponseDto;
 import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.Product;
+import com.ssafy.i10a709be.domain.product.entity.Unit;
 import com.ssafy.i10a709be.domain.product.service.ProductService;
+
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -34,9 +40,13 @@ public class ProductRestController {
 
     @PostMapping
     public ResponseEntity<Void> saveProduct(@AuthenticationPrincipal String memberId, @RequestBody ProductSaveRequestDto productSaveRequestDto) {
+        log.info( productSaveRequestDto.toString());
+        log.info( productSaveRequestDto.getUnit().toString());
         try {
             Product product = productService.saveProduct(memberId, productSaveRequestDto);
+            log.info("products!!:" + product.toString() );
         } catch (IllegalArgumentException e) {
+            log.info( e.toString() );
             return ResponseEntity.badRequest().build();
         }
 
@@ -45,12 +55,12 @@ public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
+            @AuthenticationPrincipal String memberId,
             @RequestParam int page,
             @RequestParam int size,
             @RequestParam(required = false) Long productId,
             @RequestParam(required = false) Boolean isCombined,
             @RequestParam(required = false) String nickname,
-            @RequestParam(required = false) String memberId,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String productStatus,
             @RequestParam(required = false) Integer startPrice,
@@ -60,7 +70,6 @@ public class ProductRestController {
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("productId"));
         Page<Product> products = productService.findAllProduct(pageable, productId,isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
-
         List<ProductFindResponseDto> productFindResponseDtos = products.stream()
                 .map(ProductFindResponseDto::fromEntity).toList();
 
@@ -96,4 +105,5 @@ public class ProductRestController {
         }
         return ResponseEntity.ok().build();
     }
+
 }

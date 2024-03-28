@@ -36,8 +36,9 @@ public class MemberRestController {
         return ResponseEntity.ok(MemberSummaryResponseDto.fromEntity(memberService.findMemberById(memberId)));
     }
 
-    @PatchMapping
+    @PutMapping
     public ResponseEntity<MemberResponseDto> updateMemberDetails(@AuthenticationPrincipal String memberId, @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
+        log.info( "data:" + memberUpdateRequestDto.toString() );
         return ResponseEntity.ok(MemberResponseDto.fromEntity(memberService.updateMemberDetails(memberId, memberUpdateRequestDto)));
     }
 
@@ -59,6 +60,7 @@ public class MemberRestController {
         Map<String, Object> map = new HashMap<>();
         map.put("member", MemberSummaryResponseDto.fromEntity(member));
         map.put("accessToken", "Bearer " + tokens.get(0));
+
 
         return ResponseEntity.status(HttpStatus.OK).body(map);
     }

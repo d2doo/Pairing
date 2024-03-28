@@ -49,7 +49,7 @@ class DealServiceImplTest {
     @Test
     void 컴펌을_승인하면_해당_유닛의_상태는_true가_된다() {
 
-        Member member = memberRepository.findByEmail("amuva@naver.com").get();
+        Member member = memberRepository.findByEmail("amuvatest@naver.com").get();
         Product product = productRepository.findById(4L).get();
         dealService.approveConfirm( product.getProductId(), member.getMemberId() );
         Unit target = unitRepository.findUnitByProduct_ProductIdAndMember_MemberId(product.getProductId(), member.getMemberId()) ;
@@ -60,7 +60,7 @@ class DealServiceImplTest {
 
     @Test
     void 컴펌을_승인했을_때_일부_true가_된다면_product의_상태는_PENDING이다() {
-        Member member2 = memberRepository.findByEmail("amuva@naver.com").get();
+        Member member2 = memberRepository.findByEmail("amuvatest@naver.com").get();
         Product product = productRepository.findById(4L).get();
 
         dealService.approveConfirm( product.getProductId(), member2.getMemberId());
@@ -70,9 +70,9 @@ class DealServiceImplTest {
 
     @Test
     void 컴펌을_승인했을_때_전부_true가_된다면_product의_상태는_ON_SELL이다() {
-        Member member2 = memberRepository.findByEmail("amuva@naver.com").get();
+        Member member2 = memberRepository.findByEmail("amuvatest@naver.com").get();
         Product product = productRepository.findById(4L).get();
-        Member member3 = memberRepository.findByEmail("hyuniqque@gmail.com").get();
+        Member member3 = memberRepository.findByEmail("hyuniqquetest@gmail.com").get();
 
 
         dealService.approveConfirm( product.getProductId(), member2.getMemberId());
@@ -84,12 +84,12 @@ class DealServiceImplTest {
 
     @Test
     void 컨펌을_거절하면_각_유닛의_product는_원래_product로_돌아가야_하고_각각_ON_SELL이어야_한다() {
-        Member member = memberRepository.findByEmail("cqqudgjs@naver.com").get();
-        Member member2 = memberRepository.findByEmail("amuva@naver.com").get();
+        Member member = memberRepository.findByEmail("cqqudgjstest@naver.com").get();
+        Member member2 = memberRepository.findByEmail("amuvatest@naver.com").get();
         Product product4 = productRepository.findById(4L).get();
 
 
-        Member member3 = memberRepository.findByEmail("hyuniqque@gmail.com").get();
+        Member member3 = memberRepository.findByEmail("hyuniqquetest@gmail.com").get();
         Product product1 = productRepository.findById(1L).get();
         Product product2 = productRepository.findById(2L).get();
         Product product3 = productRepository.findById(3L).get();
