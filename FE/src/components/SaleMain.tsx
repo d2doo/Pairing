@@ -1,65 +1,56 @@
 import { Link } from "react-router-dom";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
 
 function SalePage() {
   return (
     <>
-      {/* 개별등록 */}
-      <Link to={"/new/unit"}>
-        <div className="flex h-[calc((100vh-3.5rem)/2)] justify-evenly bg-white1 p-10">
-          <img
-            src="/img/extra-product-img.png"
-            alt="product_img_err"
-            className="w-1/2 object-cover"
-          />
-          <div className="mt-auto flex h-full flex-col justify-end py-5 font-GothicLight">
-            <p className="text-lg">개별등록</p>
-            <p className="text-xs">내 상품을 등록해보세요.</p>
-            <p className="text-md font-GothicMedium">개별 등록하러 가기 →</p>
+      {/* 팝니다 */}
+      <Link
+        to={"/new/unit"}
+        className="flex h-1/2 justify-evenly bg-white1 p-10"
+      >
+        <img
+          src="/img/extra-product-img.png"
+          alt="product_img_err"
+          className="w-1/2 animate-doong-sil object-cover"
+        />
+        <div className="mt-auto flex h-full flex-col justify-end space-y-5 py-5 font-GothicLight">
+          <div className="w-3/4 border-b-2 border-blue1">
+            <p className="font-GothicLight text-xs">pairing mine!</p>
+            <p className="font-GothicMedium text-xl">내 상품 등록</p>
+          </div>
+          <div className="space-y-1">
+            <p className="text-xs">
+              <p>내 상품을 등록하고 조립해서</p>
+              <p>판매해보세요!</p>
+            </p>
+            <p className="text-md font-Gothic">상품 등록하러 가기 →</p>
           </div>
         </div>
       </Link>
 
-      {/* 조립등록 */}
-      <div className="h-[calc((100vh-3.5rem)/2)] bg-blue1 p-10">
-        <Dialog>
-          <DialogTrigger asChild>
-            <div className="flex h-full justify-evenly space-x-1">
-              <div className="flex h-full flex-col items-end justify-end py-5 font-GothicLight">
-                <p className="text-lg">조립등록</p>
-                <p className="text-end text-xs">
-                  다른사람의 상품을 내 상품과 조립하고 등록해보세요.
-                </p>
-                <p className="text-md font-GothicMedium">조립하러 가기 →</p>
-              </div>
-              <img
-                src="/img/extra-product-img.png"
-                alt="product_img_err"
-                className="w-1/2 object-cover"
-              />
+      {/* 삽니다 */}
+      <Link to={"/category"} className="h-1/2 bg-blue1 p-10">
+        <div className="flex h-full justify-evenly space-x-1">
+          <div className="mt-auto flex h-full flex-col items-end justify-end space-y-5 py-5 font-GothicLight">
+            <div className="w-2/3 border-b-2 border-white1 text-end">
+              <p className="font-GothicLight text-xs">pairing yours!</p>
+              <p className="font-GothicMedium text-xl">상품 구매</p>
             </div>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>이전에 등록한 제품을 조립하려면?</DialogTitle>
-              <DialogDescription>
-                <Link to="/new/unit-lists">동료 찾아 조립하기</Link>
-              </DialogDescription>
-            </DialogHeader>
-            <DialogHeader>
-              <DialogTitle>새로 처음부터 조립하려면?</DialogTitle>
-              <DialogDescription>내 상품부터 등록하기</DialogDescription>
-            </DialogHeader>
-          </DialogContent>
-        </Dialog>
-      </div>
+            <div className="space-y-1">
+              <p className="text-end text-xs">
+                <p>PAIRING에 등록된 상품을</p>
+                <p>구경하고 구매해보세요!</p>
+              </p>
+              <p className="text-md text-end font-Gothic">상품 사러 가기 →</p>
+            </div>
+          </div>
+          <img
+            src="/img/extra-product-img.png"
+            alt="product_img_err"
+            className="w-1/2 animate-doong-sil object-cover"
+          />
+        </div>
+      </Link>
     </>
   );
 }

@@ -1,5 +1,6 @@
 import { useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
 
 function SearchBar() {
   // 폼을 참조하기 위한 ref 생성
@@ -22,9 +23,9 @@ function SearchBar() {
   return (
     <>
       <nav className="mx-auto flex h-14 w-full items-center justify-around">
-        <div className="my-6 flex items-center justify-center">
+        <Link to={"/"} className="my-6 flex items-center justify-center">
           <img src="img/favicon-btn.png" alt="favicon_err" />
-        </div>
+        </Link>
         {/* form 태그 추가 및 ref, onSubmit 이벤트 핸들러 연결 */}
         <form
           ref={formRef}
