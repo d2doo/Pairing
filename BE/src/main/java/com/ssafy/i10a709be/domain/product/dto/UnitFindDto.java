@@ -13,6 +13,7 @@ public class UnitFindDto {
     private String memberId;
     private String nickname;
     private Integer score;
+    private String unitDescription;
     private List<String> unitImages;
     private List<PartTypeDto> positions;
     private Integer age;
@@ -24,6 +25,7 @@ public class UnitFindDto {
                 .memberId(memberSummaryResponseDto.getMemberId())
                 .nickname(memberSummaryResponseDto.getNickname())
                 .score(memberSummaryResponseDto.getScore())
+                .unitDescription(unit.getUnitDescription())
                 .unitImages(unit.getUnitImages().stream().map(files ->{
                     return files.getFiles().getSource();
                 }).toList())
