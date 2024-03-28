@@ -52,11 +52,11 @@ class ProductServiceImplTest {
     @Test
     void 기존_합의에서_새로운_합의를_생성하면_기존_합의들은_삭제되어있고_신규_상품이_묶여서_생성된다(){
         //멤버 불러오고
-        Member member = memberRepository.findByEmail("cqqudgjs@naver.com").get();
-        Member member2 = memberRepository.findByEmail("amuva@naver.com").get();
+        Member member = memberRepository.findByEmail("cqqudgjstest@naver.com").get();
+        Member member2 = memberRepository.findByEmail("amuvatest@naver.com").get();
         Product product4 = productRepository.findById(4L).get();
         // 각 상품 가져오고
-        Member member3 = memberRepository.findByEmail("hyuniqque@gmail.com").get();
+        Member member3 = memberRepository.findByEmail("hyuniqquetest@gmail.com").get();
         Product product = productRepository.findById(1L).get();
         Product product2 = productRepository.findById(2L).get();
         Product product3 = productRepository.findById(3L).get();

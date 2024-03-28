@@ -44,23 +44,23 @@ public class InitService {
     @Transactional
     public void insertInit(){
         Member member = Member.builder()
-                .email("cqqudgjs@naver.com")
+                .email("cqqudgjstest@naver.com")
                 .nickname("라이빵허")
                 .provider(OAuthProvider.KAKAO)
                 .build();
         member.updateRefreshToken("eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiNDhiZWY2MzYtZGZkNy00YmM3LTk4ZjUtNTIzMmM0MjZlYzAxIiwiaWF0IjoxNzEwODA2NTIwLCJleHAiOjE3MTE0MTEzMjB9.x67DUg4brARUkfCFT66t89lZqooj0cmWWxd0Lj9glpM");
         memberRepository.save( member );
-        Member findMember = memberRepository.findByEmail("cqqudgjs@naver.com").get();
+        Member findMember = memberRepository.findByEmail("cqqudgjstest@naver.com").get();
 
         Member member2 = Member.builder()
-                .email("amuva@naver.com")
+                .email("amuvatest@naver.com")
                 .nickname("윤주짜이")
                 .provider(OAuthProvider.KAKAO)
                 .build();
         memberRepository.save( member2 );
 
         Member member3 = Member.builder()
-                .email("hyuniqque@gmail.com")
+                .email("hyuniqquetest@gmail.com")
                 .nickname("김다이헌")
                 .provider(OAuthProvider.KAKAO)
                 .build();
