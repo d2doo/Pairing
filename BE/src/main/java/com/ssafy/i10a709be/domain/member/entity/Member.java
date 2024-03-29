@@ -13,15 +13,14 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 import org.hibernate.annotations.*;
 
 @Entity
 @Getter
 @NoArgsConstructor
+@ToString
 @SQLDelete(sql = "UPDATE member SET is_deleted = true WHERE member_id = ?")
 @SQLRestriction("is_deleted = false")
 public class Member {
