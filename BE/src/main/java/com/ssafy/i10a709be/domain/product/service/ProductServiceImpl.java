@@ -35,14 +35,15 @@ public class ProductServiceImpl implements ProductService {
     private final PartTypeRepository partTypeRepository;
     private final CategoryRepository categoryRepository;
     private final UnitImagesRepository unitImagesRepository;
-    private final FileRepository fileRepository;
     private final ChatService chatService;
+    private final FileRepository fileRepository;
 
     //TODO 1차 개발 끝나면 해당 로직 세분화를 시켜서 재사용성을 높히자.
     //단일 파츠 및 유닟 및 상품 생성
     @Override
     @Transactional
     public Product saveProduct(String memberId, ProductSaveRequestDto request) {
+        log.debug( memberId );
         log.info("save Product member Id = " + memberId);
         Optional<Member> member = memberRepository.findById(memberId);
         Optional<Category> category = categoryRepository.findById(request.getUnit().getCategoryId());
@@ -96,7 +97,6 @@ public class ProductServiceImpl implements ProductService {
 
                     unit.getParts().add(part);
                 } else {
-                    System.out.println("partType 없음" + Arrays.toString(request.getUnit().getPartTypeIds().toArray()));
                     throw new IllegalArgumentException();
                 }
             }
@@ -117,6 +117,7 @@ public class ProductServiceImpl implements ProductService {
 
     //합의시 일때 실행되는 로직
     @Override
+    @Transactional
     public void composeUnits(Product product, Unit unit, List<Long> targets) {
 
         // 본인이 애초에 합의를 열었기에 true에서 바꿀 필요가 없다.
@@ -125,29 +126,31 @@ public class ProductServiceImpl implements ProductService {
 
         //채팅방 생성을 위한 member list 생성
         List<Member> memberList = new ArrayList<>();
-        memberList.add(unit.getMember());
+        memberList.add( unit.getMember());
 
-        for (Long targetUnitId : targets) {
+        for (Long targetUnitId : targets){
             unitRepository.findById(targetUnitId).ifPresent(
                     targetUnit -> {
                         targetUnit.getProduct().softDeleted(true);//targetUnit의 원래 product의 isdeleted는 true로 바껴야함
-                        targetUnit.setIsConfirmed(false); // 나머지 친구들은 거절
+                        targetUnit.setIsConfirmed( false ); // 나머지 친구들은 거절
                         targetUnit.updateProduct(product);
-                        memberList.add(targetUnit.getMember());
+                        memberList.add( targetUnit.getMember() );
                         product.getUnits().add(targetUnit);
                     }
             );
         }
-        ChatRoomCreateDto dto = new ChatRoomCreateDto(memberList, unit.getMember().getMemberId(), product.getTitle() + "상품 합의 채팅방입니다.", 1 + targets.size(), ChatRoomStatus.active, product.getProductId());
-        chatService.createChatRoom(dto);
+        ChatRoomCreateDto dto = new ChatRoomCreateDto( memberList, unit.getMember().getMemberId(), product.getTitle() +"상품 합의 채팅방입니다.", 1 + targets.size(), ChatRoomStatus.active, product.getProductId());
+        chatService.createChatRoom( dto );
 
     }
 
+    @Transactional
     @Override
     public Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
         return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
     }
 
+    @Transactional
     @Override
     public Product findProduct(Long productId) {
         return productRepository.findById(productId)
@@ -183,14 +186,13 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
-
     //Compose 생성 로직
     @Transactional
     @Override
     public Long createAfterCompose(String memberId, Long productId, ProductSaveRequestDto productSaveRequestDto) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
-        Product product = productRepository.findProductAndUnitsByProductId(productId).orElseThrow(() -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
-        product.softDeleted(true);
+        Member member = memberRepository.findById( memberId ).orElseThrow( () -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
+        Product product = productRepository.findProductAndUnitsByProductId( productId ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
+        product.softDeleted( true );
         product.updateStatus(ProductStatus.PENDING);
         Unit unit = unitRepository.findUnitByProduct_ProductIdAndMember_MemberId(productId, memberId);
         // 권한 체크
@@ -209,7 +211,7 @@ public class ProductServiceImpl implements ProductService {
         unit.updateProduct(newProduct);
 
         Product saved = productRepository.save(newProduct);
-
+        
 //        for (Long targetUnitId : productSaveRequestDto.getTargetUnits()){
 //            unitRepository.findById(targetUnitId).ifPresent(
 //                    targetUnit -> {
@@ -220,7 +222,7 @@ public class ProductServiceImpl implements ProductService {
 //                    }
 //            );
 //        }
-        composeUnits(saved, unit, productSaveRequestDto.getTargetUnits());
+        composeUnits( saved, unit, productSaveRequestDto.getTargetUnits());
 
         return saved.getProductId();
     }

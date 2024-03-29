@@ -11,6 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class ChatRestController {
 
      */
     @GetMapping("/room")
-    public ResponseEntity<List<ChatRoomResponseDto>> getChatRoomList(@RequestParam String memberId) {
+    public ResponseEntity<List<ChatRoomResponseDto>> getChatRoomList(@AuthenticationPrincipal String memberId) {
         List<ChatRoomResponseDto> chatRoomResponseList = chatService.findJoinedChatRooms(memberId).stream()
                 .map( croom -> {
                     Chat c = chatService.findLatestChatByChatRoomId( croom.getChatRoomId() );

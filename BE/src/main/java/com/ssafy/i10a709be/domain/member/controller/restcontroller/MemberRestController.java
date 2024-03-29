@@ -38,7 +38,6 @@ public class MemberRestController {
 
     @PutMapping
     public ResponseEntity<MemberResponseDto> updateMemberDetails(@AuthenticationPrincipal String memberId, @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
-        log.info( "data:" + memberUpdateRequestDto.toString() );
         return ResponseEntity.ok(MemberResponseDto.fromEntity(memberService.updateMemberDetails(memberId, memberUpdateRequestDto)));
     }
 
@@ -58,9 +57,9 @@ public class MemberRestController {
         response.addCookie(cookie);
 
         Map<String, Object> map = new HashMap<>();
-        map.put("member", MemberSummaryResponseDto.fromEntity(member));
-        map.put("accessToken", "Bearer " + tokens.get(0));
 
+        map.put("member", MemberSummaryResponseDto.fromEntityWithMemberId(member,tokens.get(2)));
+        map.put("accessToken", "Bearer " + tokens.get(0));
 
         return ResponseEntity.status(HttpStatus.OK).body(map);
     }
