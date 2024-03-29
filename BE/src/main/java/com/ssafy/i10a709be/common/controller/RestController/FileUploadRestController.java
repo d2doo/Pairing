@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping("/api/common")
+@RequestMapping("/common")
 @RestController
 
 public class FileUploadRestController {

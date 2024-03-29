@@ -1,23 +1,28 @@
 import { useNavigate } from "react-router-dom";
 
-useNavigate;
+interface Props {
+  title: string;
+  prev: string;
+}
 
-function Header() {
+const Header: React.FC<Props> = ({ title, prev }) => {
   const navigate = useNavigate();
+
   return (
-    <>
-      <div className="flex h-12 w-full items-center border-b border-gray1 px-4 font-GothicMedium text-base text-black1">
+    <div className="flex h-12 w-full items-center border-b border-gray-200 px-4 font-GothicMedium text-black">
+      {prev && (
         <button
           onClick={() => {
-            navigate(-1);
+            navigate(prev);
           }}
+          className="mr-3"
         >
-          <img src="/img/back-btn.png" alt="back_err" className="h-4 w-auto" />
+          <img src="/img/back-btn.png" alt="뒤로 가기" className="h-4 w-auto" />
         </button>
-        <p className="mx-3 flex items-center">페이지 이름이지롱</p>
-      </div>
-    </>
+      )}
+      <p className="flex items-center">{title}</p>
+    </div>
   );
-}
+};
 
 export default Header;

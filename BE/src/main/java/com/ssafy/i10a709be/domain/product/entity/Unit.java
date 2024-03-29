@@ -42,6 +42,7 @@ public class Unit extends BaseEntity {
     @JoinColumn(name = "product_id")
     private Product product;
 
+    @Setter
     private Long originalProductId;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -80,21 +81,5 @@ public class Unit extends BaseEntity {
         this.price = price;
         this.age = age;
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "Unit{" +
-                "unitId=" + unitId +
-                ", originalProductId=" + originalProductId +
-                ", category=" + category +
-                ", isCombinable=" + isCombinable +
-                ", unitDescription='" + unitDescription + '\'' +
-                ", price=" + price +
-                ", age=" + age +
-                ", isConfirmed=" + isConfirmed +
-                ", status='" + status + '\'' +
-                ", parts=" + parts +
-                '}';
     }
 }

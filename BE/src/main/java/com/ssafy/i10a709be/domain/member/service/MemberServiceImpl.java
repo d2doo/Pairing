@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
     private final JwtProvider jwtProvider;
@@ -24,13 +25,15 @@ public class MemberServiceImpl implements MemberService{
         유저 확인 후 해당 유저의 UUID를 이용해 Access Token과 Refresh Token을 발급해 return
      */
     @Override
+    @Transactional
     public List<String> login(Member member) {
-        Optional<Member> originalMember = memberRepository.findByEmail(member.getEmail());
-        originalMember.orElseThrow(()-> new RuntimeException());  // exception 수정 예정
+        Optional<Member> result = memberRepository.findByEmail(member.getEmail());
+        if( !result.isPresent() ){
+            memberRepository.save(member);
+        }
 
-        memberRepository.save(member);
-
-        List<String> tokens = jwtProvider.generateToken(member.getMemberId());
+        List<String> tokens = jwtProvider.generateToken( result.isPresent() ? result.get().getMemberId(): member.getMemberId());
+        tokens.add( member.getMemberId());
         member.updateRefreshToken(tokens.get(1));
 
         return tokens;
