@@ -199,10 +199,125 @@ public class InitService {
                 .unitDescription("테스트 유닛3")
                 .product(testP4)
                 .build();
+        Unit testU4 = Unit.builder()
+                .age(1)
+                .price(10000)
+                .member(member)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛1")
+                .product(testP2)
+                .build();
+
+        Unit testU5 = Unit.builder()
+                .age(2)
+                .price(20000)
+                .member(member)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛2")
+                .product(testP2)
+                .build();
+
+        Unit testU6 = Unit.builder()
+                .age(3)
+                .price(30000)
+                .member(member)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛3")
+                .product(testP2)
+                .build();
+        Unit testU7 = Unit.builder()
+                .age(1)
+                .price(10000)
+                .member(member2)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛1")
+                .product(testP2)
+                .build();
+
+        Unit testU8 = Unit.builder()
+                .age(2)
+                .price(20000)
+                .member(member2)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛2")
+                .product(testP2)
+                .build();
+
+        Unit testU9 = Unit.builder()
+                .age(3)
+                .price(30000)
+                .member(member2)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛3")
+                .product(testP2)
+                .build();
+        Unit testU10 = Unit.builder()
+                .age(1)
+                .price(10000)
+                .member(member3)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛1")
+                .product(testP2)
+                .build();
+
+        Unit testU11 = Unit.builder()
+                .age(2)
+                .price(20000)
+                .member(member3)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛2")
+                .product(testP2)
+                .build();
+
+        Unit testU12 = Unit.builder()
+                .age(3)
+                .price(30000)
+                .member(member3)
+                .isCombinable(true)
+                .category(category)
+                .originalProductId(testP2.getProductId())
+                .isConfirmed(false)
+                .unitDescription("테스트 유닛3")
+                .product(testP2)
+                .build();
 
         unitRepository.save( testU );
         unitRepository.save( testU2 );
         unitRepository.save( testU3 );
+//        unitRepository.save( testU4 );
+//        unitRepository.save( testU5 );
+//        unitRepository.save( testU6 );
+//        unitRepository.save( testU7 );
+//        unitRepository.save( testU8 );
+//        unitRepository.save( testU9 );
+//        unitRepository.save( testU10 );
+//        unitRepository.save( testU11 );
+//        unitRepository.save( testU12 );
+
 
         Part testPart = Part.builder()
                 .partType(partType)
@@ -217,25 +332,74 @@ public class InitService {
                 .unit(testU3)
                 .build();
 
+        Part testPart4 = Part.builder()
+                .partType(partType)
+                .unit(testU4)
+                .build();
+        Part testPart5 = Part.builder()
+                .partType(partType2)
+                .unit(testU5)
+                .build();
+        Part testPart6 = Part.builder()
+                .partType(partType3)
+                .unit(testU6)
+                .build();
+        Part testPart7 = Part.builder()
+                .partType(partType)
+                .unit(testU7)
+                .build();
+        Part testPart8 = Part.builder()
+                .partType(partType2)
+                .unit(testU8)
+                .build();
+        Part testPart9 = Part.builder()
+                .partType(partType3)
+                .unit(testU9)
+                .build();
+        Part testPart10 = Part.builder()
+                .partType(partType)
+                .unit(testU10)
+                .build();
+        Part testPart11 = Part.builder()
+                .partType(partType2)
+                .unit(testU11)
+                .build();
+        Part testPart12 = Part.builder()
+                .partType(partType3)
+                .unit(testU12)
+                .build();
+
         partRepository.save(testPart);
         partRepository.save(testPart2);
         partRepository.save(testPart3);
+//        partRepository.save(testPart4);
+//        partRepository.save(testPart5);
+//        partRepository.save(testPart6);
+//        partRepository.save(testPart7);
+//        partRepository.save(testPart8);
+//        partRepository.save(testPart9);
+//        partRepository.save(testPart10);
+//        partRepository.save(testPart11);
+//        partRepository.save(testPart12);
+
+
+
 
         Files files1 = Files.builder()
                 .name("test file")
-                .source("가나다라마바사")
+                .source("https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/60b5c962-1d93-4e2e-abe7-47ac30afb1c8")
                 .build();
 
 
         Files files2 = Files.builder()
                 .name("test file")
-                .source("가나다라마바사")
+                .source("https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/60b5c962-1d93-4e2e-abe7-47ac30afb1c8")
                 .build();
 
 
         Files files3 = Files.builder()
                 .name("test file")
-                .source("가나다라마바사")
+                .source("https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/60b5c962-1d93-4e2e-abe7-47ac30afb1c8")
                 .build();
 
         fileRepository.save(files1);

@@ -7,5 +7,6 @@ import java.util.List;
 public interface CategoryService {
     List<String> findMainCategories();
 
+    Category findByCategoryId(Long categoryId );
     List<Category> findSubCategories(String mainCategory);
 }

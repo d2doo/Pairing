@@ -82,4 +82,21 @@ public class Unit extends BaseEntity {
         this.age = age;
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Unit{" +
+                "unitId=" + unitId +
+                ", originalProductId=" + originalProductId +
+                ", category=" + category +
+                ", isCombinable=" + isCombinable +
+                ", unitDescription='" + unitDescription + '\'' +
+                ", price=" + price +
+                ", age=" + age +
+                ", isConfirmed=" + isConfirmed +
+                ", status='" + status + '\'' +
+                ", parts=" + parts +
+                ", product=" + product.getProductId() +
+                '}';
+    }
 }
