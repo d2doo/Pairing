@@ -1,6 +1,38 @@
+import {MemberSummaryResponse} from "@/types/Member.ts";
 import { Category } from "./Category";
-import { MemberSummaryResponse } from "./Member";
 import { UnitFind, UnitSaveRequest } from "./Unit";
+
+interface PartType {
+    partTypeId: number;
+    position: string;
+}
+
+interface Category {
+    categoryId: number;
+    mainCategory: string;
+    subCategory: string;
+    partType: PartType
+}
+
+interface UnitResponse {
+    age: number;
+    memberId: string;
+    nickname: string;
+    positions: PartType[];
+    score: number;
+    unitImages: string[];
+}
+
+interface ProductDetailResponse {
+    category: Category;
+    leader: MemberSummaryResponse;
+    maxAge: number;
+    productId: number;
+    productTitle: string;
+    thumbnailUrl: string;
+    totalPrice: number;
+    units: UnitResponse[];
+}
 
 interface ProductSaveRequest{
     productTitle: string,
@@ -8,6 +40,7 @@ interface ProductSaveRequest{
     targetUnits: number[],
     thumbnailIndex: number,
 }
+
 interface ProductFindResponse{
   thumbnailUrl: string,
   category: Category,
@@ -19,5 +52,4 @@ interface ProductFindResponse{
   units: UnitFind[],
 }
 
-
-export type { ProductSaveRequest, ProductFindResponse };
+export type { PartType, Category, UnitResponse, ProductDetailResponse, ProductSaveRequest, ProductFindResponse };
