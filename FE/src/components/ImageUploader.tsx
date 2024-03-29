@@ -56,7 +56,7 @@ export const ImageUploader = (props: ImageUploaderProps) => {
       formData.append("image", targetImage);
 
       try {
-        const response = await localAxios.post("/api/common/image", formData, {
+        const response = await localAxios.post("/common/image", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
