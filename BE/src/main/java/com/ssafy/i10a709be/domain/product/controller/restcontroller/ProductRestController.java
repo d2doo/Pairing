@@ -43,6 +43,7 @@ public class ProductRestController {
         log.info( productSaveRequestDto.toString());
         log.info( productSaveRequestDto.getUnit().toString());
         try {
+            log.info(memberId);
             Product product = productService.saveProduct(memberId, productSaveRequestDto);
             log.info("products!!:" + product.toString() );
         } catch (IllegalArgumentException e) {
@@ -55,12 +56,12 @@ public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
-            @AuthenticationPrincipal String memberId,
             @RequestParam int page,
             @RequestParam int size,
             @RequestParam(required = false) Long productId,
             @RequestParam(required = false) Boolean isCombined,
             @RequestParam(required = false) String nickname,
+            @RequestParam(required = false) String memberId,
             @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String productStatus,
             @RequestParam(required = false) Integer startPrice,
