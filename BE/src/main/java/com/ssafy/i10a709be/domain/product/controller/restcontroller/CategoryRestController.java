@@ -20,6 +20,12 @@ public class CategoryRestController {
         return ResponseEntity.ok(categoryService.findMainCategories());
     }
 
+    @GetMapping("/main/{categoryId}")
+    public ResponseEntity<CategoryDto> findAllCategoriesById( @PathVariable Long categoryId ){
+        return ResponseEntity.ok(CategoryDto.fromEntity(categoryService.findByCategoryId( categoryId )));
+    }
+
+
     @GetMapping("/sub")
     public ResponseEntity<List<CategoryDto>> findSubCategories(@RequestParam(required = false) String mainCategory) {
         return ResponseEntity.ok(categoryService

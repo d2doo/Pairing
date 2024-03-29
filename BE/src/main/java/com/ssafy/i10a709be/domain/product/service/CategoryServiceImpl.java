@@ -20,6 +20,11 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
+    public Category findByCategoryId(Long categoryId) {
+        return categoryRepository.findById( categoryId ).orElseThrow( () -> new IllegalArgumentException("해당하는 카테고리가 없습니다.") );
+    }
+
+    @Override
     public List<Category> findSubCategories(String mainCategory) {
         if (mainCategory == null) {
             return categoryRepository.findAll();
