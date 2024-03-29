@@ -53,15 +53,16 @@ export const ImageUploader = (props: ImageUploaderProps) => {
             const formData = new FormData();
             formData.append('image', targetImage);
 
-            try {
-                const response = await localAxios.post("/api/common/image", formData, {
-                    headers: {
-                        "Content-Type": "multipart/form-data"
-                    },
-                    onUploadProgress: (data: AxiosProgressEvent) => {
-                        if (data.total) setProgress(Math.round((100 * data.loaded) / data.total))
-                    },
-                });
+      try {
+        const response = await localAxios.post("/common/image", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+          onUploadProgress: (data: AxiosProgressEvent) => {
+            if (data.total)
+              setProgress(Math.round((100 * data.loaded) / data.total));
+          },
+        });
 
                 setUploadStatus(ImageUploadStatus.COMPLETE);
                 if (props.onUploadComplete) props.onUploadComplete(response);
