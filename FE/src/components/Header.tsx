@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import BackBtn from "@/assets/images/back-btn.png";
 
 interface Props {
   title: string;
@@ -17,7 +18,7 @@ const Header: React.FC<Props> = ({ title, prev }) => {
           }}
           className="mr-3"
         >
-          <img src="/img/back-btn.png" alt="뒤로 가기" className="h-4 w-auto" />
+          <img src={BackBtn} alt="뒤로 가기" className="h-4 w-auto" />
         </button>
       )}
       <p className="flex items-center">{title}</p>
