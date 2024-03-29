@@ -1,8 +1,11 @@
 import KakaoLoginButtonImage from '@/assets/images/kakao-login-btn.png';
 import GoogleLoginButtonImage from '@/assets/images/google-login-btn.png';
+import { useEffect } from 'react';
 
 function Login() {
-
+  useEffect(() => {
+    alert( import.meta.env.VITE_REDIRECT_URI_BASE + '/kakao')
+  },[])
   const kakaoLogin = () => {
     location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${
       import.meta.env.VITE_KAKAO_CLIENT_ID

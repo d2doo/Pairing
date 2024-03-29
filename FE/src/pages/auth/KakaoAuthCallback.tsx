@@ -15,7 +15,7 @@ export const KakaoAuthCallback = () => {
             navigate('/');
             return;
         }
-
+        console.log( code );
         localAxios.post('/member/login/kakao', null, {
             params: { code }
         })

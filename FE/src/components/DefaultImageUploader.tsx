@@ -4,9 +4,10 @@ import { useLocalAxios } from "@/utils/axios.ts";
 import { AxiosProgressEvent, AxiosResponse } from "axios";
 import { Progress } from "@/components/ui/progress.tsx";
 
-interface ImageUploaderProps {
+interface DefaultImageUploaderProps {
   children?: ReactNode;
   className?: string;
+  selectedUrl?: string;
   onUploadRequested?: () => void;
   onUploadComplete?: (response: AxiosResponse) => void;
   onError?: (error: Error | unknown) => void;
@@ -20,7 +21,7 @@ enum ImageUploadStatus {
   COMPLETE,
 }
 
-export const ImageUploader = (props: ImageUploaderProps) => {
+export const DefaultImageUploader = (props: DefaultImageUploaderProps) => {
   const localAxios = useLocalAxios();
   const [selectedFile, setSelectedFile] = useState<File>();
   const [preview, setPreview] = useState<string>();
@@ -28,6 +29,9 @@ export const ImageUploader = (props: ImageUploaderProps) => {
     ImageUploadStatus.PENDING,
   );
   const [progress, setProgress] = useState<number>(0);
+  useEffect(() => {
+    setPreview(props.selectedUrl);
+  }, []);
 
   useEffect(() => {
     if (selectedFile) {
@@ -40,6 +44,14 @@ export const ImageUploader = (props: ImageUploaderProps) => {
       };
     }
   }, [selectedFile]);
+
+  const resetImageUploader = (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    setPreview(props.selectedUrl);
+    setUploadStatus(ImageUploadStatus.PENDING);
+    e.preventDefault();
+  };
 
   const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
@@ -88,15 +100,15 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         uploadStatus == ImageUploadStatus.ERROR) && (
         <button
           className="material-symbols-outlined absolute right-0 top-0 rounded-md bg-red-600 px-1 py-0.5 text-xs font-bold text-white"
-          onClick={props.onRemove}
+          onClick={(e) => resetImageUploader(e)}
         >
           close
         </button>
       )}
-      {selectedFile && <img src={preview} className="h-full w-full" />}
+      {<img src={preview} className="h-full w-full" />}
       {!selectedFile && (
         <>
-          <span className="material-symbols-outlined">photo_camera</span>
+          {/* <span className="material-symbols-outlined">photo_camera</span> */}
           <span className="text-xs">{props.children}</span>
         </>
       )}
