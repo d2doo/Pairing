@@ -11,21 +11,28 @@ import {
 } from "@/components/ui/table";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Carousel, CarouselContent, CarouselItem, type CarouselApi } from "@/components/ui/carousel.tsx";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {useLocalAxios} from "@/utils/axios.ts";
-import {ProductDetailResponse} from "@/types/Product.ts";
+import {ProductDetailResponse, UnitResponse} from "@/types/Product.ts";
 import classNames from "classnames";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useAuthStore } from "@/stores/auth";
 
 const tableHead: string[] = ["카테고리", "사용기간", "판매자"];
 
 function ProductDetailPage() {
   const localAxios = useLocalAxios();
+  const authStore = useAuthStore();
+  const navigate = useNavigate();
+
   const { id } = useParams();
   const [ item, setItem ] = useState<ProductDetailResponse>();
   const [ imageList, setImageList ] = useState<string[]>([]);
   const [ carouselApi, setCarouselApi ] = useState<CarouselApi>();
   const [ carouselCurrent, setCarouselCurrent ] = useState(0);
   const [ carouselTotal, setCarouselTotal ] = useState(0);
+  const [ unitSelection, setUnitSelection ] = useState<UnitResponse>();
+  const [ tableSelectionIndex, setTableSelectionIndex ] = useState(0);
 
   useEffect(() => {
     if (id) getProductData(id);
@@ -45,7 +52,7 @@ function ProductDetailPage() {
   const getProductData = async (productId: string) => {
     const response = await localAxios.get<ProductDetailResponse>(`/product/${productId}`);
     setItem(response.data);
-
+    console.log(response.data);
     const newImageList = [];
 
     for (const unit of response.data.units) {
@@ -58,9 +65,13 @@ function ProductDetailPage() {
   };
 
   const onClickBuyRequest = async () => {
-    const response = localAxios.post(`/deal/buy/${item?.productId}`);
-
+    const response = localAxios.patch(`/deal/buy/${item?.productId}`);
+    navigate('/chat');
     // TODO: response 핸들링해서 상태값에 따라 상품 페이지 바꿔주기
+  }
+
+  const onClickEditUnit = async () => {
+    // TODO: 수정 구현
   }
 
   return (
@@ -82,8 +93,8 @@ function ProductDetailPage() {
           <Carousel setApi={setCarouselApi}>
             <CarouselContent>
               {
-                imageList.map(image => (
-                  <CarouselItem key={image} className="aspect-square">
+                imageList.map((image, index) => (
+                  <CarouselItem key={index} className="aspect-square">
                     <img src={image} className="w-full h-full" />
                   </CarouselItem>
                 ))
@@ -93,7 +104,7 @@ function ProductDetailPage() {
           <div className='absolute bottom-6 flex gap-2 w-full justify-center'>
             {
               imageList.map((image, index) => (
-                <div key={image} className={
+                <div key={index} className={
                   classNames(
                       'rounded-full w-4 h-4 border-2 border-gray1',
                       (carouselCurrent == index ? 'bg-blue1' : 'bg-white1')
@@ -114,11 +125,21 @@ function ProductDetailPage() {
           </div>
           <div className="flex justify-between items-center">
             <p className="font-GothicBold text-base">{item?.totalPrice.toLocaleString()} 원</p>
-            <Button className="h-7 rounded-lg bg-white1 border-2 border-blue1 flex items-center gap-1 px-2 hover:bg-blue3"
-                    onClick={onClickBuyRequest}>
-              <span className="material-symbols-outlined text-[0.8rem]">chat</span>
-              <span>구매 신청</span>
-            </Button>
+            {
+              item?.units.find(x => x.memberId == authStore.memberId)
+              ?
+                <Button className="h-7 rounded-lg bg-white1 border-2 border-blue1 flex items-center gap-1 px-2 hover:bg-blue3"
+                        onClick={onClickEditUnit}>
+                  <span className="material-symbols-outlined text-[0.8rem]">edit</span>
+                  <span>수정하기</span>
+                </Button>
+              :
+                <Button className="h-7 rounded-lg bg-white1 border-2 border-blue1 flex items-center gap-1 px-2 hover:bg-blue3"
+                        onClick={onClickBuyRequest}>
+                  <span className="material-symbols-outlined text-[0.8rem]">chat</span>
+                  <span>구매 신청</span>
+                </Button>
+            }
           </div>
         </div>
         <Table className="font-Gothic">
@@ -141,9 +162,19 @@ function ProductDetailPage() {
           <TableBody className="[&_tr:last-child]:border-1 text-center">
             {item?.units.map((unit) =>
               unit.positions.map((part, index) => (
-                <TableRow key={index} className="h-7 border-b-blue1">
-                  <TableCell className="p-0 ">
-                    <Checkbox className="align-middle" />
+                <TableRow key={part.partTypeId} className="h-7 border-b-blue1" onClick={
+                  () => {
+                    setTableSelectionIndex(part.partTypeId);
+                    setUnitSelection(unit);
+                  }
+                }>
+                  <TableCell className="p-0">
+                    <input type="radio" name="product-select" className="align-middle" checked={tableSelectionIndex == part.partTypeId} onChange={
+                      () => {
+                        setTableSelectionIndex(part.partTypeId);
+                        setUnitSelection(unit);
+                      }
+                    } />
                   </TableCell>
                   <TableCell className="p-0 font-Gothic text-xs">
                     {part.position}
@@ -159,8 +190,11 @@ function ProductDetailPage() {
             )}
           </TableBody>
         </Table>
-
-        <p>보고싶은 제품을 선택하면 이곳에서 설명을 볼 수 있어요 :)</p>
+        {
+          unitSelection 
+          ? <p>{unitSelection.unitDescription}</p>
+          : <p>보고싶은 제품을 선택하면 이곳에서 설명을 볼 수 있어요 :)</p>
+        }
       </div>
     </>
   );

@@ -20,6 +20,7 @@ interface UnitResponse {
     nickname: string;
     positions: PartType[];
     score: number;
+    unitDescription: string;
     unitImages: string[];
 }
 
