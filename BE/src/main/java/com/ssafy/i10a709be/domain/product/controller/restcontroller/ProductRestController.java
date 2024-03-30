@@ -56,9 +56,9 @@ public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
-            @AuthenticationPrincipal String memberId,
-            @RequestParam int page,
+            @RequestParam(defaultValue = "0") int page,
             @RequestParam int size,
+            @RequestParam(required = false) String memberId,
             @RequestParam(required = false) Long productId,
             @RequestParam(required = false) Boolean isCombined,
             @RequestParam(required = false) String nickname,
