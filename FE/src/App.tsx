@@ -15,15 +15,17 @@ import SaleUnit from "./components/SaleUnit";
 import { AuthRoute } from "@/components/AuthRoute.tsx";
 import { useEffect } from "react";
 import { useAuthStore } from "@/stores/auth.ts";
-import axios from "axios";
+import { useLocalAxios } from "./utils/axios";
 
 function App() {
   const authStore = useAuthStore();
+  const localAxios = useLocalAxios();
+
   useEffect(() => {
     if (!authStore.accessToken) {
-      axios
+      localAxios
         .post<{ accessToken: string }>(
-          `${import.meta.env.VITE_API_BASE_URL}/refresh`,
+          '/refresh',
         )
         .then((response) => {
           authStore.setAccessToken(response.data.accessToken);

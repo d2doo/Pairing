@@ -34,6 +34,7 @@ export const useLocalAxios = (isAuthenticated: boolean = true) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        withCredentials: true
     });
 
     axiosInstance.interceptors.request.use(

@@ -1,5 +1,4 @@
 import {MemberSummaryResponse} from "@/types/Member.ts";
-import { Category } from "./Category";
 import { UnitFind, UnitSaveRequest } from "./Unit";
 
 interface PartType {
@@ -43,14 +42,14 @@ interface ProductSaveRequest{
 }
 
 interface ProductFindResponse{
-  thumbnailUrl: string,
-  category: Category,
-  leader: MemberSummaryResponse,
-  productId: string,
-  productTitle: string,
-  totalPrice: number,
-  maxAge: number,
-  units: UnitFind[],
+    thumbnailUrl: string,
+    category: Category,
+    leader: MemberSummaryResponse,
+    productId: string,
+    productTitle: string,
+    totalPrice: number,
+    maxAge: number,
+    units: UnitFind[],
 }
 
 export type { PartType, Category, UnitResponse, ProductDetailResponse, ProductSaveRequest, ProductFindResponse };
