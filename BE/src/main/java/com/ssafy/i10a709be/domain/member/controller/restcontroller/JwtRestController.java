@@ -11,47 +11,46 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class JwtRestController {
     private final JwtService jwtService;
     private final JwtValidator jwtValidator;
 
     @PostMapping("/refresh")
-    public ResponseEntity<Map<String, String>> silentRefresh(HttpServletRequest request, HttpServletResponse response){
-        String refreshToken = null;
-        Cookie refreshTokenCookie = null;
-        String header = "Authorization";
-
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (header.equals(cookie.getName())) {
-                    refreshToken = cookie.getValue();
-                    refreshTokenCookie = cookie;
-                    break;
-                }
-            }
-        }
-
+    public ResponseEntity<Map<String, String>> silentRefresh(@CookieValue(name = "Authorization", required = false) Cookie refresh){
+        log.info("refresh token: {}", refresh);
+        String refreshToken = refresh.getValue();
         if (null != refreshToken){
             String memberId = jwtValidator.isValidToken(refreshToken);
             if (null != memberId){
                 List<String> tokens = jwtService.refresh(memberId);
 
-                refreshTokenCookie.setValue(tokens.get(1));
-                refreshTokenCookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
-                response.addCookie(refreshTokenCookie);
+                ResponseCookie responseCookie = ResponseCookie.from("Authorization", tokens.get(1))
+                        .httpOnly(true)
+                        .secure(true)
+                        .sameSite("None")
+                        .maxAge(60 * 60 * 24 * 7)
+                        .path("/")
+                        .build();
+
+                HttpHeaders headers = new HttpHeaders();
+                headers.add(HttpHeaders.SET_COOKIE, responseCookie.toString());
 
                 Map<String, String> map = new HashMap<>();
                 map.put("accessToken", "Bearer " + tokens.get(0));
 
-                return ResponseEntity.status(HttpStatus.OK).body(map);
+                return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
             } else{
                 throw new TokenInvalidException();
             }
