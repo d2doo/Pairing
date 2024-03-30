@@ -13,26 +13,29 @@ import MyPage from "@/pages/MyPage";
 import DefaultLayout from "./components/DefaultLayout";
 import SaleUnit from "./components/SaleUnit";
 import { AuthRoute } from "@/components/AuthRoute.tsx";
-import {useEffect} from "react";
-import {useAuthStore} from "@/stores/auth.ts";
+import { useEffect } from "react";
+import { useAuthStore } from "@/stores/auth.ts";
 import axios from "axios";
 
 function App() {
   const authStore = useAuthStore();
   useEffect(() => {
     if (!authStore.accessToken) {
-      axios.post<{ accessToken: string }>(`${import.meta.env.VITE_API_BASE_URL}/refresh`)
-          .then(response => {
-            authStore.setAccessToken(response.data.accessToken);
-          })
-          .catch(error => {
-            authStore.clearAuth();
-          });
+      axios
+        .post<{ accessToken: string }>(
+          `${import.meta.env.VITE_API_BASE_URL}/refresh`,
+        )
+        .then((response) => {
+          authStore.setAccessToken(response.data.accessToken);
+        })
+        .catch((error) => {
+          authStore.clearAuth();
+        });
     }
   }, []);
 
   return (
-    <div className="relative flex h-[100vh] flex-col overflow-y-hidden">
+    <div className="relative flex h-[100dvh] flex-col overflow-y-hidden">
       {/* Routing 정의 시작 */}
       <BrowserRouter>
         <Routes>
