@@ -46,12 +46,19 @@ public class Product extends BaseEntity {
 
     private Integer totalPrice;
 
+    private String consumerId;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Unit> units = new ArrayList<>();
 
     public void updateStatus( ProductStatus status ){
 
         this.status = status;
+    }
+
+    public void updateDealInfo( String consumerId, ProductStatus status){
+        this.status = status;
+        this.consumerId = consumerId;
     }
 
     public void modifyTitle(String title) {
