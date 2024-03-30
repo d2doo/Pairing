@@ -30,6 +30,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
 
         BooleanBuilder builder = new BooleanBuilder();
 
+        builder.and(product.isDeleted.eq(false));
+
         if (productId != null) {
             builder.and(product.productId.gt(productId));
         }
