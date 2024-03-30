@@ -13,7 +13,9 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -48,20 +50,22 @@ public class MemberRestController {
 
         List<String> tokens = memberService.login(member);
 
-        Cookie cookie = new Cookie("Authorization", tokens.get(1));
-        cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
+        ResponseCookie responseCookie = ResponseCookie.from("Authorization", tokens.get(1))
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .maxAge(60 * 60 * 24 * 7)
+                .path("/")
+                .build();
 
-        response.addCookie(cookie);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, responseCookie.toString());
 
         Map<String, Object> map = new HashMap<>();
-
         map.put("member", MemberSummaryResponseDto.fromEntityWithMemberId(member,tokens.get(2)));
         map.put("accessToken", "Bearer " + tokens.get(0));
 
-        return ResponseEntity.status(HttpStatus.OK).body(map);
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
     }
 
     @DeleteMapping
