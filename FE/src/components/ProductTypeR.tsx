@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import { products } from "@/assets/dummydata/products.json";
 import { Link } from "react-router-dom";
-
-interface productInterface {
-  thumbnailUrl: string;
-  category: string[];
-  productId: string;
-  productTitle: string;
-  totalPrice: number;
-}
+import useSearchProductQuery from "./UseSearchProductQuery";
+import { useInView } from "react-intersection-observer";
+import { ProudctPreview, ProductListResponse } from "@/types/Products.ts";
+import { useLocalAxios } from "@/utils/axios.ts";
+import SkeletonCard from "./SkeletonCard";
 
 function Product({
   thumbnailUrl,
@@ -16,7 +12,7 @@ function Product({
   productId,
   productTitle,
   totalPrice,
-}: productInterface) {
+}: ProudctPreview) {
   return (
     <>
       <Link to={"/product/" + productId} key={productId}>
@@ -39,22 +35,61 @@ function Product({
 }
 
 function Products() {
-  const [product, setProduct] = useState<productInterface[]>([]);
-  //   const [loading, setLoading] = useState(true);
+  const localAxios = useLocalAxios(false); // 로그인 필요 없을 때 사용
+  const ROWS_PER_PAGE = 10;
+  const [lastProductId, setLastProductId] = useState<number>(1);
+  const [productList, setProductList] = useState<ProudctPreview[]>([]);
+  const { products, isLoading, isError, fetchNextPage, isFetchingNextPage } =
+    useSearchProductQuery({
+      // startCount: 몇번째 상품부터 불러올건지 시작인덱스 / row: 받아 올 상품 개수
+      rowsPerPage: ROWS_PER_PAGE,
+      queryFn: () => fetchProductsData(ROWS_PER_PAGE, lastProductId),
+    });
+
+  const fetchProductsData = async (
+    size: number,
+    productId: number,
+  ): Promise<ProductListResponse[]> => {
+    const response = await localAxios.get<ProductListResponse[]>(`/product`, {
+      params: { size: size, productId: productId },
+    });
+    return response.data;
+  };
+
+  const { ref, inView } = useInView();
 
   useEffect(() => {
-    (async () => {
-      const json: productInterface[] = products;
-      setProduct(json);
-      //   setLoading(false);
-    })();
-  }, []);
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView]);
+
+  useEffect(() => {
+    // product 확인
+    // 마지막 proudctId 가져오기
+    if (products) {
+      setLastProductId(Number(products[products.length - 1].productId));
+      setProductList([...productList, ...products]);
+    }
+  }, [products]);
+
+  if (isLoading) {
+    return (
+      <div className={"productList"}>
+        <SkeletonCard />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <></>;
+  }
 
   return (
     <>
       <div className="flex flex-wrap px-7 ">
         <div className="grid grid-cols-2 gap-x-10 gap-y-7">
-          {product.map((item: productInterface, index) => (
+          {productList?.map((item: ProudctPreview, index) => (
             <Product
               key={index}
               thumbnailUrl={item.thumbnailUrl}
@@ -64,6 +99,7 @@ function Products() {
               totalPrice={item.totalPrice}
             />
           ))}
+          {isFetchingNextPage ? <SkeletonCard /> : <div ref={ref} />}
         </div>
       </div>
     </>

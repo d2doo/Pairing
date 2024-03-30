@@ -1,0 +1,914 @@
+[
+  {
+    "productId": 4,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": "/img/extra-product-img.png",
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 5,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 6,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 4,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": "/img/extra-product-img.png",
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 5,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 6,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 4,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": "/img/extra-product-img.png",
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 5,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 6,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 4,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": "/img/extra-product-img.png",
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 5,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  },
+  {
+    "productId": 6,
+    "leader": {
+      "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+      "nickname": "라이빵허",
+      "profileImage": null,
+      "score": 30
+    },
+    "productTitle": "test14",
+    "thumbnailUrl": "/img/extra-product-img.png",
+    "category": {
+      "categoryId": 1,
+      "mainCategory": "무선 이어폰",
+      "subCategory": "에어팟 프로 2",
+      "partTypes": [
+        {
+          "partTypeId": 1,
+          "position": "왼쪽"
+        },
+        {
+          "partTypeId": 2,
+          "position": "오른쪽"
+        },
+        {
+          "partTypeId": 3,
+          "position": "케이스"
+        }
+      ]
+    },
+    "units": [
+      {
+        "memberId": "dd901deb-3cc7-4b63-a4b6-ff1709a4e0d5",
+        "nickname": "라이빵허",
+        "score": 30,
+        "unitDescription": "테스트 유닛1",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 1,
+            "position": "왼쪽"
+          }
+        ],
+        "age": 1
+      },
+      {
+        "memberId": "a1c7bf5f-241e-48d3-a843-a06c39cb7e82",
+        "nickname": "윤주짜이",
+        "score": 30,
+        "unitDescription": "테스트 유닛2",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 2,
+            "position": "오른쪽"
+          }
+        ],
+        "age": 2
+      },
+      {
+        "memberId": "9c00d866-2d9d-4ab9-8c7d-1f73c76ff314",
+        "nickname": "김다이헌",
+        "score": 30,
+        "unitDescription": "테스트 유닛3",
+        "unitImages": ["가나다라마바사"],
+        "positions": [
+          {
+            "partTypeId": 3,
+            "position": "케이스"
+          }
+        ],
+        "age": 3
+      }
+    ],
+    "totalPrice": 60000,
+    "maxAge": 3
+  }
+]
