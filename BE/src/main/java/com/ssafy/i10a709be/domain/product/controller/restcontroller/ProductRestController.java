@@ -56,7 +56,6 @@ public class ProductRestController {
 
     @GetMapping
     public ResponseEntity<List<ProductFindResponseDto>> findAllProduct(
-            @RequestParam(defaultValue = "0") int page,
             @RequestParam int size,
             @RequestParam(required = false) String memberId,
             @RequestParam(required = false) Long productId,
@@ -69,7 +68,7 @@ public class ProductRestController {
             @RequestParam(required = false) Integer maxAge,
             @RequestParam(required = false) String keyword
     ) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("productId"));
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC,"productId"));
         Page<Product> products = productService.findAllProduct(pageable, productId,isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
         List<ProductFindResponseDto> productFindResponseDtos = products.stream()
                 .map(ProductFindResponseDto::fromEntity).toList();
