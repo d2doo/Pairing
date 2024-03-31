@@ -33,7 +33,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
         builder.and(product.isDeleted.eq(false));
 
         if (productId != null) {
-            builder.and(product.productId.gt(productId));
+            builder.and(product.productId.loe(productId));
         }
         if (isCombined != null) {
             if (isCombined) {
@@ -53,6 +53,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
         }
         if (productStatus != null) {
             builder.and(product.status.eq(ProductStatus.valueOf(productStatus)));
+        } else{
+            builder.and(product.status.eq(ProductStatus.valueOf("ON_SELL")));
         }
         if (startPrice != null) {
             builder.and(product.totalPrice.goe(startPrice));
