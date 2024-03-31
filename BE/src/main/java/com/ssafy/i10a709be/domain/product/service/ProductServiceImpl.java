@@ -147,7 +147,12 @@ public class ProductServiceImpl implements ProductService {
     @Transactional
     @Override
     public Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
-        return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+        if (productId == null) {
+            Long lastProductId = productRepository.count();
+            return productRepository.findProductsByDynamicQuery(pageable, lastProductId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+        } else {
+            return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+        }
     }
 
     @Transactional
