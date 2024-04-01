@@ -63,7 +63,7 @@ public class MemberRestController {
         Map<String, Object> map = new HashMap<>();
         map.put("member", MemberSummaryResponseDto.fromEntityWithMemberId(member,tokens.get(2)));
         map.put("accessToken", "Bearer " + tokens.get(0));
-
+        log.info( "login1!:" + map.toString() );
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
     }
 
