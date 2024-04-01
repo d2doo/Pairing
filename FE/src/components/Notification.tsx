@@ -18,6 +18,26 @@ function Notification() {
   const localAxios = useLocalAxios();
   const baseUrl: string = import.meta.env.VITE_API_BASE_URL;
 
+  
+  const send = () => {
+    console.log("Send Message Request");
+    const dest = `/send/notification`;
+
+    stompClient.current?.publish({
+      destination: dest,
+      body: JSON.stringify({
+        topicSubject: 'product',
+        members: [
+          auth.memberId
+        ],
+        content: '테스트 알림 입니다.',
+        isRead: false,
+        notificationType: 'confirm',
+        productId: 4
+      })
+    })
+  }
+  
   const readNotifications = async () => {
     console.log("Read Messages");
     await localAxios.put(
@@ -91,7 +111,7 @@ function Notification() {
               const messages = notificationList.current
                 .map(
                   (notification, index) =>
-                    `Notification ${index + 1}: ${notification.content}`,
+                    `Notification ${index + 1}: ${notification.content} type: ${notification.notificationType} id: ${notification.productId}`,
                 )
                 .join("\n");
 
@@ -106,6 +126,14 @@ function Notification() {
               <p className="text-xs text-white">{notificationCount}</p>
             </div>
           )}
+          <p
+            className="material-symbols-outlined"
+            onClick={() => {
+              send();
+            }}
+          >
+            send
+          </p>
         </div>
       </div>
     </>
