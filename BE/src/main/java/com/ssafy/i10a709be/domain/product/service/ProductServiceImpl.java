@@ -27,6 +27,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -192,8 +193,8 @@ public class ProductServiceImpl implements ProductService {
         }
     }
     //Compose 생성 로직
-    @Transactional
     @Override
+    @Transactional
     public Long createAfterCompose(String memberId, Long productId, ProductSaveRequestDto productSaveRequestDto) {
         Member member = memberRepository.findById( memberId ).orElseThrow( () -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
         Product product = productRepository.findProductAndUnitsByProductId( productId ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
