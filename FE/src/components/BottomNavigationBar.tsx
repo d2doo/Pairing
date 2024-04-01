@@ -1,18 +1,21 @@
 import { Link } from "react-router-dom";
+import MyPage from "@/assets/images/mypage-btn.png";
+import HOME from "@/assets/images/home-btn.png";
+import Message from "@/assets/images/message-btn.png";
 
 const navigationMenus = [
   {
-    icon: "/img/message-btn.png",
+    icon: Message,
     url: "/chat",
     text: "채팅",
   },
   {
-    icon: "/img/home-btn.png",
+    icon: HOME,
     url: "/",
     text: "홈",
   },
   {
-    icon: "/img/mypage-btn.png",
+    icon: MyPage,
     url: "/mypage",
     text: "마이",
   },

@@ -8,6 +8,7 @@ import { DefaultImageUploader } from "./DefaultImageUploader";
 import { AxiosResponse } from "axios";
 import { useLocalAxios } from "@/utils/axios";
 import Swal from "sweetalert2";
+import Anonymous from "@/assets/images/mypage-btn.png";
 
 function InfoUser() {
   const auth = useAuthStore();
@@ -37,9 +38,23 @@ function InfoUser() {
     }));
   };
 
+  useEffect(() => {}, [userInfo]);
+
   useEffect(() => {
-    console.log(userInfo);
-  }, [userInfo]);
+    (async () => {
+      const data = await getMemberData();
+      if (data) {
+        setUserData(data); // 상태 업데이트
+      }
+    })();
+  }, []);
+
+  const getMemberData = async () => {
+    const response = await localAxios.get<MemberResponse>("/member");
+    return response.data;
+  };
+
+  const [userData, setUserData] = useState<MemberResponse | null>(null);
 
   const onImageUploadComplete = (response: AxiosResponse) => {
     const profileImage: string = response.data.imgUrl;
@@ -69,23 +84,37 @@ function InfoUser() {
 
   return (
     <>
-      <div className="mb-14 flex flex-col items-center border-y border-gray1 font-GothicLight text-sm">
+      <div className="flex flex-col items-center border-gray1 font-GothicLight text-sm">
         <div className="w-50 mt-4 flex items-center space-x-4 text-xs">
-          <DefaultImageUploader
-            selectedUrl={auth.profileImage}
-            className="h-32 w-32"
-            onUploadComplete={onImageUploadComplete}
-          />
+          {userData ? (
+            <DefaultImageUploader
+              selectedUrl={auth.profileImage}
+              className="h-20 w-20 object-cover"
+              onUploadComplete={onImageUploadComplete}
+            />
+          ) : (
+            <img
+              src={Anonymous}
+              alt="anonymous_err"
+              className="size-12 object-cover"
+            />
+          )}
           <div className="text-md h-full">
-            <p>{auth.nickname}</p>
-            <div className="flex">
-              <img
-                src="/img/platinum.png"
-                alt="pl_err"
-                className="size-4 object-cover"
-              />
-              <p>{auth.score}</p>
-            </div>
+            {userData ? (
+              <>
+                <p>{userData.email}</p>
+                <div className="flex">
+                  <img
+                    src="/img/platinum.png"
+                    alt="pl_err"
+                    className="size-4 object-cover"
+                  />
+                  <p>{userData.score}</p>
+                </div>
+              </>
+            ) : (
+              <p className="font-GothicBold">비회원입니다.</p>
+            )}
           </div>
         </div>
         <div className="mt-4 flex w-full px-4">
@@ -94,14 +123,11 @@ function InfoUser() {
             <div className="flex h-9 border-b-2">
               <Input
                 placeholder="이곳에 입력하세요."
-                className="test-xs p-1"
+                className="test-xs border-none p-1"
                 name="nickname"
                 value={userInfo.nickname}
                 onChange={onChangedUpdateRequest}
               ></Input>
-              {/* <Button className="my-1 border border-gray1 bg-transparent">
-                수정
-              </Button> */}
             </div>
           </div>
         </div>
@@ -111,31 +137,16 @@ function InfoUser() {
             <div className="flex h-9 border-b-2">
               <Input
                 placeholder="이곳에 입력하세요."
-                className="test-xs p-1"
-                value={userInfo.phoneNumber}
+                className="test-xs border-none p-1"
+                value={userData?.phoneNumber}
                 name="phoneNumber"
                 onChange={onChangedUpdateRequest}
-              ></Input>
-              {/* <Button className="my-1 border border-gray1 bg-transparent">
-                수정
-              </Button> */}
+                defaultValue={userData?.phoneNumber}
+              />
+              {/* 이게 아니란 말이야? */}
             </div>
           </div>
         </div>
-        {/* <div className="mt-4 flex w-full px-4">
-          <div className="w-full">
-            <p className="flex items-center font-Gothic text-xxs">연락처</p>
-            <div className="flex border-b-2">
-              <Input
-                placeholder="이곳에 입력하세요."
-                className="test-xs"
-              ></Input>
-              <Button className="my-1 border border-gray1 bg-transparent">
-                수정
-              </Button>
-            </div>
-          </div>
-        </div> */}
         <div className="mt-4 flex w-full px-4">
           <div className="w-full">
             <Postcode onChanged={onChangedAddress} />
@@ -144,9 +155,9 @@ function InfoUser() {
 
         {/* 다음 주소 가져오면 삭제할 부분 시작 */}
         <div className="w-full px-4">
-          <div className="mt-2 w-full">
+          <div className="mt-2 flex   w-full justify-center">
             <Button
-              className="my-1 h-full w-full border border-gray1 bg-transparent"
+              className="my-1 h-full w-1/2 border border-gray1 bg-transparent"
               onClick={UpdateMember}
             >
               수정
