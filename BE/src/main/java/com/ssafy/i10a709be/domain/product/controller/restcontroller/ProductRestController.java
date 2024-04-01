@@ -74,7 +74,7 @@ public class ProductRestController {
         return ResponseEntity.ok().body(ProductFindResponseDto.fromEntity(product));
     }
 
-    @PatchMapping("/{productId}")
+    @PutMapping("/{productId}")
     public ResponseEntity<String> modifyProductTitle(@PathVariable Long productId, @RequestParam String productTitle) {
         return ResponseEntity.ok().body(productService.modifyProduct(productId, productTitle));
     }
