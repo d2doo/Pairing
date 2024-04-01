@@ -2,15 +2,15 @@ import {MemberSummaryResponse} from "@/types/Member.ts";
 import { UnitFind, UnitSaveRequest } from "./Unit";
 
 interface PartType {
-    partTypeId: number;
-    position: string;
+  partTypeId: number;
+  position: string;
 }
 
 interface Category {
-    categoryId: number;
-    mainCategory: string;
-    subCategory: string;
-    partType: PartType
+  categoryId: number;
+  mainCategory: string;
+  subCategory: string;
+  partType: PartType;
 }
 
 interface UnitResponse {
@@ -24,21 +24,21 @@ interface UnitResponse {
 }
 
 interface ProductDetailResponse {
-    category: Category;
-    leader: MemberSummaryResponse;
-    maxAge: number;
-    productId: number;
-    productTitle: string;
-    thumbnailUrl: string;
-    totalPrice: number;
-    units: UnitResponse[];
+  category: Category;
+  leader: MemberSummaryResponse;
+  maxAge: number;
+  productId: number;
+  productTitle: string;
+  thumbnailUrl: string;
+  totalPrice: number;
+  units: UnitResponse[];
 }
 
-interface ProductSaveRequest{
-    productTitle: string,
-    unit: UnitSaveRequest,
-    targetUnits: number[],
-    thumbnailIndex: number,
+interface ProductSaveRequest {
+  productTitle: string;
+  unit: UnitSaveRequest;
+  targetUnits: number[];
+  thumbnailIndex: number;
 }
 
 interface ProductFindResponse{
@@ -52,4 +52,20 @@ interface ProductFindResponse{
     units: UnitFind[],
 }
 
-export type { PartType, Category, UnitResponse, ProductDetailResponse, ProductSaveRequest, ProductFindResponse };
+interface ProudctPreview {
+  thumbnailUrl: string;
+  category: string[];
+  productId: string;
+  productTitle: string;
+  totalPrice: number;
+}
+
+export type {
+  PartType,
+  Category,
+  UnitResponse,
+  ProductDetailResponse,
+  ProductSaveRequest,
+  ProductFindResponse,
+  ProudctPreview,
+};

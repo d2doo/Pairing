@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useSearchProductQuery from "./UseSearchProductQuery";
 import { useInView } from "react-intersection-observer";
-import { ProudctPreview, ProductListResponse } from "@/types/Products.ts";
 import { useLocalAxios } from "@/utils/axios.ts";
 import SkeletonCard from "./SkeletonCard";
+import { ProudctPreview, ProductDetailResponse } from "@/types/Product";
 
 function Product({
   thumbnailUrl,
@@ -34,11 +34,10 @@ function Product({
   );
 }
 
-function Products() {
-  const localAxios = useLocalAxios(false); // 로그인 필요 없을 때 사용
-  const ROWS_PER_PAGE = 10;
-  const [lastProductId, setLastProductId] = useState<number>(1);
-  const [productList, setProductList] = useState<ProudctPreview[]>([]);
+function Products(props: { onlyMyProduct: boolean; productId: number }) {
+  const localAxios = useLocalAxios(props.onlyMyProduct); // 로그인 필요 없을 때 사용
+  const ROWS_PER_PAGE = 4;
+  const [lastProductId, setLastProductId] = useState<number>(props.productId);
   const { products, isLoading, isError, fetchNextPage, isFetchingNextPage } =
     useSearchProductQuery({
       // startCount: 몇번째 상품부터 불러올건지 시작인덱스 / row: 받아 올 상품 개수
@@ -46,12 +45,16 @@ function Products() {
       queryFn: () => fetchProductsData(ROWS_PER_PAGE, lastProductId),
     });
 
+  // 처음 요청은 size만 받고 그 다음 요청을 할 때는 productId가 필요
   const fetchProductsData = async (
     size: number,
     productId: number,
-  ): Promise<ProductListResponse[]> => {
-    const response = await localAxios.get<ProductListResponse[]>(`/product`, {
-      params: { size: size, productId: productId },
+  ): Promise<ProductDetailResponse[]> => {
+    const params =
+      productId !== 0 ? { size: size, productId: productId } : { size: size };
+
+    const response = await localAxios.get<ProductDetailResponse[]>(`/product`, {
+      params: params,
     });
     return response.data;
   };
@@ -67,16 +70,16 @@ function Products() {
   useEffect(() => {
     // product 확인
     // 마지막 proudctId 가져오기
-    if (products) {
-      setLastProductId(Number(products[products.length - 1].productId));
-      setProductList([...productList, ...products]);
+    if (products && products.length !== 0) {
+      const last = Number(products[products.length - 1].productId);
+      setLastProductId(last);
     }
-  }, [products]);
+  }, [products, props.productId]);
 
   if (isLoading) {
     return (
-      <div className={"productList"}>
-        <SkeletonCard />
+      <div className={"products"}>
+        <SkeletonCard size={ROWS_PER_PAGE} />
       </div>
     );
   }
@@ -89,7 +92,7 @@ function Products() {
     <>
       <div className="flex flex-wrap px-7 ">
         <div className="grid grid-cols-2 gap-x-10 gap-y-7">
-          {productList?.map((item: ProudctPreview, index) => (
+          {products?.map((item: ProudctPreview, index) => (
             <Product
               key={index}
               thumbnailUrl={item.thumbnailUrl}
@@ -99,8 +102,12 @@ function Products() {
               totalPrice={item.totalPrice}
             />
           ))}
-          {isFetchingNextPage ? <SkeletonCard /> : <div ref={ref} />}
         </div>
+        {isFetchingNextPage ? (
+          <SkeletonCard size={ROWS_PER_PAGE} />
+        ) : (
+          <div ref={ref} />
+        )}
       </div>
     </>
   );
