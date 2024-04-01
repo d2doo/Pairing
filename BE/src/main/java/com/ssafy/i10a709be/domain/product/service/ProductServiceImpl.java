@@ -12,6 +12,7 @@ import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.*;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import com.ssafy.i10a709be.domain.product.repository.*;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -68,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
                     .unitDescription(request.getUnit().getUnitDescription())
                     .price(request.getUnit().getPrice())
                     .age(request.getUnit().getAge())
+                    .status(request.getUnit().getStatus())
                     .isConfirmed(true)
                     .build();
 
@@ -88,7 +90,7 @@ public class ProductServiceImpl implements ProductService {
 
             for (Long partTypeId : request.getUnit().getPartTypeIds()) {
                 Optional<PartType> partType = partTypeRepository.findById(partTypeId);
-
+                System.out.println(partType);
                 if (partType.isPresent()) {
 
                     Part part = Part.builder()
@@ -194,13 +196,13 @@ public class ProductServiceImpl implements ProductService {
     }
     //Compose 생성 로직
     @Override
-    @Transactional
-    public Long createAfterCompose(String memberId, Long productId, ProductSaveRequestDto productSaveRequestDto) {
+    public Long createAfterCompose(String memberId, Long unitId, ProductSaveRequestDto productSaveRequestDto) {
         Member member = memberRepository.findById( memberId ).orElseThrow( () -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
-        Product product = productRepository.findProductAndUnitsByProductId( productId ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
+        Unit unit = unitRepository.findById( unitId ).orElseThrow( () -> new EntityNotFoundException("찾으시는 유닛이 없습니다"));
+        Product product = productRepository.findProductAndUnitsByProductId( unit.getOriginalProductId() ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
         product.softDeleted( true );
         product.updateStatus(ProductStatus.PENDING);
-        Unit unit = unitRepository.findUnitByProduct_ProductIdAndMember_MemberId(productId, memberId);
+
         // 권한 체크
         if (member.getMemberId() != product.getMember().getMemberId())
             throw new NoAuthorizationException("잘못된 요청입니다.", this);

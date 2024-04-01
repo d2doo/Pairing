@@ -1,5 +1,7 @@
 package com.ssafy.i10a709be.domain.product.service;
 
+import com.ssafy.i10a709be.domain.product.dto.UnitResponseDto;
+import com.ssafy.i10a709be.domain.product.dto.UnitSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.dto.UnitUpdateRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.Unit;
 import com.ssafy.i10a709be.domain.product.repository.UnitRepository;
@@ -8,6 +10,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +30,8 @@ public class UnitServiceImpl implements UnitService {
         return unitRepository.findUnitsByPartTypeId(pageable, unitId, partTypeId);
     }
 
+
+
     @Override
     @Transactional
     public Unit updateUnitById(String memberId, Long unitId, UnitUpdateRequestDto unitUpdateRequestDto) {
@@ -41,4 +47,11 @@ public class UnitServiceImpl implements UnitService {
 
         return unit;
     }
+
+    @Override
+    public List<Unit> findMyUnits(String memberId) {
+        return unitRepository.findAllByMember_MemberId( memberId );
+    }
+
+
 }
