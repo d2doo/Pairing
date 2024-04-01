@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import BackBtn from "@/assets/images/back-btn.png";
+import MainHeader from "./MainHeader";
 
 interface Props {
   title: string;
