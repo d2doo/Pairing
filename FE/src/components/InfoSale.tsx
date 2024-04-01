@@ -77,6 +77,8 @@ function Product({
   return (
     <>
       <Link to={"/product/" + productId} key={productId}>
+        {/* 이미지 처리 필요 */}
+
         {/* <img src={thumbnailUrl} className="size-32 object-cover pb-1" /> */}
         <img
           src="img/extra-product-img.png"

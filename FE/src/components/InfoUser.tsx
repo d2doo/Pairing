@@ -33,7 +33,7 @@ function InfoUser() {
   const onChangedImage = (value: string) => {
     setUserInfo((prevState) => ({
       ...prevState,
-      profileImage: value,
+      profileImage: value ? value : "/img/extra.png",
     }));
   };
 

@@ -7,6 +7,7 @@ import { Progress } from "@/components/ui/progress.tsx";
 interface ImageUploaderProps {
   children?: ReactNode;
   className?: string;
+  disabled?: boolean;
   onUploadRequested?: () => void;
   onUploadComplete?: (response: AxiosResponse) => void;
   onError?: (error: Error | unknown) => void;
@@ -104,7 +105,13 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         <Progress className="absolute bottom-1/4 h-2 w-3/4" value={progress} />
       )}
       {uploadStatus == ImageUploadStatus.PENDING && (
-        <input type="file" accept="image/*" hidden onChange={onChangeImage} />
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={onChangeImage}
+          disabled={props.disabled}
+        />
       )}
     </label>
   );

@@ -44,8 +44,8 @@ function App() {
           {/* 로그인이 필요한 페이지 */}
           <Route element={<AuthRoute />}>
             <Route element={<DefaultLayout headerType="titleBar" />}>
-              <Route path="/new/unit-lists" element={<UnitLists />} />
-              <Route path="/new/product" element={<SaleProduct />} />
+              {/* <Route path="/new/unit-lists" element={<UnitLists />} /> */}
+              {/* <Route path="/new/product" element={<SaleProduct />} /> */}
               <Route path="/new/unit" element={<SaleUnit />} />
             </Route>
             <Route element={<DefaultLayout headerType="titleBar" />}>
@@ -71,6 +71,8 @@ function App() {
           <Route element={<DefaultLayout />}>
             <Route path="/" element={<SaleMain />} />
           </Route>
+          <Route path="/new/product" element={<SaleProduct />} />
+          <Route path="/new/unit-lists" element={<UnitLists />} />
         </Routes>
       </BrowserRouter>
       {/* Routing 정의 끝 */}
