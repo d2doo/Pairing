@@ -35,6 +35,8 @@ public class KafkaNotificationConsumerService {
                                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다.")))
                         .content(notificationRequest.getContent())
                         .isRead(notificationRequest.getIsRead())
+                        .notificationType(notificationRequest.getNotificationType())
+                        .productId(notificationRequest.getProductId())
                         .build();
                 notificationPool.add(notification);
             }

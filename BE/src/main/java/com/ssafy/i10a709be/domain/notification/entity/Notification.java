@@ -1,6 +1,7 @@
 package com.ssafy.i10a709be.domain.notification.entity;
 
 import com.ssafy.i10a709be.domain.member.entity.Member;
+import com.ssafy.i10a709be.domain.notification.enums.NotificationType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -28,6 +29,10 @@ public class Notification {
     private String content;
 
     private Boolean isRead;
+
+    private NotificationType notificationType;
+
+    private Long productId;
 
     public void readNotification() {
         this.isRead = true;
