@@ -43,8 +43,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*"));
-        config.setAllowedMethods(List.of("*"));
+        config.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:3000", "https://j10a709.p.ssafy.io","https://ssafyhelper.shop","chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo","https://ssafycontrol.shop"));
+        config.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "PATCH"));
         config.setAllowCredentials(true);
         config.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-requested-with"));
         config.setMaxAge(1800L);
