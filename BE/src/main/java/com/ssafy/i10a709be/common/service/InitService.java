@@ -5,6 +5,7 @@ import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.common.repository.FileRepository;
 import com.ssafy.i10a709be.domain.community.dto.ChatMessageRequestDto;
 import com.ssafy.i10a709be.domain.community.dto.ChatRoomCreateDto;
+import com.ssafy.i10a709be.domain.community.entity.ChatRoom;
 import com.ssafy.i10a709be.domain.community.enums.ChatRoomStatus;
 import com.ssafy.i10a709be.domain.community.enums.ChatType;
 import com.ssafy.i10a709be.domain.community.repository.ChatRoomRepository;

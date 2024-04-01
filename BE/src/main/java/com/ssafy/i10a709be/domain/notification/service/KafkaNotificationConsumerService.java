@@ -2,8 +2,8 @@ package com.ssafy.i10a709be.domain.notification.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
-import com.ssafy.i10a709be.domain.notification.dto.NotificationRequestDto;
-import com.ssafy.i10a709be.domain.notification.dto.NotificationResponseDto;
+import com.ssafy.i10a709be.domain.notification.dto.NotificationCreateRequestDto;
+import com.ssafy.i10a709be.domain.notification.dto.NotificationCreateResponseDto;
 import com.ssafy.i10a709be.domain.notification.entity.Notification;
 import com.ssafy.i10a709be.domain.notification.repository.NotificationRepository;
 import java.util.ArrayList;
@@ -26,18 +26,21 @@ public class KafkaNotificationConsumerService {
     @KafkaListener(topics = "product-notification", groupId = "productGroup")
     public void consume(ConsumerRecord<String, String> message) {
         try {
-            NotificationRequestDto notificationRequest = objectMapper.readValue(message.value(), NotificationRequestDto.class);
+            log.info("Consume Messasge : " + message.value());
+            NotificationCreateRequestDto notificationRequest = objectMapper.readValue(message.value(), NotificationCreateRequestDto.class);
             ArrayList<Notification> notificationPool = new ArrayList<>();
             for (String memberId : notificationRequest.getMembers()) {
                 Notification notification = Notification.builder()
                         .member(memberRepository.findById(memberId)
                                 .orElseThrow(() -> new IllegalArgumentException("해당 사용자를 찾을 수 없습니다.")))
                         .content(notificationRequest.getContent())
+                        .isRead(notificationRequest.getIsRead())
                         .build();
                 notificationPool.add(notification);
             }
             for (Notification notification : notificationPool) {
-                NotificationResponseDto notificationResponse = NotificationResponseDto.fromEntity(notification);
+                notificationRepository.save(notification);
+                NotificationCreateResponseDto notificationResponse = NotificationCreateResponseDto.fromEntity(notification);
                 simpMessagingTemplate.convertAndSend("/product-notification/" + notificationResponse.getMemberId(), objectMapper.writeValueAsString(notificationResponse));
             }
         } catch (Exception e) {

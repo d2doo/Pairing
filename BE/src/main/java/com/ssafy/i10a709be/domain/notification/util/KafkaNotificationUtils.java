@@ -19,8 +19,6 @@ import org.springframework.stereotype.Component;
 public class KafkaNotificationUtils {
     private final KafkaAdmin kafkaAdmin;
     private final KafkaNotificationConsumerService kafkaNotificationConsumerService;
-    private final KafkaListenerEndpointRegistry kafkaListenerEndpointRegistry;
-    private final KafkaListenerContainerFactory<?> kafkaListenerContainerFactory;
 
     public void createTopic(String topicName, int numPartitions, short replicationFactor) {
         NewTopic newNotificationTopic = new NewTopic(topicName, numPartitions, replicationFactor);

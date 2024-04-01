@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 public class MemberServiceImpl implements MemberService{
     private final MemberRepository memberRepository;
@@ -43,6 +43,7 @@ public class MemberServiceImpl implements MemberService{
         Member UUID를 이용해 Soft delete 실행
      */
     @Override
+    @Transactional
     public boolean removeMember(String memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
         if(member.isPresent()){
@@ -75,6 +76,7 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
+    @Transactional
     public void logout(String memberId) {
         memberRepository.findById(memberId).ifPresent(member ->{
             member.updateRefreshToken(null);
