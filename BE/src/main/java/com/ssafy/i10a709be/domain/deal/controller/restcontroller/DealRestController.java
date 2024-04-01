@@ -33,13 +33,13 @@ public class DealRestController {
         구매 신청 & 완료
         구매자만이 해당 Request를 보낼 수 있어야합니다.
      */
-    @PatchMapping("/buy/{productId}")
+    @PutMapping("/buy/{productId}")
     public ResponseEntity<Void> startTrading(@PathVariable Long productId, @AuthenticationPrincipal String memberId){
         dealService.startTrading(productId, memberId);
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/complete/{productId}")
+    @PutMapping("/complete/{productId}")
     public ResponseEntity<Void> transactionComplete(@PathVariable Long productId, @AuthenticationPrincipal String memberId){
         dealService.transactionComplete(productId, memberId);
         return ResponseEntity.ok().build();

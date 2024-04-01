@@ -1,5 +1,7 @@
 package com.ssafy.i10a709be.domain.product.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.common.exception.NoAuthorizationException;
 import com.ssafy.i10a709be.common.repository.FileRepository;
@@ -8,11 +10,16 @@ import com.ssafy.i10a709be.domain.community.enums.ChatRoomStatus;
 import com.ssafy.i10a709be.domain.community.service.ChatService;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
+import com.ssafy.i10a709be.domain.notification.dto.NotificationCreateRequestDto;
+import com.ssafy.i10a709be.domain.notification.enums.NotificationType;
+import com.ssafy.i10a709be.domain.notification.repository.NotificationRepository;
+import com.ssafy.i10a709be.domain.notification.service.KafkaNotificationProducerService;
 import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.*;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import com.ssafy.i10a709be.domain.product.repository.*;
 import jakarta.persistence.EntityNotFoundException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -39,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
     private final UnitImagesRepository unitImagesRepository;
     private final ChatService chatService;
     private final FileRepository fileRepository;
+    private final KafkaNotificationProducerService notificationProducerService;
 
     //TODO 1차 개발 끝나면 해당 로직 세분화를 시켜서 재사용성을 높히자.
     //단일 파츠 및 유닟 및 상품 생성
@@ -144,7 +152,18 @@ public class ProductServiceImpl implements ProductService {
         }
         ChatRoomCreateDto dto = new ChatRoomCreateDto( memberList, unit.getMember().getMemberId(), product.getTitle() +"상품 합의 채팅방입니다.", 1 + targets.size(), ChatRoomStatus.active, product.getProductId());
         chatService.createChatRoom( dto );
-
+        NotificationCreateRequestDto notificationCreateRequestDto = NotificationCreateRequestDto
+                .builder()
+                .topicSubject("product")
+                .members((ArrayList<String>) memberList.stream().map((member) -> {
+                    return member.getMemberId();
+                }).collect(Collectors.toList()))
+                .content(product.getTitle() + " 상품이 생성되었습니다. 어서 합의해주세요!")
+                .isRead(false)
+                .notificationType(NotificationType.confirm)
+                .productId(product.getProductId())
+                .build();
+        notificationProducerService.sendNotificationToKafkaTopic(notificationCreateRequestDto);
     }
 
     @Transactional
