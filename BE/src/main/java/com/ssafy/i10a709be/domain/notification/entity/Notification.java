@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Builder @Getter
@@ -25,4 +26,10 @@ public class Notification {
     private Member member;
 
     private String content;
+
+    private Boolean isRead;
+
+    public void readNotification() {
+        this.isRead = true;
+    }
 }

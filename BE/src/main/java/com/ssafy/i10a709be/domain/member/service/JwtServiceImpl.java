@@ -5,9 +5,11 @@ import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class JwtServiceImpl implements JwtService{
     private final JwtProvider jwtProvider;
     private final MemberRepository memberRepository;

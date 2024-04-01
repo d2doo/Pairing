@@ -11,14 +11,18 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class NotificationResponseDto {
+public class NotificationCreateResponseDto {
+    private Long notificationId;
     private String memberId;
     private String content;
+    private Boolean isRead;
 
-    public static NotificationResponseDto fromEntity(Notification notification) {
-        return NotificationResponseDto.builder()
+    public static NotificationCreateResponseDto fromEntity(Notification notification) {
+        return NotificationCreateResponseDto.builder()
+                .notificationId(notification.getNotificationId())
                 .memberId(notification.getMember().getMemberId())
                 .content(notification.getContent())
+                .isRead(notification.getIsRead())
                 .build();
     }
 }

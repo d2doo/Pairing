@@ -1,6 +1,5 @@
 package com.ssafy.i10a709be.domain.member.controller.restcontroller;
 
-import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
 import com.ssafy.i10a709be.domain.member.dto.*;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.oauth.OAuthClient;
