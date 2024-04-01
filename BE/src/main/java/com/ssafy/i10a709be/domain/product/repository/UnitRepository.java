@@ -25,9 +25,14 @@ public interface UnitRepository extends JpaRepository<Unit, Long>, QuerydslPredi
 
         BooleanBuilder builder = new BooleanBuilder();
 
-        if (unitId != null) builder.and(unit.unitId.gt(unitId));
+        builder.and(unit.isDeleted.eq(false));
+        builder.and(unit.isCombinable.eq(true));
+
+        if (unitId != null) builder.and(unit.unitId.lt(unitId));
+
         builder.and(unit.parts.size().eq(1));
         builder.and(unit.parts.any().partType.partTypeId.eq(partTypeId));
+        builder.and(unit.product.productId.eq(unit.originalProductId));
 
         return findAll(builder, pageable);
     }
