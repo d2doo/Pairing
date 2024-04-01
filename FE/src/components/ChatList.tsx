@@ -46,8 +46,8 @@ function ChatList() {
     const url = `/chat/room`;
 
     localAxios.get<ChatRoomResponse[]>(url).then((res) => {
-      console.log(res["data"]);
-      res["data"].forEach((element) => {
+      // console.log(res["data"]);
+      res.data.forEach((element) => {
         const tag: JSX.Element = (
           <Link
             to={`/chat/room/${element.chatRoomId}`}

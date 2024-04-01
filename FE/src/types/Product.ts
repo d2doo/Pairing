@@ -1,4 +1,5 @@
-import {MemberSummaryResponse} from "@/types/Member.ts";
+import { MemberSummaryResponse } from "@/types/Member.ts";
+import { Category } from "./Category";
 import { UnitFind, UnitSaveRequest } from "./Unit";
 
 interface PartType {
@@ -6,21 +7,13 @@ interface PartType {
   position: string;
 }
 
-interface Category {
-  categoryId: number;
-  mainCategory: string;
-  subCategory: string;
-  partType: PartType;
-}
-
 interface UnitResponse {
-    age: number;
-    memberId: string;
-    nickname: string;
-    positions: PartType[];
-    score: number;
-    unitDescription: string;
-    unitImages: string[];
+  age: number;
+  memberId: string;
+  nickname: string;
+  positions: PartType[];
+  score: number;
+  unitImages: string[];
 }
 
 interface ProductDetailResponse {

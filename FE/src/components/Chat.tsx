@@ -38,6 +38,8 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
       return (
         <div key={elem.chatId} className="chat flex items-center gap-2">
           <div className="self-start">
+            {/* 이미지 수정 필요 */}
+
             <img
               src="/img/extra.png"
               alt="profile_err"
@@ -59,8 +61,6 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
     // getLoginTestMemberId();
     console.log("authMember:", authMember);
     getChatList();
-    // console.log("memberId", memberId );
-    // console.log('roomId', roomId );
   }, []);
 
   useEffect(() => {
@@ -189,7 +189,7 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
           />
           <div className="flex h-7 w-56 items-center rounded-md border-2 border-black1 p-1 font-Gothic text-xs">
             <Input
-              placeholder="채팅 치는 공간 여기에 있어야함"
+              placeholder="채팅 입력"
               onChange={onChangeInputValue}
               onKeyDown={handleEnter}
               value={value}
