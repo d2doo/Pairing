@@ -1,6 +1,5 @@
 package com.ssafy.i10a709be.domain.member.controller.restcontroller;
 
-import com.ssafy.i10a709be.common.security.jwt.JwtProvider;
 import com.ssafy.i10a709be.domain.member.dto.*;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.oauth.OAuthClient;
@@ -13,7 +12,9 @@ import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,6 @@ public class MemberRestController {
 
     @PutMapping
     public ResponseEntity<MemberResponseDto> updateMemberDetails(@AuthenticationPrincipal String memberId, @RequestBody MemberUpdateRequestDto memberUpdateRequestDto) {
-        log.info( "data:" + memberUpdateRequestDto.toString() );
         return ResponseEntity.ok(MemberResponseDto.fromEntity(memberService.updateMemberDetails(memberId, memberUpdateRequestDto)));
     }
 
@@ -49,20 +49,22 @@ public class MemberRestController {
 
         List<String> tokens = memberService.login(member);
 
-        Cookie cookie = new Cookie("Authorization", tokens.get(1));
-        cookie.setMaxAge(1000 * 60 * 60 * 24 * 7);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
+        ResponseCookie responseCookie = ResponseCookie.from("Authorization", tokens.get(1))
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .maxAge(60 * 60 * 24 * 7)
+                .path("/")
+                .build();
 
-        response.addCookie(cookie);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, responseCookie.toString());
 
         Map<String, Object> map = new HashMap<>();
-        map.put("member", MemberSummaryResponseDto.fromEntity(member));
+        map.put("member", MemberSummaryResponseDto.fromEntityWithMemberId(member,tokens.get(2)));
         map.put("accessToken", "Bearer " + tokens.get(0));
-
-
-        return ResponseEntity.status(HttpStatus.OK).body(map);
+        log.info( "login1!:" + map.toString() );
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
     }
 
     @DeleteMapping
@@ -75,25 +77,21 @@ public class MemberRestController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(@AuthenticationPrincipal String memberId, HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<Void> logout(@AuthenticationPrincipal String memberId, @CookieValue(name = "Authorization", required = false) Cookie refresh){
         memberService.logout(memberId);
 
-        Cookie refreshTokenCookie = null;
-        String header = "Authorization";
+        ResponseCookie cookie = ResponseCookie.from("Authorization", null)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .maxAge(0)
+                .path("/")
+                .build();
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (header.equals(cookie.getName())) {
-                    refreshTokenCookie = cookie;
-                    break;
-                }
-            }
-        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        refreshTokenCookie.setMaxAge(0);
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
 
     // 채팅 테스트 로그인 서비스

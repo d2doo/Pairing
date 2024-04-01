@@ -1,11 +1,10 @@
 package com.ssafy.i10a709be.common.service;
 import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 
 import com.amazonaws.services.s3.AmazonS3Client;
@@ -43,6 +42,15 @@ public class FileUploadServiceImpl implements FileUploadService {
 
 
         return uploadFiles(multipartFile, false);
+    }
+
+    @Override
+    public List<Files> findAllByFileId(List<Long> imageIds) {
+        return imageIds.stream().map( id -> {
+            Files file = fileRepository.findById( id ).orElseThrow( () -> new InternalServerException("찾으시는 파일이 없습니다", this ));
+            System.out.println(file.toString());
+            return file;
+        }).collect(Collectors.toList());
     }
 
 

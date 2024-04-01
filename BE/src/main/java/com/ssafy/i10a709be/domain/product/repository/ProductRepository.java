@@ -26,12 +26,16 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
     Optional<Product> deleteProductById(@Param(value = "productId") Long productId, @Param(value = "memberId") String memberId);
 
     default Page<Product> findProductsByDynamicQuery(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+        ProductStatus onsell = ProductStatus.ON_SELL;
+
         QProduct product = QProduct.product;
 
         BooleanBuilder builder = new BooleanBuilder();
 
+        builder.and(product.isDeleted.eq(false));
+
         if (productId != null) {
-            builder.and(product.productId.gt(productId));
+            builder.and(product.productId.lt(productId));
         }
         if (isCombined != null) {
             if (isCombined) {
@@ -51,6 +55,8 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
         }
         if (productStatus != null) {
             builder.and(product.status.eq(ProductStatus.valueOf(productStatus)));
+        } else{
+            builder.and(product.status.eq(onsell));
         }
         if (startPrice != null) {
             builder.and(product.totalPrice.goe(startPrice));

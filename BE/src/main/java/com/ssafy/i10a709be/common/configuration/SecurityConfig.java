@@ -2,6 +2,7 @@ package com.ssafy.i10a709be.common.configuration;
 
 import com.ssafy.i10a709be.common.security.filter.JwtAuthenticationFilter;
 import java.util.Arrays;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,11 +44,8 @@ public class SecurityConfig {
     public CorsConfigurationSource configurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(Arrays.asList("http://localhost:5173","http://localhost:3000", "https://j10a709.p.ssafy.io","https://ssafyhelper.shop","chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo","https://ssafycontrol.shop"));
-//        config.setAllowedOriginPatterns( Arrays.asList( "/**" ) );
-//        config.addAllowedOrigin("chrome-extension://mdmlhchldhfnfnkfmljgeinlffmdgkjo");
         config.setAllowedMethods(Arrays.asList("GET", "PUT", "POST", "DELETE", "PATCH"));
         config.setAllowCredentials(true);
-//        config.setAllowedOriginPatterns( Arrays.asList( "/**" ) );
         config.setAllowedHeaders(Arrays.asList("Authorization", "content-type", "x-requested-with"));
         config.setMaxAge(1800L);
 

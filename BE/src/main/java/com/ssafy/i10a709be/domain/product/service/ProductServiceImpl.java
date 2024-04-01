@@ -1,5 +1,7 @@
 package com.ssafy.i10a709be.domain.product.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.i10a709be.common.entity.Files;
 import com.ssafy.i10a709be.common.exception.NoAuthorizationException;
 import com.ssafy.i10a709be.common.repository.FileRepository;
@@ -8,10 +10,16 @@ import com.ssafy.i10a709be.domain.community.enums.ChatRoomStatus;
 import com.ssafy.i10a709be.domain.community.service.ChatService;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
+import com.ssafy.i10a709be.domain.notification.dto.NotificationCreateRequestDto;
+import com.ssafy.i10a709be.domain.notification.enums.NotificationType;
+import com.ssafy.i10a709be.domain.notification.repository.NotificationRepository;
+import com.ssafy.i10a709be.domain.notification.service.KafkaNotificationProducerService;
 import com.ssafy.i10a709be.domain.product.dto.ProductSaveRequestDto;
 import com.ssafy.i10a709be.domain.product.entity.*;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import com.ssafy.i10a709be.domain.product.repository.*;
+import jakarta.persistence.EntityNotFoundException;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -27,6 +35,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ProductServiceImpl implements ProductService {
 
     private final ProductRepository productRepository;
@@ -35,14 +44,16 @@ public class ProductServiceImpl implements ProductService {
     private final PartTypeRepository partTypeRepository;
     private final CategoryRepository categoryRepository;
     private final UnitImagesRepository unitImagesRepository;
-    private final FileRepository fileRepository;
     private final ChatService chatService;
+    private final FileRepository fileRepository;
+    private final KafkaNotificationProducerService notificationProducerService;
 
     //TODO 1차 개발 끝나면 해당 로직 세분화를 시켜서 재사용성을 높히자.
     //단일 파츠 및 유닟 및 상품 생성
     @Override
     @Transactional
     public Product saveProduct(String memberId, ProductSaveRequestDto request) {
+        log.debug( memberId );
         log.info("save Product member Id = " + memberId);
         Optional<Member> member = memberRepository.findById(memberId);
         Optional<Category> category = categoryRepository.findById(request.getUnit().getCategoryId());
@@ -66,6 +77,7 @@ public class ProductServiceImpl implements ProductService {
                     .unitDescription(request.getUnit().getUnitDescription())
                     .price(request.getUnit().getPrice())
                     .age(request.getUnit().getAge())
+                    .status(request.getUnit().getStatus())
                     .isConfirmed(true)
                     .build();
 
@@ -86,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
 
             for (Long partTypeId : request.getUnit().getPartTypeIds()) {
                 Optional<PartType> partType = partTypeRepository.findById(partTypeId);
-
+                System.out.println(partType);
                 if (partType.isPresent()) {
 
                     Part part = Part.builder()
@@ -96,7 +108,6 @@ public class ProductServiceImpl implements ProductService {
 
                     unit.getParts().add(part);
                 } else {
-                    System.out.println("partType 없음" + Arrays.toString(request.getUnit().getPartTypeIds().toArray()));
                     throw new IllegalArgumentException();
                 }
             }
@@ -117,6 +128,7 @@ public class ProductServiceImpl implements ProductService {
 
     //합의시 일때 실행되는 로직
     @Override
+    @Transactional
     public void composeUnits(Product product, Unit unit, List<Long> targets) {
 
         // 본인이 애초에 합의를 열었기에 true에서 바꿀 필요가 없다.
@@ -125,29 +137,42 @@ public class ProductServiceImpl implements ProductService {
 
         //채팅방 생성을 위한 member list 생성
         List<Member> memberList = new ArrayList<>();
-        memberList.add(unit.getMember());
+        memberList.add( unit.getMember());
 
-        for (Long targetUnitId : targets) {
+        for (Long targetUnitId : targets){
             unitRepository.findById(targetUnitId).ifPresent(
                     targetUnit -> {
                         targetUnit.getProduct().softDeleted(true);//targetUnit의 원래 product의 isdeleted는 true로 바껴야함
-                        targetUnit.setIsConfirmed(false); // 나머지 친구들은 거절
+                        targetUnit.setIsConfirmed( false ); // 나머지 친구들은 거절
                         targetUnit.updateProduct(product);
-                        memberList.add(targetUnit.getMember());
+                        memberList.add( targetUnit.getMember() );
                         product.getUnits().add(targetUnit);
                     }
             );
         }
-        ChatRoomCreateDto dto = new ChatRoomCreateDto(memberList, unit.getMember().getMemberId(), product.getTitle() + "상품 합의 채팅방입니다.", 1 + targets.size(), ChatRoomStatus.active, product.getProductId());
-        chatService.createChatRoom(dto);
-
+        ChatRoomCreateDto dto = new ChatRoomCreateDto( memberList, unit.getMember().getMemberId(), product.getTitle() +"상품 합의 채팅방입니다.", 1 + targets.size(), ChatRoomStatus.active, product.getProductId());
+        chatService.createChatRoom( dto );
+        NotificationCreateRequestDto notificationCreateRequestDto = NotificationCreateRequestDto
+                .builder()
+                .topicSubject("product")
+                .members((ArrayList<String>) memberList.stream().map((member) -> {
+                    return member.getMemberId();
+                }).collect(Collectors.toList()))
+                .content(product.getTitle() + " 상품이 생성되었습니다. 어서 합의해주세요!")
+                .isRead(false)
+                .notificationType(NotificationType.confirm)
+                .productId(product.getProductId())
+                .build();
+        notificationProducerService.sendNotificationToKafkaTopic(notificationCreateRequestDto);
     }
 
+    @Transactional
     @Override
     public Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
         return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
     }
 
+    @Transactional
     @Override
     public Product findProduct(Long productId) {
         return productRepository.findById(productId)
@@ -183,16 +208,16 @@ public class ProductServiceImpl implements ProductService {
             }
         }
     }
-
     //Compose 생성 로직
     @Transactional
     @Override
-    public Long createAfterCompose(String memberId, Long productId, ProductSaveRequestDto productSaveRequestDto) {
-        Member member = memberRepository.findById(memberId).orElseThrow(() -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
-        Product product = productRepository.findProductAndUnitsByProductId(productId).orElseThrow(() -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
-        product.softDeleted(true);
+    public Long createAfterCompose(String memberId, Long unitId, ProductSaveRequestDto productSaveRequestDto) {
+        Member member = memberRepository.findById( memberId ).orElseThrow( () -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
+        Unit unit = unitRepository.findById( unitId ).orElseThrow( () -> new EntityNotFoundException("찾으시는 유닛이 없습니다"));
+        Product product = productRepository.findProductAndUnitsByProductId( unit.getOriginalProductId() ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
+        product.softDeleted( true );
         product.updateStatus(ProductStatus.PENDING);
-        Unit unit = unitRepository.findUnitByProduct_ProductIdAndMember_MemberId(productId, memberId);
+
         // 권한 체크
         if (member.getMemberId() != product.getMember().getMemberId())
             throw new NoAuthorizationException("잘못된 요청입니다.", this);
@@ -209,7 +234,7 @@ public class ProductServiceImpl implements ProductService {
         unit.updateProduct(newProduct);
 
         Product saved = productRepository.save(newProduct);
-
+        
 //        for (Long targetUnitId : productSaveRequestDto.getTargetUnits()){
 //            unitRepository.findById(targetUnitId).ifPresent(
 //                    targetUnit -> {
@@ -220,7 +245,7 @@ public class ProductServiceImpl implements ProductService {
 //                    }
 //            );
 //        }
-        composeUnits(saved, unit, productSaveRequestDto.getTargetUnits());
+        composeUnits( saved, unit, productSaveRequestDto.getTargetUnits());
 
         return saved.getProductId();
     }

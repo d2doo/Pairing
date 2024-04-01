@@ -2,7 +2,7 @@ package com.ssafy.i10a709be.domain.notification.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ssafy.i10a709be.domain.notification.dto.NotificationRequestDto;
+import com.ssafy.i10a709be.domain.notification.dto.NotificationCreateRequestDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class KafkaNotificationProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
-    public void sendNotificationToKafkaTopic(NotificationRequestDto notificationRequest) {
+    public void sendNotificationToKafkaTopic(NotificationCreateRequestDto notificationRequest) {
         String topicName = notificationRequest.getTopicSubject() + "-notification";
         String payload = "";
         try {
