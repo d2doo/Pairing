@@ -10,6 +10,10 @@ import com.ssafy.i10a709be.domain.community.enums.ChatRoomStatus;
 import com.ssafy.i10a709be.domain.community.service.ChatService;
 import com.ssafy.i10a709be.domain.member.entity.Member;
 import com.ssafy.i10a709be.domain.member.repository.MemberRepository;
+import com.ssafy.i10a709be.domain.notification.dto.NotificationCreateRequestDto;
+import com.ssafy.i10a709be.domain.notification.enums.NotificationType;
+import com.ssafy.i10a709be.domain.notification.service.KafkaNotificationProducerService;
+import com.ssafy.i10a709be.domain.notification.service.NotificationService;
 import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.entity.Unit;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
@@ -18,6 +22,7 @@ import com.ssafy.i10a709be.domain.product.repository.UnitRepository;
 import jakarta.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +35,7 @@ public class DealServiceImpl implements DealService {
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
     private final UnitRepository unitRepository;
+    private final KafkaNotificationProducerService notificationProducerService;
 
     //합의 승인과정 + 전부 승인시 product 개시
     @Override
@@ -108,6 +114,18 @@ public class DealServiceImpl implements DealService {
         );
 
         product.updateDealInfo(memberId, ProductStatus.ON_CONTRACT);
+        NotificationCreateRequestDto notificationCreateRequestDto = NotificationCreateRequestDto
+                .builder()
+                .topicSubject("product")
+                .members((ArrayList<String>) members.stream().map((memberElem) -> {
+                    return memberElem.getMemberId();
+                }).collect(Collectors.toList()))
+                .content(product.getTitle() + " 상품의 구매 요청이 있습니다.")
+                .isRead(false)
+                .notificationType(NotificationType.confirm)
+                .productId(product.getProductId())
+                .build();
+        notificationProducerService.sendNotificationToKafkaTopic(notificationCreateRequestDto);
     }
 
     @Override
@@ -118,6 +136,18 @@ public class DealServiceImpl implements DealService {
 
         if (product.getConsumerId().equals(memberId)) {
             product.updateStatus(ProductStatus.COMPLETE);
+            NotificationCreateRequestDto notificationCreateRequestDto = NotificationCreateRequestDto
+                    .builder()
+                    .topicSubject("product")
+                    .members((ArrayList<String>) product.getUnits().stream().map((unit) -> {
+                        return unit.getMember().getMemberId();
+                    }).collect(Collectors.toList()))
+                    .content(product.getTitle() + " 상품의 거래가 완료되었습니다.")
+                    .isRead(false)
+                    .notificationType(NotificationType.confirm)
+                    .productId(product.getProductId())
+                    .build();
+            notificationProducerService.sendNotificationToKafkaTopic(notificationCreateRequestDto);
         } else{
             throw new IllegalArgumentException("구매자가 아니라면 상품 구매를 완료할 수 없습니다.");
         }

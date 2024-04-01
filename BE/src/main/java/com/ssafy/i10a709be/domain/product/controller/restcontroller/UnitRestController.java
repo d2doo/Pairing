@@ -30,7 +30,7 @@ public class UnitRestController {
             @RequestParam(required = false) Long unitId,
             @RequestParam Long partTypeId
     ) {
-        Pageable pageable = PageRequest.of(0, size, Sort.by("unitId"));
+        Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, "unitId"));
         return ResponseEntity.ok(unitService.findUnitsByPartTypeId(pageable, unitId, partTypeId).stream().map(UnitResponseDto::fromEntity).toList());
     }
 
