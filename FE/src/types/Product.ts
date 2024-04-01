@@ -12,6 +12,7 @@ interface UnitResponse {
   memberId: string;
   nickname: string;
   positions: PartType[];
+  unitDescription: string;
   score: number;
   unitImages: string[];
 }
