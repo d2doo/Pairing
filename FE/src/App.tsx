@@ -24,9 +24,7 @@ function App() {
   useEffect(() => {
     if (!authStore.accessToken) {
       localAxios
-        .post<{ accessToken: string }>(
-          '/refresh',
-        )
+        .post<{ accessToken: string }>("/refresh")
         .then((response) => {
           authStore.setAccessToken(response.data.accessToken);
         })

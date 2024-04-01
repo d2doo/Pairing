@@ -4,7 +4,13 @@ import * as Stomp from "@stomp/stompjs";
 import { useAuthStore } from "@/stores/auth";
 import { useLocalAxios } from "@/utils/axios";
 
-function MainHeader() {
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+function Notification() {
   const [notificationCount, setNotificationCount] = useState<number>(0);
   const auth = useAuthStore();
   const stompClient = useRef<Stomp.Client | null>(null);
@@ -42,7 +48,6 @@ function MainHeader() {
         stompClient.current?.subscribe(dest, async () => {
           getNotifications();
 
-          // reduce 메소드를 사용하여 notificationCount를 계산합니다.
           const notificationCount = notificationList.current.reduce(
             (count, item) => {
               return item.isRead === false ? count + 1 : count;
@@ -78,7 +83,7 @@ function MainHeader() {
 
   return (
     <>
-      <div className="flex h-12 w-full items-center justify-between border-b border-gray1 px-4 font-GothicMedium text-base text-black1">
+      <div className="flex h-12 w-full items-center justify-between border-b font-GothicMedium text-base text-black1">
         <div className="flex justify-end">
           <p
             className="material-symbols-outlined"
@@ -107,4 +112,4 @@ function MainHeader() {
   );
 }
 
-export default MainHeader;
+export default Notification;
