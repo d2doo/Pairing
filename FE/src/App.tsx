@@ -14,23 +14,26 @@ import DefaultLayout from "./components/DefaultLayout";
 import SaleUnit from "./components/SaleUnit";
 import { AuthRoute } from "@/components/AuthRoute.tsx";
 import { useEffect } from "react";
-import { useAuthStore } from "@/stores/auth.ts";
-import { useLocalAxios } from "./utils/axios";
+import {useTokenStore} from "@/stores/token.ts";
+import axios from "axios";
+import {useAuthStore} from "@/stores/auth.ts";
 
 function App() {
   const authStore = useAuthStore();
-  const localAxios = useLocalAxios();
+  const tokenStore = useTokenStore();
 
   useEffect(() => {
-    if (!authStore.accessToken) {
-      localAxios
-        .post<{ accessToken: string }>("/refresh")
-        .then((response) => {
-          authStore.setAccessToken(response.data.accessToken);
-        })
-        .catch((error) => {
-          authStore.clearAuth();
-        });
+    if (!tokenStore.accessToken) {
+      axios.post<{ accessToken: string }>(import.meta.env.VITE_API_BASE_URL + '/refresh', null, {
+        withCredentials: true
+      })
+      .then((response) => {
+        tokenStore.setAccessToken(response.data.accessToken);
+      })
+      .catch((error) => {
+        tokenStore.clearAccessToken();
+        authStore.clearAuth();
+      });
     }
   }, []);
 

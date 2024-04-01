@@ -2,21 +2,19 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 import {
-  MemberLoginResponse,
-  MemberResponse,
-  //   MemberSummaryResponse,
+    MemberLoginResponse,
+    MemberResponse, MemberSummaryResponse,
+    //   MemberSummaryResponse,
 } from "@/types/Member.ts";
 
 interface AuthState {
-  accessToken?: string;
   memberId?: string;
   nickname?: string;
   profileImage?: string;
   score?: number;
 
-  setAuth: (response: MemberLoginResponse) => void;
+  setAuth: (response: MemberSummaryResponse) => void;
   setAuthByChange: (response: MemberResponse) => void;
-  setAccessToken: (accessToken: string) => void;
   clearAuth: () => void;
 }
 
@@ -24,13 +22,12 @@ const useAuthStore = create<AuthState>()(
   // persist를 통해 localStorage에 로그인 정보 저장
   persist(
     (set) => ({
-      setAuth: (response: MemberLoginResponse) => {
+      setAuth: (response: MemberSummaryResponse) => {
         set({
-          accessToken: response.accessToken,
-          memberId: response.member.memberId,
-          nickname: response.member.nickname,
-          profileImage: response.member.profileImage,
-          score: response.member.score,
+          memberId: response.memberId,
+          nickname: response.nickname,
+          profileImage: response.profileImage,
+          score: response.score,
         });
       },
       setAuthByChange: (response: MemberResponse) => {
@@ -41,14 +38,8 @@ const useAuthStore = create<AuthState>()(
           score: response.score,
         });
       },
-      setAccessToken: (accessToken: string) => {
-        set({
-          accessToken,
-        });
-      },
       clearAuth: () => {
         set({
-          accessToken: undefined,
           memberId: undefined,
           nickname: undefined,
           profileImage: undefined,
