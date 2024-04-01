@@ -19,6 +19,7 @@ public class UnitResponseDto {
     private List<String> images;
     private String status;
 
+
     public static UnitResponseDto fromEntity(Unit unit) {
         return UnitResponseDto.builder()
                 .unitId(unit.getUnitId())

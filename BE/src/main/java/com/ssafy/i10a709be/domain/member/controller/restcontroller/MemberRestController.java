@@ -77,25 +77,21 @@ public class MemberRestController {
     }
 
     @DeleteMapping("/logout")
-    public ResponseEntity<Void> logout(@AuthenticationPrincipal String memberId, HttpServletRequest request, HttpServletResponse response){
+    public ResponseEntity<Void> logout(@AuthenticationPrincipal String memberId, @CookieValue(name = "Authorization", required = false) Cookie refresh){
         memberService.logout(memberId);
 
-        Cookie refreshTokenCookie = null;
-        String header = "Authorization";
+        ResponseCookie cookie = ResponseCookie.from("Authorization", null)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .maxAge(0)
+                .path("/")
+                .build();
 
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (header.equals(cookie.getName())) {
-                    refreshTokenCookie = cookie;
-                    break;
-                }
-            }
-        }
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        refreshTokenCookie.setMaxAge(0);
-
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).build();
     }
 
     // 채팅 테스트 로그인 서비스
