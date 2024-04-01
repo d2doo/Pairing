@@ -13,11 +13,12 @@ import java.util.List;
 
 @Entity
 @Getter
+
 @NoArgsConstructor
 public class Unit extends BaseEntity {
 
     @Builder
-    public Unit(Member member, Product product, Long originalProductId, Category category, Boolean isCombinable, String unitDescription, Integer price, Integer age, Boolean isConfirmed) {
+    public Unit(Member member, Product product, Long originalProductId, Category category, Boolean isCombinable, String unitDescription, Integer price, Integer age, Boolean isConfirmed, String status) {
         this.member = member;
         this.product = product;
         this.originalProductId = originalProductId;
@@ -27,6 +28,7 @@ public class Unit extends BaseEntity {
         this.price = price;
         this.age = age;
         this.isConfirmed = isConfirmed;
+        this.status = status;
     }
 
     @Id

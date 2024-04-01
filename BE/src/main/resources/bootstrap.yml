@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: juseok
+    active: dev
   cloud:
     config:
       uri: https://www.ssafyhelper.shop

@@ -10,12 +10,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.querydsl.QuerydslPredicateExecutor;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UnitRepository extends JpaRepository<Unit, Long>, QuerydslPredicateExecutor<Unit> {
     Unit findUnitByProduct_ProductIdAndMember_MemberId(Long productId, String memberId);
 
     Optional<Unit> findByUnitIdAndMember_MemberId(Long unitId, String memberId);
+
+    List<Unit> findAllByMember_MemberId( String memberId );
 
     default Page<Unit> findUnitsByPartTypeId(Pageable pageable, Long unitId, Long partTypeId) {
         QUnit unit = QUnit.unit;

@@ -20,15 +20,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/product")
@@ -39,19 +31,19 @@ public class ProductRestController {
     private final ProductService productService;
 
     @PostMapping
-    public ResponseEntity<Void> saveProduct(@AuthenticationPrincipal String memberId, @RequestBody ProductSaveRequestDto productSaveRequestDto) {
-        log.info( productSaveRequestDto.toString());
-        log.info( productSaveRequestDto.getUnit().toString());
+    public ResponseEntity<Long> saveProduct(@AuthenticationPrincipal String memberId, @RequestBody ProductSaveRequestDto productSaveRequestDto) {
         try {
             log.info(memberId);
+            //어쩔수 없다 Product지만 unit id를 반환하자.
+            log.info( "dto: "  + productSaveRequestDto.toString() );
             Product product = productService.saveProduct(memberId, productSaveRequestDto);
-            log.info("products!!:" + product.toString() );
+            return ResponseEntity.ok(product.getUnits().get(0).getUnitId());
         } catch (IllegalArgumentException e) {
             log.info( e.toString() );
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.ok().build();
+
     }
 
     @GetMapping
@@ -95,11 +87,12 @@ public class ProductRestController {
     }
 
     //TODO compsoe Patch 만들기
-    @PatchMapping("/compose/{productId}")
-    public ResponseEntity<Void> createAfterCompose( @AuthenticationPrincipal String memberId, @PathVariable Long productId, ProductSaveRequestDto productSaveRequestDto){
+    @PutMapping("/compose/{unitId}")
+    public ResponseEntity<Void> createAfterCompose( @AuthenticationPrincipal String memberId, @PathVariable Long unitId, @RequestBody ProductSaveRequestDto productSaveRequestDto){
+//        System.out.println("received:" + productSaveRequestDto.toString() );
         try {
             //MEMO 일단은 반환하지말고 추후에 프론트에서 필요해지면 반환할 것.
-            Long saveId = productService.createAfterCompose( memberId, productId, productSaveRequestDto );
+            Long saveId = productService.createAfterCompose( memberId, unitId, productSaveRequestDto );
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().build();
         }
