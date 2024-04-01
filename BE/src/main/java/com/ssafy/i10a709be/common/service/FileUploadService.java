@@ -3,6 +3,9 @@ package com.ssafy.i10a709be.common.service;
 import com.ssafy.i10a709be.common.entity.Files;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.util.List;
+
 public interface FileUploadService {
 
     /**
@@ -12,6 +15,8 @@ public interface FileUploadService {
      * @return source of image or null
      */
     Files uploadFile(MultipartFile multipartFile);
+
+    List<Files> findAllByFileId( List<Long> imageIds );
 
 }
 
