@@ -105,7 +105,7 @@ export const DefaultImageUploader = (props: DefaultImageUploaderProps) => {
           close
         </button>
       )}
-      {<img src={preview} className="h-full w-full" />}
+      {<img src={preview} className="h-full w-full object-cover" />}
       {!selectedFile && (
         <>
           {/* <span className="material-symbols-outlined">photo_camera</span> */}
