@@ -53,11 +53,7 @@ function ProductListPage() {
                 ))}
               </TabsList>
               {categoryList.map((category, index) => (
-                <TabsContent
-                  key={index}
-                  value={category}
-                  // onClick={() => handleTabClick(category)}
-                >
+                <TabsContent key={index} value={category}>
                   {category === "전체" ? (
                     <p className="flex items-center pb-3 pl-7 font-GothicLight text-xs">
                       전체
@@ -92,7 +88,7 @@ function ProductListPage() {
                     </Select> */}
                     </div>
                   )}
-                  <ProductTypeR />
+                  <ProductTypeR onlyMyProduct={false} productId={0} />
                 </TabsContent>
               ))}
             </Tabs>
@@ -133,24 +129,9 @@ function ProductListPage() {
                           </option>
                         ))}
                       </select>
-                      {/* <Select
-                      defaultValue="전체"
-                      onValueChange={(value) => clickSelectType(value)}
-                    >
-                      <SelectTrigger className="h-5 w-20 ">
-                        <SelectValue placeholder="전체" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        {subList1.map((sub, index) => (
-                          <SelectItem key={index} value={sub}>
-                            {sub}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select> */}
                     </div>
                   )}
-                  <ProductTypeR />
+                  {/* <ProductTypeR /> */}
                 </TabsContent>
               ))}
             </Tabs>
