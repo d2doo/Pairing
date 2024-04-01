@@ -195,6 +195,7 @@ public class ProductServiceImpl implements ProductService {
         }
     }
     //Compose 생성 로직
+    @Transactional
     @Override
     public Long createAfterCompose(String memberId, Long unitId, ProductSaveRequestDto productSaveRequestDto) {
         Member member = memberRepository.findById( memberId ).orElseThrow( () -> new NoAuthorizationException("해당 사용자가 없습니다.", this));
