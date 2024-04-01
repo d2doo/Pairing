@@ -10,8 +10,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class NotificationRequestDto {
+public class NotificationCreateRequestDto {
     private String topicSubject;
     private ArrayList<String> members;
     private String content;
+    private Boolean isRead;
 }

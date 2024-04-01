@@ -22,7 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 public class ChatServiceImpl implements ChatService {
     private final ChatRoomRepository chatRoomRepository;
     private final UserChatRoomRepository userChatRoomRepository;
@@ -37,11 +37,13 @@ public class ChatServiceImpl implements ChatService {
        return joinedChatRooms;
     }
 
+    @Override
     public ChatRoom findChatRoomById(Long chatRoomId ){
         return chatRoomRepository.findById( chatRoomId ).orElseThrow( () -> new IllegalArgumentException(chatRoomId + "번 채팅방 조회간 에러 발생") );
     }
 
     @Override
+    @Transactional
     public Long createChatRoom(ChatRoomCreateDto chatRoomCreateDto) {
         ChatRoom chatRoom = ChatRoom.builder()
                 .member(chatRoomCreateDto.getJoinMembers()
@@ -67,11 +69,13 @@ public class ChatServiceImpl implements ChatService {
 
 
     @Override
+    @Transactional
     public void deleteChatRoom(ChatRoomDeleteDto chatRoomDeleteDto) {
 
     }
 
     @Override
+    @Transactional
     public Chat saveChatMessage(ChatMessageRequestDto chatMessageRequestDto, Long roomId) {
         Chat chat = Chat.builder()
                 .member(memberRepository.findById(chatMessageRequestDto.getMemberId())
