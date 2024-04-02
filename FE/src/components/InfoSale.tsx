@@ -15,23 +15,23 @@ function InfoSale() {
   const localAxios = useLocalAxios();
   const auth = useAuthStore();
 
-  const [products, setProduct] = useState<ProductFindResponse[]>([]);
-  useEffect(() => {
-    ProductsSetting();
-  }, []);
+  // const [products, setProduct] = useState<ProductFindResponse[]>([]);
+  // useEffect(() => {
+  //   ProductsSetting();
+  // }, []);
 
-  const ProductsSetting = async () => {
-    const result = await localAxios.get<ProductFindResponse[]>(`/product`, {
-      params: {
-        page: 0,
-        size: 5,
-        memberId: auth.memberId,
-      },
-    });
-    const json = result.data;
-    console.log(json);
-    setProduct(json);
-  };
+  // const ProductsSetting = async () => {
+  //   const result = await localAxios.get<ProductFindResponse[]>(`/product`, {
+  //     params: {
+  //       page: 0,
+  //       size: 5,
+  //       memberId: auth.memberId,
+  //     },
+  //   });
+  //   const json = result.data;
+  //   // console.log(json);
+  //   setProduct(json);
+  // };
 
   const navigate = useNavigate();
   const Logout = async () => {
@@ -91,7 +91,12 @@ function InfoSale() {
             <TabsContent value="전체">
               {/* 여기가 왜 안뜨지 */}
               <div className="border-y py-6">
-                <ProductTypeR onlyMyProduct={true} productId={0} />
+                <ProductTypeR
+                  onlyMyProduct={true}
+                  productId={0}
+                  isOnly={false}
+                  memberId={auth.memberId === undefined ? "" : auth.memberId}
+                />
               </div>
             </TabsContent>
           </Tabs>
