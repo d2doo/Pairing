@@ -58,10 +58,11 @@ public class ProductRestController {
             @RequestParam(required = false) Integer startPrice,
             @RequestParam(required = false) Integer endPrice,
             @RequestParam(required = false) Integer maxAge,
-            @RequestParam(required = false) String keyword
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Boolean isOnly
     ) {
         Pageable pageable = PageRequest.of(0, size, Sort.by(Sort.Direction.DESC,"productId"));
-        Page<Product> products = productService.findAllProduct(pageable, productId,isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+        Page<Product> products = productService.findAllProduct(pageable, productId,isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword, isOnly);
         List<ProductFindResponseDto> productFindResponseDtos = products.stream()
                 .map(ProductFindResponseDto::fromEntity).toList();
 
