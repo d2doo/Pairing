@@ -70,4 +70,8 @@ public class Product extends BaseEntity {
     public void modifyTitle(String title) {
         this.title = title;
     }
+
+    public void updateTotalPrice(Integer price) {
+        this.totalPrice += price;
+    }
 }
