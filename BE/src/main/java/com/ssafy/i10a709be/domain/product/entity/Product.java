@@ -21,12 +21,13 @@ import org.hibernate.annotations.Where;
 // TODO 합의 거절시 아예 안가져오기에 soft delete가 되버리면 원상복구를 못시킴.
 public class Product extends BaseEntity {
     @Builder
-    public Product(Member member, String title, ProductStatus status, Integer maxAge, Integer totalPrice) {
+    public Product(Member member, String title, ProductStatus status, Integer maxAge, Integer totalPrice, Boolean isOnly) {
         this.member = member;
         this.title = title;
         this.status = status;
         this.maxAge = maxAge;
         this.totalPrice = totalPrice;
+        this.isOnly = isOnly;
     }
 
     @Id
@@ -48,17 +49,22 @@ public class Product extends BaseEntity {
 
     private String consumerId;
 
+    private Boolean isOnly;
+
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "product", cascade = CascadeType.PERSIST)
     private List<Unit> units = new ArrayList<>();
 
     public void updateStatus( ProductStatus status ){
-
         this.status = status;
     }
 
-    public void updateDealInfo( String consumerId, ProductStatus status){
+    public void updateDealInfo(String consumerId, ProductStatus status){
         this.status = status;
         this.consumerId = consumerId;
+    }
+
+    public void updateIsOnly(Boolean isOnly) {
+        this.isOnly = isOnly;
     }
 
     public void modifyTitle(String title) {
