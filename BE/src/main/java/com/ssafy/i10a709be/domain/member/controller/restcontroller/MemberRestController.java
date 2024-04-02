@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 public class MemberRestController {
     private final MemberService memberService;
+
     private final OAuthClient kakaoOAuthClient;
+    private final OAuthClient googleOAuthClient;
 
     @GetMapping
     public ResponseEntity<MemberResponseDto> findMember(@AuthenticationPrincipal String memberId) {
@@ -65,6 +67,31 @@ public class MemberRestController {
         map.put("accessToken", "Bearer " + tokens.get(0));
         log.info( "login1!:" + map.toString() );
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
+    }
+
+    @PostMapping("/login/google")
+    public ResponseEntity<Map<String, Object>> googleLogin(@RequestParam String code, HttpServletResponse response) {
+        String accessToken = googleOAuthClient.getAccessToken(code);
+        Member member = googleOAuthClient.getMemberInfo(accessToken);
+
+        List<String> tokens = memberService.login(member);
+
+        ResponseCookie responseCookie = ResponseCookie.from("Authorization", tokens.get(1))
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .maxAge(60 * 60 * 24 * 7)
+                .path("/")
+                .build();
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.SET_COOKIE, responseCookie.toString());
+
+        Map<String, Object> map = new HashMap<>();
+        map.put("member", MemberSummaryResponseDto.fromEntityWithMemberId(member,tokens.get(2)));
+        map.put("accessToken", "Bearer " + accessToken);
+        //log.info( "login1!:" + map.toString() );
+        return ResponseEntity.status(HttpStatus.OK).body(map);
     }
 
     @DeleteMapping
