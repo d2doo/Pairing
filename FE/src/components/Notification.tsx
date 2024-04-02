@@ -1,140 +1,98 @@
-import { useEffect, useRef, useState } from "react";
-import SockJS from "sockjs-client";
-import * as Stomp from "@stomp/stompjs";
-import { useAuthStore } from "@/stores/auth";
-import { useLocalAxios } from "@/utils/axios";
-
+import { useEffect, useState } from "react";
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
-
-function Notification() {
-  const [notificationCount, setNotificationCount] = useState<number>(0);
-  const auth = useAuthStore();
-  const stompClient = useRef<Stomp.Client | null>(null);
-  const notificationList = useRef<NotificationResponse[]>([]);
-  const localAxios = useLocalAxios();
-  const baseUrl: string = import.meta.env.VITE_API_BASE_URL;
-
-  
-  const send = () => {
-    console.log("Send Message Request");
-    const dest = `/send/notification`;
-
-    stompClient.current?.publish({
-      destination: dest,
-      body: JSON.stringify({
-        topicSubject: 'product',
-        members: [
-          auth.memberId
-        ],
-        content: '테스트 알림 입니다.',
-        isRead: false,
-        notificationType: 'confirm',
-        productId: 4
-      })
-    })
-  }
-  
-  const readNotifications = async () => {
-    console.log("Read Messages");
-    await localAxios.put(
-      `/notification`,
-      notificationList.current.map(
-        (notification) => notification.notificationId,
-      ),
-    );
-    getNotifications();
-    changeNotificationCount();
-  };
-
-  const changeNotificationCount = () => {
-    const notificationCount = notificationList.current.reduce((count, item) => {
-      return item.isRead === false ? count + 1 : count;
-    }, 0);
-    setNotificationCount(notificationCount);
-  };
-
-  const stompSetting = () => {
-    const socket = new SockJS(`${baseUrl}/ws`);
-    stompClient.current = new Stomp.Client({
-      webSocketFactory: () => socket,
-      reconnectDelay: 5000,
-      onConnect: (frame) => {
-        console.log(`connected ${auth.memberId}`, frame);
-        const dest = `/product-notification/${auth.memberId}`;
-        stompClient.current?.subscribe(dest, async () => {
-          getNotifications();
-
-          const notificationCount = notificationList.current.reduce(
-            (count, item) => {
-              return item.isRead === false ? count + 1 : count;
-            },
-            0,
-          );
-          setNotificationCount(notificationCount);
-        });
-      },
-    });
-    stompClient.current?.activate();
-  };
-
-  const getNotifications = async () => {
-    const res = await localAxios.get(`/notification`, {
-      params: {
-        memberId: auth.memberId,
-      },
-    });
-    notificationList.current = [];
-    res.data.map((item: NotificationResponse) => {
-      notificationList.current.push(item);
-    });
-    changeNotificationCount();
-  };
-
-  useEffect(() => {
-    if (auth.memberId) {
-      stompSetting();
-      getNotifications();
-    }
-  }, [auth]);
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { NotificationResponse } from "@/types/Notification";
+import NotificationDetail from "./NotificationDetail";
+interface NotificationProps {
+  openhandler: (notificationId: bigint) => void;
+  closehandler: (notificationId: bigint) => void;
+  notification: NotificationResponse;
+}
+function Notification(props: NotificationProps) {
 
   return (
     <>
-      <div className="flex h-12 w-full items-center justify-between border-b font-GothicMedium text-base text-black1">
-        <div className="flex justify-end">
-          <p
-            className="material-symbols-outlined"
-            onClick={() => {
-              const messages = notificationList.current
-                .map(
-                  (notification, index) =>
-                    `Notification ${index + 1}: ${notification.content} type: ${notification.notificationType} id: ${notification.productId}`,
-                )
-                .join("\n");
+      <div className="flex flex-wrap w-full">
+        <AlertDialog>
+          <AlertDialogTrigger asChild>
+            <Button variant="outline" className="space-y-1 text-sm my-1">자세히 보기</Button>
+          </AlertDialogTrigger>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>
+                {props.notification?.notificationType == 'confirm' ? '합의 제안' : '일반 알림'}
+              </AlertDialogTitle>
+              <AlertDialogDescription>
+                <div className="py-1">
+                  {/* <NotificationDetail key={props.notification?.notificationId} notification={props.notification} /> */}
+                  <Card className="font-[Gothic] bg-white border border-gray-200 shadow-md rounded-md">
+                    <CardHeader className="bg-blue1 text-white rounded-t-md">
+                      <CardTitle className="flex items-center">
+                        {/* 포인트 색상 설정 */}
+                        <div className="bg-yellow-500 rounded-full w-6 h-6 flex items-center justify-center mr-2">
+                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                            <path fillRule="evenodd" d="M10 2a1 1 0 011 1v7h4a1 1 0 010 2h-5v1a1 1 0 01-2 0V12H5a1 1 0 010-2h4V3a1 1 0 011-1z" clipRule="evenodd" />
+                            <path fillRule="evenodd" d="M3 8a1 1 0 011-1h8V5a1 1 0 012 0v2h3a1 1 0 110 2h-3v2a1 1 0 01-2 0V9H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                          </svg>
+                        </div>
+                        {/* 내용 */}
+                        <div>
+                          {props.notification?.content}
+                        </div>
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex flex-row justify-around">
+                        {props.notification.units && props.notification.units.map((unit, index) => (
+                          <div key={index} className="border border-gray-200 rounded-md mt-6">
+                            <img
+                              src={unit.unitImages[0] ? unit.unitImages[0] : '../assets/images/case.png'}
+                              alt="Unit Image"
+                              className="w-full h-auto object-cover rounded-t-md"
+                            />
+                            <div className="p-4">
+                              <div>주인: {unit.nickname}</div>
+                              <div>연식: {unit.age}</div>
+                              <div>신뢰도: {unit.score}</div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
 
-              alert(messages);
-              readNotifications();
-            }}
-          >
-            notifications
-          </p>
-          {notificationCount > 0 && (
-            <div className="flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
-              <p className="text-xs text-white">{notificationCount}</p>
-            </div>
-          )}
-          <p
-            className="material-symbols-outlined"
-            onClick={() => {
-              send();
-            }}
-          >
-            send
-          </p>
-        </div>
+
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter className="flex flex-row justify-end">
+              <AlertDialogCancel className="w-12">
+                <Button onClick={() => props.closehandler(props.notification.notificationId)} className="bg-white h-full">{props.notification?.notificationType == 'confirm' ? 'X' : '닫기'}</Button>
+              </AlertDialogCancel>
+              <AlertDialogAction className="w-12">
+                <Button onClick={() => props.openhandler(props.notification.notificationId)}>{props.notification?.notificationType == 'confirm' ? 'O' : '읽기'}</Button>
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </>
   );

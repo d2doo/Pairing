@@ -55,7 +55,7 @@ interface UnitCProps {
 
 export default function SaleProduct() {
   const mapper = useRef<PartType[]>([]);
-  const [chart, setChart] = useState(0);
+  const [chart, setChart] = useState(-1);
   const [title, setTitle] = useState("");
   const size = useRef(12);
   const [tagList, setTagList] = useState<UnitCProps[]>([]);
@@ -99,13 +99,14 @@ export default function SaleProduct() {
       // console.log(newComplete);
     }); // 차피 products있어도 mapper 없으면 의미 없음.
   }, []);
-  useEffect(() => {
-    console.log("come", complete);
-  }, [complete]);
+  // useEffect(() => {
+  //   // console.log("come", complete);
+  // }, [complete]);
   //스크롤 처리 필요 size ref로 해두고 나중에 ㄱ
   useEffect(() => {
     setTagList([]);
     if (mapper.current.length > 0) {
+      // console.log("mapper", mapper.current, "chart", chart);
       const pos = mapper.current[chart].position;
       setTitle(pos);
       // console.log( pos );
