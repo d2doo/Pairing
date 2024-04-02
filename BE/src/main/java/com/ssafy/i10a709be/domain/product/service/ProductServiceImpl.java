@@ -65,6 +65,7 @@ public class ProductServiceImpl implements ProductService {
                     .status(ProductStatus.ON_SELL)
                     .maxAge(request.getUnit().getAge())
                     .totalPrice(request.getUnit().getPrice())
+                    .isOnly(true)
                     .build();
 
             log.info("product 생성 완료={} ", product.toString());
@@ -98,7 +99,7 @@ public class ProductServiceImpl implements ProductService {
 
             for (Long partTypeId : request.getUnit().getPartTypeIds()) {
                 Optional<PartType> partType = partTypeRepository.findById(partTypeId);
-                System.out.println(partType);
+                log.info("partType = {}" ,partType.toString());
                 if (partType.isPresent()) {
 
                     Part part = Part.builder()
@@ -112,6 +113,12 @@ public class ProductServiceImpl implements ProductService {
                 }
             }
             log.info("part 생성 완료={} ", unit.getParts().toString());
+
+            // 한 명이 모든 파츠를 묶어서 올리는 경우 조합 제품
+            if (unit.getParts().size() == 3){
+                product.updateIsOnly(false);
+            }
+
             productRepository.save(product);
             //새로 생성하기에
             unit.setOriginalProductId(product.getProductId());
@@ -150,6 +157,7 @@ public class ProductServiceImpl implements ProductService {
                     }
             );
         }
+
         ChatRoomCreateDto dto = new ChatRoomCreateDto( memberList, unit.getMember().getMemberId(), product.getTitle() +"상품 합의 채팅방입니다.", 1 + targets.size(), ChatRoomStatus.active, product.getProductId());
         chatService.createChatRoom( dto );
         NotificationCreateRequestDto notificationCreateRequestDto = NotificationCreateRequestDto
@@ -168,8 +176,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Transactional
     @Override
-    public Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
-        return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword);
+    public Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword, Boolean isOnly) {
+        return productRepository.findProductsByDynamicQuery(pageable, productId, isCombined, nickname, memberId, categoryId, productStatus, startPrice, endPrice, maxAge, keyword, isOnly);
     }
 
     @Transactional
@@ -228,6 +236,7 @@ public class ProductServiceImpl implements ProductService {
                 .status(ProductStatus.ON_SELL)
                 .maxAge(productSaveRequestDto.getUnit().getAge())
                 .totalPrice(productSaveRequestDto.getUnit().getPrice())
+                .isOnly(false)
                 .build();
 
         newProduct.getUnits().add(unit);

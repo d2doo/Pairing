@@ -3,6 +3,7 @@ package com.ssafy.i10a709be.domain.product.repository;
 import com.querydsl.core.BooleanBuilder;
 import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.entity.QProduct;
+import com.ssafy.i10a709be.domain.product.entity.QUnit;
 import com.ssafy.i10a709be.domain.product.enums.ProductStatus;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +26,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
             "OR p.status = 'PENDING')")
     Optional<Product> deleteProductById(@Param(value = "productId") Long productId, @Param(value = "memberId") String memberId);
 
-    default Page<Product> findProductsByDynamicQuery(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword) {
+    default Page<Product> findProductsByDynamicQuery(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword, Boolean isOnly) {
         ProductStatus onsell = ProductStatus.ON_SELL;
 
         QProduct product = QProduct.product;
@@ -48,7 +49,7 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
             builder.and(product.member.nickname.eq(nickname));
         }
         if (memberId != null) {
-            builder.and(product.member.memberId.eq(memberId));
+            builder.and(product.units.any().member.memberId.eq(memberId));
         }
         if (categoryId != null) {
             builder.and(product.units.any().category.categoryId.eq(categoryId));
@@ -69,6 +70,13 @@ public interface ProductRepository extends JpaRepository<Product, Long>, Queryds
         }
         if (keyword != null) {
             builder.and(product.title.contains(keyword));
+        }
+        if (isOnly != null) {
+            if (isOnly) {
+                builder.and(product.isOnly.eq(isOnly));
+            } else {
+                builder.and(product.isOnly.eq(isOnly));
+            }
         }
 
         return findAll(builder, pageable);
