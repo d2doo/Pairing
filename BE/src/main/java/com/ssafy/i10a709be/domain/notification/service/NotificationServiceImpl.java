@@ -18,14 +18,14 @@ public class NotificationServiceImpl implements NotificationService{
     private final NotificationRepository notificationRepository;
     @Override
     public List<Notification> getNotifications(String memberId) {
-        return notificationRepository.findNotificationsByMember_MemberId(memberId);
+        return notificationRepository.findNotificationsByMemberId(memberId);
     }
 
     @Override
     @Transactional
     public void readNotifications(String memberId, List<Long> targetNotifications) {
         log.info("MemberID : " + memberId);
-        List<Notification> notifications = notificationRepository.findNotificationsByMember_MemberId(memberId);
+        List<Notification> notifications = notificationRepository.findNotificationsByMemberId(memberId);
         HashMap<Long, Notification> notificationHashMap = new HashMap<>();
         for (Notification notification : notifications) {
             notificationHashMap.put(notification.getNotificationId(), notification);
@@ -41,3 +41,4 @@ public class NotificationServiceImpl implements NotificationService{
         }
     }
 }
+
