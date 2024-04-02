@@ -13,10 +13,38 @@ import MyPage from "@/pages/MyPage";
 import DefaultLayout from "./components/DefaultLayout";
 import SaleUnit from "./components/SaleUnit";
 import { AuthRoute } from "@/components/AuthRoute.tsx";
+import { useEffect } from "react";
+import { useTokenStore } from "@/stores/token.ts";
+import axios from "axios";
+import { useAuthStore } from "@/stores/auth.ts";
+import {GoogleAuthCallback} from "@/pages/auth/GoogleAuthCallback.tsx";
 
 function App() {
+  const authStore = useAuthStore();
+  const tokenStore = useTokenStore();
+
+  useEffect(() => {
+    if (!tokenStore.accessToken) {
+      axios
+        .post<{ accessToken: string }>(
+          import.meta.env.VITE_API_BASE_URL + "/refresh",
+          null,
+          {
+            withCredentials: true,
+          },
+        )
+        .then((response) => {
+          tokenStore.setAccessToken(response.data.accessToken);
+        })
+        .catch((error) => {
+          tokenStore.clearAccessToken();
+          authStore.clearAuth();
+        });
+    }
+  }, []);
+
   return (
-    <div className="relative flex h-[100vh] flex-col overflow-y-hidden">
+    <div className="relative flex h-[100dvh] flex-col overflow-y-hidden">
       {/* Routing 정의 시작 */}
       <BrowserRouter>
         <Routes>
@@ -42,6 +70,7 @@ function App() {
             {/* <Route element={<DefaultLayout />}> */}
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
+            <Route path="/auth/google" element={<GoogleAuthCallback />} />
           </Route>
           <Route element={<DefaultLayout headerType="searchBar" />}>
             {/* <Route element={<DefaultLayout headerType={true} />}> */}

@@ -24,6 +24,8 @@ export default function DefaultLayout(props: layoutProps) {
       setHeaderProps({ title: "마이페이지", prev: "/" });
     } else if (location.pathname === "/chat") {
       setHeaderProps({ title: "채팅", prev: "/" });
+    } else if (location.pathname.match(/^\/chat\/room\/\d+$/)) {
+      setHeaderProps({ title: "채팅", prev: "/chat" });
     }
   }, [location]);
 

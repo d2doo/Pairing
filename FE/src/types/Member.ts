@@ -17,4 +17,16 @@ interface MemberSummaryResponse {
   score: number;
 }
 
-export type { MemberResponse, MemberLoginResponse, MemberSummaryResponse };
+interface MemberUpdateRequest {
+  nickname: string;
+  profileImage: string;
+  address: string;
+  phoneNumber: string;
+}
+
+export type {
+  MemberResponse,
+  MemberLoginResponse,
+  MemberSummaryResponse,
+  MemberUpdateRequest,
+};

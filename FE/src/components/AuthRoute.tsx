@@ -5,7 +5,7 @@ export const AuthRoute = () => {
     const authStore = useAuthStore();
 
     return (
-        authStore.accessToken
+        authStore.memberId
             ? <Outlet />
             : <Navigate to="/login" />
     );

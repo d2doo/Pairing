@@ -1,14 +1,21 @@
-import KakaoLoginButtonImage from '@/assets/images/kakao-login-btn.png';
-import GoogleLoginButtonImage from '@/assets/images/google-login-btn.png';
+import KakaoLoginButtonImage from "@/assets/images/kakao-login-btn.png";
+import GoogleLoginButtonImage from "@/assets/images/google-login-btn.png";
 
 function Login() {
-
   const kakaoLogin = () => {
     location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${
       import.meta.env.VITE_KAKAO_CLIENT_ID
     }&redirect_uri=${
-      import.meta.env.VITE_REDIRECT_URI_BASE + '/kakao'
+      import.meta.env.VITE_REDIRECT_URI_BASE + "/kakao"
     }&response_type=code`;
+  };
+
+  const googleLogin = () => {
+    location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${
+      import.meta.env.VITE_GOOGLE_CLIENT_ID
+    }&redirect_uri=${
+      import.meta.env.VITE_REDIRECT_URI_BASE + "/google"
+    }&response_type=code&scope=openid%20profile%20email`;
   };
 
   return (
@@ -30,7 +37,7 @@ function Login() {
             className="h-full w-full"
           />
         </button>
-        <button type="button" className="">
+        <button type="button" className="" onClick={googleLogin}>
           <img
             src={GoogleLoginButtonImage}
             alt="google_err"
