@@ -1,5 +1,5 @@
-import classNames from "classnames";
-import React, { ReactNode, useEffect, useState } from "react";
+import classNames from 'classnames';
+import React, {ReactNode, useEffect, useState} from "react";
 import { useLocalAxios } from "@/utils/axios.ts";
 import { AxiosProgressEvent, AxiosResponse } from "axios";
 import { Progress } from "@/components/ui/progress.tsx";
@@ -15,45 +15,44 @@ interface ImageUploaderProps {
 }
 
 enum ImageUploadStatus {
-  ERROR,
-  PENDING,
-  UPLOADING,
-  COMPLETE,
+    ERROR,
+    PENDING,
+    UPLOADING,
+    COMPLETE
 }
 
 export const ImageUploader = (props: ImageUploaderProps) => {
-  const localAxios = useLocalAxios();
-  const [selectedFile, setSelectedFile] = useState<File>();
-  const [preview, setPreview] = useState<string>();
-  const [uploadStatus, setUploadStatus] = useState<ImageUploadStatus>(
-    ImageUploadStatus.PENDING,
-  );
-  const [progress, setProgress] = useState<number>(0);
+    const localAxios = useLocalAxios();
+    const [ selectedFile, setSelectedFile ] = useState<File>();
+    const [ preview, setPreview ] = useState<string>();
+    const [ uploadStatus, setUploadStatus ] = useState<ImageUploadStatus>(ImageUploadStatus.PENDING);
+    const [ progress, setProgress ] = useState<number>( 0);
 
-  useEffect(() => {
-    if (selectedFile) {
-      const imageURL = URL.createObjectURL(selectedFile);
-      setPreview(imageURL);
+    useEffect(() => {
+        if (selectedFile) {
+            const imageURL = URL.createObjectURL(selectedFile);
+            setPreview(imageURL);
 
-      return () => {
-        // Unmount시 생성했던 URL 해제 (Memory Leak)
-        URL.revokeObjectURL(imageURL);
-      };
-    }
-  }, [selectedFile]);
+            return () => {
+                // Unmount시 생성했던 URL 해제 (Memory Leak)
+                URL.revokeObjectURL(imageURL);
+            }
+        }
 
-  const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
+    }, [selectedFile]);
 
-    if (e.target.files) {
-      setUploadStatus(ImageUploadStatus.UPLOADING);
-      if (props.onUploadRequested) props.onUploadRequested();
+    const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        e.preventDefault();
 
-      const targetImage = e.target.files[0];
-      setSelectedFile(targetImage);
+        if (e.target.files) {
+            setUploadStatus(ImageUploadStatus.UPLOADING);
+            if (props.onUploadRequested) props.onUploadRequested();
 
-      const formData = new FormData();
-      formData.append("image", targetImage);
+            const targetImage = e.target.files[0];
+            setSelectedFile(targetImage);
+
+            const formData = new FormData();
+            formData.append('image', targetImage);
 
       try {
         const response = await localAxios.post("/common/image", formData, {
@@ -66,17 +65,20 @@ export const ImageUploader = (props: ImageUploaderProps) => {
           },
         });
 
-        setUploadStatus(ImageUploadStatus.COMPLETE);
-        if (props.onUploadComplete) props.onUploadComplete(response);
-      } catch (e) {
-        console.error(e);
-        setUploadStatus(ImageUploadStatus.ERROR);
+                setUploadStatus(ImageUploadStatus.COMPLETE);
+                if (props.onUploadComplete) props.onUploadComplete(response);
+            }
+            catch (e) {
+                console.error(e);
+                setUploadStatus(ImageUploadStatus.ERROR);
 
-        if (props.onError) props.onError(e);
-        return;
-      }
+                if (props.onError) props.onError(e);
+                return;
+            }
+
+
+        }
     }
-  };
 
   return (
     <label
