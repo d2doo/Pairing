@@ -25,7 +25,7 @@ pipeline {
                         sh 'chmod +x gradlew'
                         sh 'ls -l'
 
-                        sh './gradlew clean build -x test'
+                        sh './gradlew clean build'
                         sh 'jq --version'
                         sh 'cd build/libs && ls -al'
 
