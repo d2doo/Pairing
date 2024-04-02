@@ -15,7 +15,7 @@ public interface ProductService {
     //합의시 일때 실행되는 로직
     void composeUnits(Product product, Unit unit, List<Long> targets);
 
-    Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword);
+    Page<Product> findAllProduct(Pageable pageable, Long productId, Boolean isCombined, String nickname, String memberId, Long categoryId, String productStatus, Integer startPrice, Integer endPrice, Integer maxAge, String keyword, Boolean isOnly);
 
     Product findProduct(Long productId);
 
