@@ -30,8 +30,6 @@ public class UnitServiceImpl implements UnitService {
         return unitRepository.findUnitsByPartTypeId(pageable, unitId, partTypeId);
     }
 
-
-
     @Override
     @Transactional
     public Unit updateUnitById(String memberId, Long unitId, UnitUpdateRequestDto unitUpdateRequestDto) {
