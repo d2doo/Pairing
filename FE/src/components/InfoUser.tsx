@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useAuthStore } from "@/stores/auth";
-import { useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { MemberResponse, MemberUpdateRequest } from "@/types/Member";
 import Postcode from "./DaumPost";
 import { DefaultImageUploader } from "./DefaultImageUploader";
@@ -39,7 +39,6 @@ function InfoUser() {
   };
 
   useEffect(() => {}, [userInfo]);
-
   useEffect(() => {
     (async () => {
       const data = await getMemberData();
@@ -61,6 +60,12 @@ function InfoUser() {
     onChangedImage(profileImage);
   };
 
+  const handlePhoneNumberChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setUserInfo({
+      ...userInfo,
+      phoneNumber: e.target.value,
+    });
+  };
   const UpdateMember = () => {
     if (auth.nickname) {
       Swal.fire({
@@ -70,13 +75,11 @@ function InfoUser() {
         denyButtonText: `Don't save`,
       }).then((result) => {
         if (result.isConfirmed) {
-          localAxios
-            .put<MemberResponse>("/member", JSON.stringify(userInfo))
-            .then((res) => {
-              console.log("res", res.data);
-              Swal.fire("회원 정보가 변경되었습니다.");
-              auth.setAuthByChange(res.data);
-            });
+          localAxios.put<MemberResponse>("/member", userInfo).then((res) => {
+            console.log("res", res.data);
+            Swal.fire("회원 정보가 변경되었습니다.");
+            auth.setAuthByChange(res.data);
+          });
         }
       });
     }
@@ -138,9 +141,8 @@ function InfoUser() {
               <Input
                 placeholder="이곳에 입력하세요."
                 className="test-xs border-none p-1"
-                value={userData?.phoneNumber}
                 name="phoneNumber"
-                onChange={onChangedUpdateRequest}
+                onChange={handlePhoneNumberChange}
                 defaultValue={userData?.phoneNumber}
               />
               {/* 이게 아니란 말이야? */}

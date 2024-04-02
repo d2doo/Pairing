@@ -98,15 +98,19 @@ function SaleUnit() {
       alert("위치를 선택해 주세요.");
     } else if (unit.age === undefined || unit.age === null) {
       alert("사용기간을 입력해주세요.");
+    } else if (unit.age < 0) {
+      alert("사용기간은 최소 0개월 이상이어야 합니다.");
     } else if (!unit.price) {
       alert("가격을 입력해 주세요.");
+    } else if (unit.price <= 0) {
+      alert("가격은 최소 1원 이상이어야 합니다.");
     } else if (unit.unitDescription.length === 0) {
       alert("상품 설명을 입력해 주세요.");
     } else {
       Swal.fire({
         title: "제품을 등록하시겠습니까?",
         showCancelButton: true,
-        confirmButtonText: "저장하기",
+        confirmButtonText: "등록하기",
         denyButtonText: `취소`,
       }).then((result) => {
         if (result.isConfirmed) {
@@ -119,6 +123,7 @@ function SaleUnit() {
           localAxios.post("/product", product).then((res) => {
             if (res.status == 200) {
               Swal.fire("변경되었습니다.", "", "success");
+              navigate("/category");
             } else {
               Swal.fire("에러 발생! 잠시후 다시 시도해주세요.", "", "error");
             }
@@ -214,77 +219,95 @@ function SaleUnit() {
   };
 
   const openCompose = () => {
-    Swal.fire({
-      title: "조립하러 가시겠습니까?",
-      showDenyButton: true,
-      showCancelButton: true,
-      confirmButtonText: "조립하러 가기",
-      denyButtonText: `취소`,
-    }).then(async (result) => {
-      if (unit.partTypeIds.length > 1) {
-        Swal.fire({
-          icon: "error",
-          title: "조립을 원하시면 제품을 하나만 등록해주세요.",
-        });
-      } else {
-        if (result.isConfirmed) {
-          const obj: ImageRequest = {
-            imageIds: imageList
-              .map((elem) => elem.fileId)
-              .slice(1, imageList.length),
-          };
-          const res = await localAxios.post<ImageResponse[]>(
-            "/common/images",
-            obj,
-          );
-          const images = res.data.map((elem) => elem.imgUrl);
-          product.unit = unit;
+    if (product.productTitle.length === 0) {
+      alert("제목을 입력해 주세요.");
+    } else if (imageList.length === 1) {
+      alert("사진을 첨부해 주세요.");
+    } else if (unit.partTypeIds.length === 0) {
+      alert("위치를 선택해 주세요.");
+    } else if (unit.age === undefined || unit.age === null) {
+      alert("사용기간을 입력해주세요.");
+    } else if (unit.age < 0) {
+      alert("사용기간은 최소 0개월 이상이어야 합니다.");
+    } else if (!unit.price) {
+      alert("가격을 입력해 주세요.");
+    } else if (unit.price <= 0) {
+      alert("가격은 최소 1원 이상이어야 합니다.");
+    } else if (unit.unitDescription.length === 0) {
+      alert("상품 설명을 입력해 주세요.");
+    } else {
+      Swal.fire({
+        title: "조립하러 가시겠습니까?",
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: "조립하러 가기",
+        denyButtonText: `취소`,
+      }).then(async (result) => {
+        if (unit.partTypeIds.length > 1) {
+          Swal.fire({
+            icon: "error",
+            title: "조립을 원하시면 제품을 하나만 등록해주세요.",
+          });
+        } else {
+          if (result.isConfirmed) {
+            const obj: ImageRequest = {
+              imageIds: imageList
+                .map((elem) => elem.fileId)
+                .slice(1, imageList.length),
+            };
+            const res = await localAxios.post<ImageResponse[]>(
+              "/common/images",
+              obj,
+            );
+            const images = res.data.map((elem) => elem.imgUrl);
+            product.unit = unit;
 
-          unit.images = imageList
-            .map((elem) => elem.fileId)
-            .slice(1, imageList.length);
-          unit.categoryId = category;
-          const part = categories[0].partTypes.filter(
-            (x) => x.partTypeId === unit.partTypeIds[0],
-          );
-          const indexMapper = new Map<string, number>();
-          indexMapper.set("왼쪽", 0);
-          indexMapper.set("오른쪽", 1);
-          indexMapper.set("케이스", 2);
-          let idx: number = -1; // 기본값으로 0을 할당합니다.
-          if (indexMapper) {
-            if (part.length > 0) {
-              const position = part[0].position;
-              console.log("pos", position, "re", indexMapper.get(position));
-              idx = indexMapper.get(position) || idx; // indexMapper에서 position에 대한 값이 없으면 기존 값인 idx를 사용합니다.
+            unit.images = imageList
+              .map((elem) => elem.fileId)
+              .slice(1, imageList.length);
+            unit.categoryId = category;
+            const part = categories[0].partTypes.filter(
+              (x) => x.partTypeId === unit.partTypeIds[0],
+            );
+            const indexMapper = new Map<string, number>();
+            indexMapper.set("왼쪽", 0);
+            indexMapper.set("오른쪽", 1);
+            indexMapper.set("케이스", 2);
+            let idx: number = -1; // 기본값으로 0을 할당합니다.
+            if (indexMapper) {
+              if (part.length > 0) {
+                const position = part[0].position;
+                console.log("pos", position, "re", indexMapper.get(position));
+                idx = indexMapper.get(position) || idx; // indexMapper에서 position에 대한 값이 없으면 기존 값인 idx를 사용합니다.
+              }
+            }
+
+            //유닛 저장 해야댐
+            const unitprop: UnitCProps = {
+              unitId: -1,
+              images: images,
+              unitDescription: unit.unitDescription,
+              price: unit.price,
+              category: part[0].position,
+              age: unit.age,
+              idx: idx,
+            };
+            const response = await localAxios.post("/product", product);
+
+            unitprop.unitId = response.data;
+            const props: SaleProductProp = {
+              categoryId: category,
+              unitprop: unitprop,
+              product: product,
+            };
+
+            if (response.status == 200) {
+              navigate("/new/product", { state: { props: props } });
             }
           }
-
-          //유닛 저장 해야댐
-          const unitprop: UnitCProps = {
-            unitId: -1,
-            images: images,
-            unitDescription: unit.unitDescription,
-            price: unit.price,
-            category: part[0].position,
-            age: unit.age,
-            idx: idx,
-          };
-          const response = await localAxios.post("/product", product);
-
-          unitprop.unitId = response.data;
-          const props: SaleProductProp = {
-            categoryId: category,
-            unitprop: unitprop,
-            product: product,
-          };
-
-          if (response.status == 200) {
-            navigate("/new/product", { state: { props: props } });
-          }
         }
-      }
-    });
+      });
+    }
   };
 
   return (

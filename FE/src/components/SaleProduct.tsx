@@ -33,13 +33,14 @@ import {
 } from "@/components/ui/popover";
 // import { Input } from "./ui/input";
 import Swal from "sweetalert2";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ProductSaveRequest } from "@/types/Product";
+import MultiClamp from "react-multi-clamp";
 
 interface SaleProductProp {
   categoryId: number;
   unitprop: UnitCProps;
-  product: ProductSaveRequest
+  product: ProductSaveRequest;
 }
 interface UnitCProps {
   unitId: number;
@@ -70,10 +71,7 @@ export default function SaleProduct() {
   // const loadUnitByCategory() = {}
   const localAxios = useLocalAxios();
   //내꺼 미리 받아서 넣어놓기 못했어
-  const baseSetting = ( u: SaleProductProp ) => {
-
-  }
-
+  const baseSetting = (u: SaleProductProp) => {};
 
   useEffect(() => {
     indexMapper.set("왼쪽", 0);
@@ -88,20 +86,22 @@ export default function SaleProduct() {
       });
       if (props.unitprop) {
         const idx = indexMapper.get(props.unitprop.category);
-        if( idx != undefined ){
+        if (idx != undefined) {
           newComplete.set(props.unitprop.category, true);
           const nextClr = [...clr];
           nextClr[idx] = props.unitprop;
-          setComplete( newComplete);
+          setComplete(newComplete);
           setClr(nextClr);
         }
       }
       setComplete(newComplete);
-      baseSetting( props );
+      baseSetting(props);
       // console.log(newComplete);
     }); // 차피 products있어도 mapper 없으면 의미 없음.
   }, []);
-  useEffect(()=>{console.log('come',complete)},[complete])
+  useEffect(() => {
+    console.log("come", complete);
+  }, [complete]);
   //스크롤 처리 필요 size ref로 해두고 나중에 ㄱ
   useEffect(() => {
     setTagList([]);
@@ -174,24 +174,29 @@ export default function SaleProduct() {
     };
     setClr(nextClr);
   };
-
+  const navigate = useNavigate();
   const saveProduct = () => {
     Swal.fire({
       title: "저장하시겠습니까?",
       showCancelButton: true,
       confirmButtonText: "저장하기",
-    }).then( async (result) => {
+    }).then(async (result) => {
       if (
         complete.get("케이스") &&
         complete.get("왼쪽") &&
         complete.get("오른쪽")
       ) {
         if (result.isConfirmed) {
-          console.log( props );
-          props.product.targetUnits = clr.filter( x => x.idx != props.unitprop.idx ).map( elem => elem.unitId );
-          console.log( 'sendData: ', props.product );
-          const res = await localAxios.patch(`/product/compose/${props.unitprop.unitId}`,props.product);
-          console.log( res );
+          console.log(props);
+          props.product.targetUnits = clr
+            .filter((x) => x.idx != props.unitprop.idx)
+            .map((elem) => elem.unitId);
+          console.log("sendData: ", props.product);
+          const res = await localAxios.put(
+            `/product/compose/${props.unitprop.unitId}`,
+            props.product,
+          );
+          navigate("/category");
         }
       } else {
         Swal.fire("모든 제품을 등록해주세요.", "", "info");
@@ -226,11 +231,16 @@ export default function SaleProduct() {
                     <img src={CaseRealImg2} />
                   </PopoverTrigger>
                   <PopoverContent>
-                    <div className="flex flex-row justify-center align-middle">
-                      <img src={clr[2].images[0]} />
+                    <div className="flex flex-row justify-center gap-2 align-middle">
+                      <img
+                        src={clr[2].images[0]}
+                        className="size-24 object-cover"
+                      />
                       <div className="flex w-full rounded-lg border-2">
                         <div className="flex w-full flex-col self-center justify-self-center px-1 font-GothicLight text-sm">
-                          <div className="">{clr[2].unitDescription}</div>
+                          <MultiClamp ellipsis="..." clamp={3}>
+                            <div className="">{clr[2].unitDescription}</div>
+                          </MultiClamp>
                           <div className="">가격: {clr[2].price}</div>
                           <div className="">연식: {clr[2].age}</div>
                           <div className="flex justify-center">
@@ -250,16 +260,10 @@ export default function SaleProduct() {
                   </PopoverContent>
                 </Popover>
               )}
-
-              {/* <div className="flex w-full flex-col items-center">
-                <p>Case</p>
-                <p>d2doo</p>
-                <p>3000원</p>
-              </div> */}
             </div>
 
             <div className="flex items-center justify-between space-x-5">
-              <div className="flex-1.5 flex  w-full animate-doong-sil flex-col items-center justify-start">
+              <div className="flex-1.5 flex w-full animate-doong-sil flex-col items-center justify-start">
                 {!complete.get("왼쪽") ? (
                   <DrawerTrigger>
                     {/*여기 수정 필요*/}
@@ -275,8 +279,11 @@ export default function SaleProduct() {
                       <img src={LeftRealImg2} />
                     </PopoverTrigger>
                     <PopoverContent>
-                      <div className="flex flex-row justify-center align-middle">
-                        <img src={clr[0].images[0]} />
+                      <div className="flex flex-row justify-center gap-2 align-middle">
+                        <img
+                          src={clr[0].images[0]}
+                          className="size-24 object-cover"
+                        />
                         <div className="flex w-full rounded-lg border-2">
                           <div className="flex w-full flex-col self-center justify-self-center px-1 font-GothicLight text-sm">
                             <div className="">{clr[0].unitDescription}</div>
@@ -316,8 +323,11 @@ export default function SaleProduct() {
                       <img src={RightRealImg2} />
                     </PopoverTrigger>
                     <PopoverContent>
-                      <div className="flex flex-row justify-center align-middle">
-                        <img src={clr[1].images[0]} />
+                      <div className="flex flex-row justify-center gap-2 align-middle">
+                        <img
+                          src={clr[1].images[0]}
+                          className="size-24 object-cover"
+                        />
                         <div className="flex w-full rounded-lg border-2">
                           <div className="flex w-full flex-col self-center justify-self-center px-1 font-GothicLight text-sm">
                             <div className="">{clr[1].unitDescription}</div>
@@ -344,28 +354,30 @@ export default function SaleProduct() {
             </div>
           </div>
           <DrawerContent>
-            <DrawerHeader>
-              <DrawerTitle>{title}</DrawerTitle>
-              <DrawerDescription className="py-4">
-                {tagList.map((unit: UnitCProps) => {
-                  return (
-                    <DrawerClose>
-                      <UnitC
-                        key={unit.unitId}
-                        unitId={unit.unitId}
-                        images={unit.images}
-                        unitDescription={unit.unitDescription}
-                        price={unit.price}
-                        category={unit.category}
-                        age={unit.age}
-                        handler={unit.handler}
-                        idx={unit.idx}
-                      />
-                    </DrawerClose>
-                  );
-                })}
-              </DrawerDescription>
-            </DrawerHeader>
+            <div className="overflow-y-scroll">
+              <DrawerHeader>
+                <DrawerTitle>{title}</DrawerTitle>
+                <DrawerDescription className="py-4">
+                  {tagList.map((unit: UnitCProps) => {
+                    return (
+                      <DrawerClose>
+                        <UnitC
+                          key={unit.unitId}
+                          unitId={unit.unitId}
+                          images={unit.images}
+                          unitDescription={unit.unitDescription}
+                          price={unit.price}
+                          category={unit.category}
+                          age={unit.age}
+                          handler={unit.handler}
+                          idx={unit.idx}
+                        />
+                      </DrawerClose>
+                    );
+                  })}
+                </DrawerDescription>
+              </DrawerHeader>
+            </div>
             <DrawerFooter>
               <Button size="drawer">선택</Button>
               <DrawerClose>
