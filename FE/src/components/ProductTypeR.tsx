@@ -38,7 +38,12 @@ function Product({
   );
 }
 
-function ProductTypeR(props: { onlyMyProduct: boolean; productId: number }) {
+function ProductTypeR(props: {
+  onlyMyProduct: boolean;
+  productId: number;
+  isOnly: boolean;
+  memberId: string;
+}) {
   const queryClient = useQueryClient();
   useEffect(() => {
     queryClient.invalidateQueries("searchProducts");
@@ -46,9 +51,10 @@ function ProductTypeR(props: { onlyMyProduct: boolean; productId: number }) {
 
   const localAxios = useLocalAxios(props.onlyMyProduct); // 로그인 필요 없을 때 사용
 
-  const ROWS_PER_PAGE = 4;
+  const ROWS_PER_PAGE = 6;
+  const isOnly = props.isOnly;
   const [lastProductId, setLastProductId] = useState<number>(props.productId);
-  // const [productList, setProductList] = useState<ProudctPreview>();
+
   const {
     products,
     refetch,
@@ -59,17 +65,29 @@ function ProductTypeR(props: { onlyMyProduct: boolean; productId: number }) {
   } = useSearchProductQuery({
     // startCount: 몇번째 상품부터 불러올건지 시작인덱스 / row: 받아 올 상품 개수
     rowsPerPage: ROWS_PER_PAGE,
-    queryFn: () => fetchProductsData(ROWS_PER_PAGE, lastProductId),
+    isOnly: isOnly,
+    onlyMyProduct: props.onlyMyProduct,
+    queryFn: () => fetchProductsData(ROWS_PER_PAGE, lastProductId, isOnly),
   });
 
   // 처음 요청은 size만 받고 그 다음 요청을 할 때는 productId가 필요
   const fetchProductsData = async (
     size: number,
     productId: number,
+    isOnly: boolean,
   ): Promise<ProductDetailResponse[]> => {
     // console.log("productId: ", productId);
-    const params =
-      productId !== 0 ? { size: size, productId: productId } : { size: size };
+    // 여기가 조회를 바꿔야 함
+    // 자신일 경우 param에 넣어야함
+
+    const params = {
+      size: size,
+      ...(productId !== 0 && { productId: productId }), // productId가 0이 아닐 경우에만 productId를 포함합니다.
+      ...(props.onlyMyProduct && { memberId: props.memberId }), // onlyMyProduct가 true일 경우에만 memberId를 포함합니다.
+      ...(!props.onlyMyProduct && { isOnly: isOnly }), // onlyMyProduct가 false일 경우에만 isOnly를 포함합니다.
+    };
+
+    // isOnly: isOnly,
     console.log("params: ", params);
     const response = await localAxios.get<ProductDetailResponse[]>(`/product`, {
       params: params,
@@ -77,13 +95,25 @@ function ProductTypeR(props: { onlyMyProduct: boolean; productId: number }) {
     return response.data;
   };
 
+  useEffect(() => {
+    queryClient.invalidateQueries("searchProducts");
+  }, [queryClient]);
+
   const { ref, inView } = useInView({
     threshold: 0, // 여기서 원하는 threshold 값을 설정
     delay: 500,
   });
 
   useEffect(() => {
-    refetch({ refetchPage: (page, index) => index === 0 });
+    if (props.productId === 0) {
+      // productId가 0일 때 데이터 리로드
+      refetch();
+    }
+  }, [props.productId, refetch]);
+
+  useEffect(() => {
+    // refetch({ refetchPage: (page, index) => index === 0 });
+    refetch();
     console.log("패치패치패치패치");
   }, []);
 

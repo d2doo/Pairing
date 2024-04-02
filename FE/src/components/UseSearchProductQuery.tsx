@@ -1,18 +1,31 @@
-import { useMemo } from "react";
+import { useState, useMemo } from "react";
 import { QueryFunctionContext, useInfiniteQuery } from "react-query";
 import { ProductDetailResponse } from "@/types/Product.ts";
 
 interface useSearchProductQueryProps {
   rowsPerPage: number;
+  isOnly: boolean;
+  onlyMyProduct: boolean;
   queryFn: (context?: QueryFunctionContext) => Promise<ProductDetailResponse[]>;
 }
-
-const queryKey = "searchProducts";
 
 const useSearchProductQuery = ({
   rowsPerPage,
   queryFn,
+  isOnly,
+  onlyMyProduct,
 }: useSearchProductQueryProps) => {
+  // const [myProduct, setMyProduct] = useState(true); // 예시로 사용할 상태입니다.
+
+  const queryKey = useMemo(
+    () => ["searchProducts", { onlyMyProduct, rowsPerPage, isOnly }],
+    [onlyMyProduct, rowsPerPage, isOnly],
+  );
+  // const queryKey = useMemo(
+  //   () => ["searchProducts", { rowsPerPage, isOnly }],
+  //   [rowsPerPage, isOnly],
+  // );
+
   const {
     data,
     refetch,
@@ -29,7 +42,7 @@ const useSearchProductQuery = ({
         : nextPage;
     },
     retry: 0,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });
@@ -39,6 +52,8 @@ const useSearchProductQuery = ({
     if (data === undefined) return data;
     // 모든 배열을 단일 배열로 flat 처리
     const response = data.pages.flat();
+    // console.log("response: ", response);
+    // console.log(data);
     const json = response.map((item) => ({
       thumbnailUrl: item.thumbnailUrl,
       //partTypes 배열에서 position만 추출하여 category 배열로 변환
@@ -49,15 +64,8 @@ const useSearchProductQuery = ({
       productTitle: item.productTitle,
       totalPrice: item.totalPrice,
     }));
-    console.log("????");
-    console.log(fetchNextPage);
-    console.log(isFetchingNextPage);
     return json;
   }, [data]);
-
-  // const handleRefetch = () => {
-  //   refetch({ refetchPage: (page, index) => index === 0 });
-  // };
 
   return {
     products,

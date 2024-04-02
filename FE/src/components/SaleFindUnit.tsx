@@ -46,7 +46,12 @@ function FindUnit() {
       <div className="p-2">
         <ProductTypeC />
         <div className="mt-8 border-y border-black1 py-4">
-          <ProductTypeR onlyMyProduct={false} productId={0} />
+          <ProductTypeR
+            onlyMyProduct={false}
+            productId={0}
+            isOnly={false}
+            memberId=""
+          />
           <PaginationDemo />
         </div>
         <div className="mb-14">
