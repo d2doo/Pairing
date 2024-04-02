@@ -10,6 +10,14 @@ function Login() {
     }&response_type=code`;
   };
 
+  const googleLogin = () => {
+    location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${
+      import.meta.env.VITE_GOOGLE_CLIENT_ID
+    }&redirect_uri=${
+      import.meta.env.VITE_REDIRECT_URI_BASE + "/google"
+    }&response_type=code&scope=openid%20profile%20email`;
+  };
+
   return (
     <>
       <div className="justify-center">
@@ -29,7 +37,7 @@ function Login() {
             className="h-full w-full"
           />
         </button>
-        <button type="button" className="">
+        <button type="button" className="" onClick={googleLogin}>
           <img
             src={GoogleLoginButtonImage}
             alt="google_err"

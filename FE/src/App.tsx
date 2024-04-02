@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useTokenStore } from "@/stores/token.ts";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth.ts";
+import {GoogleAuthCallback} from "@/pages/auth/GoogleAuthCallback.tsx";
 
 function App() {
   const authStore = useAuthStore();
@@ -52,8 +53,6 @@ function App() {
             <Route element={<DefaultLayout headerType="titleBar" />}>
               <Route path="/new/unit-lists" element={<UnitLists />} />
               <Route path="/new/product" element={<SaleProduct />} />
-              <Route path="/new/unit-lists" element={<UnitLists />} />
-              <Route path="/new/product" element={<SaleProduct />} />
               <Route path="/new/unit" element={<SaleUnit />} />
             </Route>
             <Route element={<DefaultLayout headerType="titleBar" />}>
@@ -71,6 +70,7 @@ function App() {
             {/* <Route element={<DefaultLayout />}> */}
             <Route path="/product/:id" element={<ProductDetailPage />} />
             <Route path="/auth/kakao" element={<KakaoAuthCallback />} />
+            <Route path="/auth/google" element={<GoogleAuthCallback />} />
           </Route>
           <Route element={<DefaultLayout headerType="searchBar" />}>
             {/* <Route element={<DefaultLayout headerType={true} />}> */}
