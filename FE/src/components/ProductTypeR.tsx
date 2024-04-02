@@ -46,11 +46,16 @@ function ProductTypeR(props: {
 }) {
   const queryClient = useQueryClient();
   useEffect(() => {
-    queryClient.invalidateQueries("searchProducts");
+    // queryClient.invalidateQueries("searchProducts");
+    queryClient.invalidateQueries([
+      "searchProducts",
+      { onlyMyProduct, ROWS_PER_PAGE, isOnly },
+    ]);
   }, [queryClient]);
 
   const localAxios = useLocalAxios(props.onlyMyProduct); // 로그인 필요 없을 때 사용
 
+  const onlyMyProduct = props.onlyMyProduct;
   const ROWS_PER_PAGE = 6;
   const isOnly = props.isOnly;
   const [lastProductId, setLastProductId] = useState<number>(props.productId);
@@ -80,6 +85,7 @@ function ProductTypeR(props: {
     // 여기가 조회를 바꿔야 함
     // 자신일 경우 param에 넣어야함
 
+    // params를 받아서 처리하게 변경할 예정
     const params = {
       size: size,
       ...(productId !== 0 && { productId: productId }), // productId가 0이 아닐 경우에만 productId를 포함합니다.
@@ -87,7 +93,6 @@ function ProductTypeR(props: {
       ...(!props.onlyMyProduct && { isOnly: isOnly }), // onlyMyProduct가 false일 경우에만 isOnly를 포함합니다.
     };
 
-    // isOnly: isOnly,
     console.log("params: ", params);
     const response = await localAxios.get<ProductDetailResponse[]>(`/product`, {
       params: params,
@@ -95,27 +100,12 @@ function ProductTypeR(props: {
     return response.data;
   };
 
-  useEffect(() => {
-    queryClient.invalidateQueries("searchProducts");
-  }, [queryClient]);
-
   const { ref, inView } = useInView({
     threshold: 0, // 여기서 원하는 threshold 값을 설정
     delay: 500,
   });
 
-  useEffect(() => {
-    if (props.productId === 0) {
-      // productId가 0일 때 데이터 리로드
-      refetch();
-    }
-  }, [props.productId, refetch]);
-
-  useEffect(() => {
-    // refetch({ refetchPage: (page, index) => index === 0 });
-    refetch();
-    console.log("패치패치패치패치");
-  }, []);
+  // 리로드 조건 : 등록을 하고 나서
 
   useEffect(() => {
     if (inView) {

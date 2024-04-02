@@ -22,11 +22,11 @@ function Login() {
     <>
       <div className="justify-center">
         <div className="mb-9 grid">
+          <a className="font-Gothic text-black1 text-shadow-md">
+            pairing your way!
+          </a>
           <a className="font-Chab text-logo text-white1 text-shadow-default">
             PAIRING
-          </a>
-          <a className="font-Gothic text-black1 text-shadow-md">
-            pairing mine, pairing yours
           </a>
         </div>
 

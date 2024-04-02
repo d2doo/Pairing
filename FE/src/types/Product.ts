@@ -35,15 +35,15 @@ interface ProductSaveRequest {
   thumbnailIndex: number;
 }
 
-interface ProductFindResponse{
-    thumbnailUrl: string,
-    category: Category,
-    leader: MemberSummaryResponse,
-    productId: string,
-    productTitle: string,
-    totalPrice: number,
-    maxAge: number,
-    units: UnitFind[],
+interface ProductFindResponse {
+  thumbnailUrl: string;
+  category: Category;
+  leader: MemberSummaryResponse;
+  productId: string;
+  productTitle: string;
+  totalPrice: number;
+  maxAge: number;
+  units: UnitFind[];
 }
 
 interface ProudctPreview {
@@ -54,6 +54,22 @@ interface ProudctPreview {
   totalPrice: number;
 }
 
+interface ProductRequestParams {
+  isOnly?: boolean; // true이면 개별, false이면 조합 상품
+  isCombined?: boolean;
+  memberId?: string; // mypage 내 상품 조회시 필요
+  nickname?: string; //판매 유저(LEAD)
+  categoryId?: number; //에어팟, 버즈
+  productStatus?: string; // 판매중 혹은 판매 완료
+  startPrice?: number;
+  endPrice?: number;
+  maxAge?: number;
+  keyword?: string;
+  page?: number;
+  size: number;
+  productId?: number;
+}
+
 export type {
   PartType,
   Category,
@@ -62,4 +78,5 @@ export type {
   ProductSaveRequest,
   ProductFindResponse,
   ProudctPreview,
+  ProductRequestParams,
 };
