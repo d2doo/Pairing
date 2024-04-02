@@ -117,8 +117,8 @@ public class DealServiceImpl implements DealService {
         NotificationCreateRequestDto notificationCreateRequestDto = NotificationCreateRequestDto
                 .builder()
                 .topicSubject("product")
-                .members((ArrayList<String>) members.stream().map((memberElem) -> {
-                    return memberElem.getMemberId();
+                .members((ArrayList<String>) units.stream().map((unit) -> {
+                    return unit.getMember().getMemberId();
                 }).collect(Collectors.toList()))
                 .content(product.getTitle() + " 상품의 구매 요청이 있습니다.")
                 .isRead(false)
@@ -147,6 +147,7 @@ public class DealServiceImpl implements DealService {
                     .notificationType(NotificationType.confirm)
                     .productId(product.getProductId())
                     .build();
+            notificationCreateRequestDto.getMembers().add(product.getConsumerId());
             notificationProducerService.sendNotificationToKafkaTopic(notificationCreateRequestDto);
         } else{
             throw new IllegalArgumentException("구매자가 아니라면 상품 구매를 완료할 수 없습니다.");
