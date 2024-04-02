@@ -145,13 +145,13 @@ public class ProductServiceImpl implements ProductService {
         //채팅방 생성을 위한 member list 생성
         List<Member> memberList = new ArrayList<>();
         memberList.add( unit.getMember());
-
         for (Long targetUnitId : targets){
             unitRepository.findById(targetUnitId).ifPresent(
                     targetUnit -> {
                         targetUnit.getProduct().softDeleted(true);//targetUnit의 원래 product의 isdeleted는 true로 바껴야함
                         targetUnit.setIsConfirmed( false ); // 나머지 친구들은 거절
                         targetUnit.updateProduct(product);
+                        product.updateTotalPrice(targetUnit.getPrice()); // 04-02 totalprice 수정
                         memberList.add( targetUnit.getMember() );
                         product.getUnits().add(targetUnit);
                     }
