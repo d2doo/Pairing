@@ -38,7 +38,7 @@ function Product({
   );
 }
 
-function Products(props: { onlyMyProduct: boolean; productId: number }) {
+function ProductTypeR(props: { onlyMyProduct: boolean; productId: number }) {
   const queryClient = useQueryClient();
   useEffect(() => {
     queryClient.invalidateQueries("searchProducts");
@@ -142,4 +142,4 @@ function Products(props: { onlyMyProduct: boolean; productId: number }) {
   );
 }
 
-export default Products;
+export default ProductTypeR;
