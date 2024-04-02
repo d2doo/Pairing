@@ -122,7 +122,7 @@ public class DealServiceImpl implements DealService {
                 }).collect(Collectors.toList()))
                 .content(product.getTitle() + " 상품의 구매 요청이 있습니다.")
                 .isRead(false)
-                .notificationType(NotificationType.confirm)
+                .notificationType(NotificationType.message)
                 .productId(product.getProductId())
                 .build();
         notificationProducerService.sendNotificationToKafkaTopic(notificationCreateRequestDto);
@@ -144,7 +144,7 @@ public class DealServiceImpl implements DealService {
                     }).collect(Collectors.toList()))
                     .content(product.getTitle() + " 상품의 거래가 완료되었습니다.")
                     .isRead(false)
-                    .notificationType(NotificationType.confirm)
+                    .notificationType(NotificationType.message)
                     .productId(product.getProductId())
                     .build();
             notificationCreateRequestDto.getMembers().add(product.getConsumerId());
