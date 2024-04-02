@@ -13,20 +13,26 @@ const useSearchProductQuery = ({
   rowsPerPage,
   queryFn,
 }: useSearchProductQueryProps) => {
-  const { data, isLoading, isError, fetchNextPage, isFetchingNextPage } =
-    useInfiniteQuery(queryKey, queryFn, {
-      getNextPageParam: (lastPage, allPages) => {
-        const nextPage = allPages.length + 1;
-        //상품이 0개이거나 rowsPerPage보다 작을 경우 스크롤을 막는다.
-        return allPages[0].length === 0 || lastPage.length < rowsPerPage
-          ? undefined
-          : nextPage;
-      },
-      retry: 0,
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
-    });
+  const {
+    data,
+    refetch,
+    isLoading,
+    isError,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useInfiniteQuery(queryKey, queryFn, {
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+      //상품이 0개이거나 rowsPerPage보다 작을 경우 스크롤을 막는다.
+      return allPages[0].length === 0 || lastPage.length < rowsPerPage
+        ? undefined
+        : nextPage;
+    },
+    retry: 0,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
 
   const products = useMemo(() => {
     // 상품 컴포넌트(ProductCard.tsx)의 props에 맞춰 데이터 가공처리
@@ -43,10 +49,24 @@ const useSearchProductQuery = ({
       productTitle: item.productTitle,
       totalPrice: item.totalPrice,
     }));
+    console.log("????");
+    console.log(fetchNextPage);
+    console.log(isFetchingNextPage);
     return json;
   }, [data]);
 
-  return { products, isLoading, isError, fetchNextPage, isFetchingNextPage };
+  // const handleRefetch = () => {
+  //   refetch({ refetchPage: (page, index) => index === 0 });
+  // };
+
+  return {
+    products,
+    refetch,
+    isLoading,
+    isError,
+    fetchNextPage,
+    isFetchingNextPage,
+  };
 };
 
 export default useSearchProductQuery;
