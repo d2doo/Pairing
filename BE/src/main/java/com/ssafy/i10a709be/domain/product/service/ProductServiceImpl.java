@@ -224,7 +224,6 @@ public class ProductServiceImpl implements ProductService {
         Unit unit = unitRepository.findById( unitId ).orElseThrow( () -> new EntityNotFoundException("찾으시는 유닛이 없습니다"));
         Product product = productRepository.findProductAndUnitsByProductId( unit.getOriginalProductId() ).orElseThrow( () -> new IllegalArgumentException("잘못된 상품 정보 요청입니다."));
         product.softDeleted( true );
-        product.updateStatus(ProductStatus.PENDING);
 
         // 권한 체크
         if (member.getMemberId() != product.getMember().getMemberId())
@@ -233,7 +232,7 @@ public class ProductServiceImpl implements ProductService {
         Product newProduct = Product.builder()
                 .member(member)
                 .title(productSaveRequestDto.getProductTitle())
-                .status(ProductStatus.ON_SELL)
+                .status(ProductStatus.PENDING)
                 .maxAge(productSaveRequestDto.getUnit().getAge())
                 .totalPrice(productSaveRequestDto.getUnit().getPrice())
                 .isOnly(false)
