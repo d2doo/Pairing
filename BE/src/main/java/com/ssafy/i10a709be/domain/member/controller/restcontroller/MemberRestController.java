@@ -91,7 +91,7 @@ public class MemberRestController {
         map.put("member", MemberSummaryResponseDto.fromEntityWithMemberId(member,tokens.get(2)));
         map.put("accessToken", "Bearer " + accessToken);
         //log.info( "login1!:" + map.toString() );
-        return ResponseEntity.status(HttpStatus.OK).body(map);
+        return ResponseEntity.status(HttpStatus.OK).headers(headers).body(map);
     }
 
     @DeleteMapping

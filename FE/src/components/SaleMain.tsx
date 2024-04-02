@@ -18,12 +18,10 @@ function SalePage() {
             <p className="font-GothicLight text-xs">pairing mine!</p>
             <p className="font-GothicMedium text-xl">내 상품 등록</p>
           </div>
-          <div className="space-y-1">
-            <p className="text-xs">
-              <p>내 상품을 등록하고 조립해서</p>
-              <p>판매해보세요!</p>
-            </p>
-            <p className="text-md font-Gothic">상품 등록하러 가기 →</p>
+          <div className="space-y-1 text-xs">
+            <p>내 상품을 등록하고 조립해서</p>
+            <p>판매해보세요!</p>
+            <p className="font-Gothic text-base">상품 등록하러 가기 →</p>
           </div>
         </div>
       </Link>
@@ -36,12 +34,10 @@ function SalePage() {
               <p className="font-GothicLight text-xs">pairing yours!</p>
               <p className="font-GothicMedium text-xl">상품 구매</p>
             </div>
-            <div className="space-y-1">
-              <p className="text-end text-xs">
-                <p>PAIRING에 등록된 상품을</p>
-                <p>구경하고 구매해보세요!</p>
-              </p>
-              <p className="text-md text-end font-Gothic">상품 사러 가기 →</p>
+            <div className="space-y-1 text-end text-xs">
+              <p>PAIRING에 등록된 상품을</p>
+              <p>구경하고 구매해보세요!</p>
+              <p className="text-end font-Gothic text-base">상품 사러 가기 →</p>
             </div>
           </div>
           <img

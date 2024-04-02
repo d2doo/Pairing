@@ -1,16 +1,17 @@
 import classNames from 'classnames';
 import React, {ReactNode, useEffect, useState} from "react";
 import { useLocalAxios } from "@/utils/axios.ts";
-import {AxiosError, AxiosProgressEvent, AxiosResponse} from "axios";
-import {Progress} from "@/components/ui/progress.tsx";
+import { AxiosProgressEvent, AxiosResponse } from "axios";
+import { Progress } from "@/components/ui/progress.tsx";
 
 interface ImageUploaderProps {
-    children?: ReactNode;
-    className?: string;
-    onUploadRequested?: () => void;
-    onUploadComplete?: (response: AxiosResponse) => void;
-    onError?: (error: Error | unknown) => void;
-    onRemove?: () => void;
+  children?: ReactNode;
+  className?: string;
+  disabled?: boolean;
+  onUploadRequested?: () => void;
+  onUploadComplete?: (response: AxiosResponse) => void;
+  onError?: (error: Error | unknown) => void;
+  onRemove?: () => void;
 }
 
 enum ImageUploadStatus {
@@ -79,25 +80,41 @@ export const ImageUploader = (props: ImageUploaderProps) => {
         }
     }
 
-    return (
-        <label className={classNames('w-14 h-14 border-2 border-gray rounded-lg flex flex-col justify-center items-center p-1 relative', props.className)}>
-            { (uploadStatus == ImageUploadStatus.COMPLETE || uploadStatus == ImageUploadStatus.ERROR) &&
-                <button className='material-symbols-outlined absolute right-0 top-0 rounded-md bg-red-600 text-white text-xs font-bold px-1 py-0.5'
-                        onClick={props.onRemove}
-                >close</button>
-            }
-            { selectedFile && <img src={preview} className='w-full h-full' /> }
-            {
-                !selectedFile && <>
-                    <span className="material-symbols-outlined">photo_camera</span>
-                    <span className="text-xs">{props.children}</span>
-                </>
-            }
-            {
-                uploadStatus == ImageUploadStatus.UPLOADING &&
-                    <Progress className='absolute h-2 w-3/4 bottom-1/4' value={progress} />
-            }
-            { uploadStatus == ImageUploadStatus.PENDING && <input type="file" accept="image/*" hidden onChange={onChangeImage} /> }
-        </label>
-    );
+  return (
+    <label
+      className={classNames(
+        "border-gray relative flex h-14 w-14 flex-col items-center justify-center rounded-lg border-2 p-1",
+        props.className,
+      )}
+    >
+      {(uploadStatus == ImageUploadStatus.COMPLETE ||
+        uploadStatus == ImageUploadStatus.ERROR) && (
+        <button
+          className="material-symbols-outlined absolute right-0 top-0 rounded-md bg-red-600 px-1 py-0.5 text-xs font-bold text-white"
+          onClick={props.onRemove}
+        >
+          close
+        </button>
+      )}
+      {selectedFile && <img src={preview} className="h-full w-full" />}
+      {!selectedFile && (
+        <>
+          <span className="material-symbols-outlined">photo_camera</span>
+          <span className="text-xs">{props.children}</span>
+        </>
+      )}
+      {uploadStatus == ImageUploadStatus.UPLOADING && (
+        <Progress className="absolute bottom-1/4 h-2 w-3/4" value={progress} />
+      )}
+      {uploadStatus == ImageUploadStatus.PENDING && (
+        <input
+          type="file"
+          accept="image/*"
+          hidden
+          onChange={onChangeImage}
+          disabled={props.disabled}
+        />
+      )}
+    </label>
+  );
 };

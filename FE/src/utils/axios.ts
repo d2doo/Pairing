@@ -1,10 +1,12 @@
 import {useState} from "react";
 import {useAuthStore} from "@/stores/auth.ts";
 import axios, { AxiosInstance, InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+import {useTokenStore} from "@/stores/token.ts";
 
 export const useLocalAxios = (isAuthenticated: boolean = true) => {
 
     const authStore = useAuthStore();
+    const tokenStore = useTokenStore();
     const [isRefreshing, setIsRefreshing] = useState(false);
     const [refreshSubscribers, setRefreshSubscribers] = useState<((newAccessToken: string) => void)[]>([]);
 
@@ -22,9 +24,10 @@ export const useLocalAxios = (isAuthenticated: boolean = true) => {
         try {
             const response = await axios.post<{ accessToken: string }>(`${import.meta.env.VITE_API_BASE_URL}/refresh`);
             const newAccessToken = response.data.accessToken;
-            authStore.setAccessToken(newAccessToken);
+            tokenStore.setAccessToken(newAccessToken);
             onRefreshed(newAccessToken);
         } catch (error) {
+            tokenStore.clearAccessToken();
             authStore.clearAuth();
         }
     };
@@ -34,12 +37,13 @@ export const useLocalAxios = (isAuthenticated: boolean = true) => {
         headers: {
             'Content-Type': 'application/json',
         },
+        withCredentials: true
     });
 
     axiosInstance.interceptors.request.use(
         (config: InternalAxiosRequestConfig) => {
-            if (isAuthenticated && authStore.accessToken) {
-                config.headers!.Authorization = authStore.accessToken;
+            if (isAuthenticated && tokenStore.accessToken) {
+                config.headers!.Authorization = tokenStore.accessToken;
             }
             return config;
         },
@@ -75,7 +79,7 @@ export const useLocalAxios = (isAuthenticated: boolean = true) => {
                     return Promise.reject(error);
                 }
 
-                originalRequest.headers!.Authorization = authStore.accessToken;
+                originalRequest.headers!.Authorization = tokenStore.accessToken;
                 return axiosInstance(originalRequest);
             }
 

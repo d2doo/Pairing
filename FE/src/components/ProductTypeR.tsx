@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { products } from "@/assets/dummydata/products.json";
 import { Link } from "react-router-dom";
-
-interface productInterface {
-  thumbnailUrl: string;
-  category: string[];
-  productId: string;
-  productTitle: string;
-  totalPrice: number;
-}
+import useSearchProductQuery from "./UseSearchProductQuery";
+import { useInView } from "react-intersection-observer";
+import { useLocalAxios } from "@/utils/axios.ts";
+import SkeletonCard from "./SkeletonCard";
+import { ProudctPreview, ProductDetailResponse } from "@/types/Product";
+import { useQueryClient } from "react-query";
+// import PRODUCT from "@/assets/dummydata/product.json";
 
 function Product({
   thumbnailUrl,
@@ -16,7 +14,7 @@ function Product({
   productId,
   productTitle,
   totalPrice,
-}: productInterface) {
+}: ProudctPreview) {
   return (
     <>
       <Link to={"/product/" + productId} key={productId}>
@@ -32,29 +30,128 @@ function Product({
           ))}
         </div>
         <p className="truncate pb-0.5 font-Gothic text-xs">{productTitle}</p>
-        <p className="font-GothicBold text-xs">{totalPrice}원</p>
+        <p className="font-GothicBold text-xs">
+          {totalPrice.toLocaleString()}원
+        </p>
       </Link>
     </>
   );
 }
 
-function Products() {
-  const [product, setProduct] = useState<productInterface[]>([]);
-  //   const [loading, setLoading] = useState(true);
+function ProductTypeR(props: {
+  onlyMyProduct: boolean;
+  productId: number;
+  isOnly: boolean;
+  memberId: string;
+}) {
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    queryClient.invalidateQueries("searchProducts");
+  }, [queryClient]);
+
+  const localAxios = useLocalAxios(props.onlyMyProduct); // 로그인 필요 없을 때 사용
+
+  const ROWS_PER_PAGE = 6;
+  const isOnly = props.isOnly;
+  const [lastProductId, setLastProductId] = useState<number>(props.productId);
+
+  const {
+    products,
+    refetch,
+    isLoading,
+    isError,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useSearchProductQuery({
+    // startCount: 몇번째 상품부터 불러올건지 시작인덱스 / row: 받아 올 상품 개수
+    rowsPerPage: ROWS_PER_PAGE,
+    isOnly: isOnly,
+    onlyMyProduct: props.onlyMyProduct,
+    queryFn: () => fetchProductsData(ROWS_PER_PAGE, lastProductId, isOnly),
+  });
+
+  // 처음 요청은 size만 받고 그 다음 요청을 할 때는 productId가 필요
+  const fetchProductsData = async (
+    size: number,
+    productId: number,
+    isOnly: boolean,
+  ): Promise<ProductDetailResponse[]> => {
+    // console.log("productId: ", productId);
+    // 여기가 조회를 바꿔야 함
+    // 자신일 경우 param에 넣어야함
+
+    const params = {
+      size: size,
+      ...(productId !== 0 && { productId: productId }), // productId가 0이 아닐 경우에만 productId를 포함합니다.
+      ...(props.onlyMyProduct && { memberId: props.memberId }), // onlyMyProduct가 true일 경우에만 memberId를 포함합니다.
+      ...(!props.onlyMyProduct && { isOnly: isOnly }), // onlyMyProduct가 false일 경우에만 isOnly를 포함합니다.
+    };
+
+    // isOnly: isOnly,
+    console.log("params: ", params);
+    const response = await localAxios.get<ProductDetailResponse[]>(`/product`, {
+      params: params,
+    });
+    return response.data;
+  };
 
   useEffect(() => {
-    (async () => {
-      const json: productInterface[] = products;
-      setProduct(json);
-      //   setLoading(false);
-    })();
+    queryClient.invalidateQueries("searchProducts");
+  }, [queryClient]);
+
+  const { ref, inView } = useInView({
+    threshold: 0, // 여기서 원하는 threshold 값을 설정
+    delay: 500,
+  });
+
+  useEffect(() => {
+    if (props.productId === 0) {
+      // productId가 0일 때 데이터 리로드
+      refetch();
+    }
+  }, [props.productId, refetch]);
+
+  useEffect(() => {
+    // refetch({ refetchPage: (page, index) => index === 0 });
+    refetch();
+    console.log("패치패치패치패치");
   }, []);
+
+  useEffect(() => {
+    if (inView) {
+      fetchNextPage();
+    }
+  }, [inView, fetchNextPage]);
+
+  useEffect(() => {
+    // product 확인
+    // 마지막 proudctId 가져오기
+    if (products && products.length !== 0) {
+      console.log("lastProductId: ", lastProductId);
+      // console.log(products);
+      // setProductList(products);
+      const last = Number(products[products.length - 1].productId);
+      setLastProductId(last);
+    }
+  }, [products, lastProductId]);
+
+  if (isLoading) {
+    return (
+      <div className={"products"}>
+        <SkeletonCard size={ROWS_PER_PAGE} />
+      </div>
+    );
+  }
+
+  if (isError) {
+    return <></>;
+  }
 
   return (
     <>
-      <div className="flex flex-wrap px-7 ">
+      <div className="flex flex-col px-7 py-7">
         <div className="grid grid-cols-2 gap-x-10 gap-y-7">
-          {product.map((item: productInterface, index) => (
+          {products?.map((item: ProudctPreview, index) => (
             <Product
               key={index}
               thumbnailUrl={item.thumbnailUrl}
@@ -65,9 +162,14 @@ function Products() {
             />
           ))}
         </div>
+        {isFetchingNextPage ? (
+          <SkeletonCard size={ROWS_PER_PAGE} />
+        ) : (
+          <div ref={ref} />
+        )}
       </div>
     </>
   );
 }
 
-export default Products;
+export default ProductTypeR;

@@ -8,7 +8,7 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from "@/components/ui/pagination"
+} from "@/components/ui/pagination";
 import { Button } from "@/components/ui/button.tsx";
 
 export function PaginationDemo() {
@@ -37,27 +37,30 @@ export function PaginationDemo() {
         </PaginationItem>
       </PaginationContent>
     </Pagination>
-  )
+  );
 }
-
 
 function FindUnit() {
   return (
     <>
       <div className="p-2">
         <ProductTypeC />
-        <div className="border-y border-black1 mt-8 py-4">
-          <ProductTypeR />
+        <div className="mt-8 border-y border-black1 py-4">
+          <ProductTypeR
+            onlyMyProduct={false}
+            productId={0}
+            isOnly={false}
+            memberId=""
+          />
           <PaginationDemo />
         </div>
         <div className="mb-14">
-          <p
-          className="font-GothicMedium text-black1 m-3">선택한 상품</p>
+          <p className="m-3 font-GothicMedium text-black1">선택한 상품</p>
           <ProductTypeC />
           <div className="flex justify-end">
-          <Button className="rounded m-3">등록하기</Button>
+            <Button className="m-3 rounded">등록하기</Button>
           </div>
-          </div>      
+        </div>
       </div>
     </>
   );
