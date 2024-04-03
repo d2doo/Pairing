@@ -20,7 +20,7 @@ interface ChatMessageResponse {
   chatId: number;
   memberId: string;
   nickname: string;
-  imgSrc: string;
+  profileImage: string;
   content: string;
   type: string;
 }

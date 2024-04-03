@@ -25,6 +25,9 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
     setChat((prevChat: ChatMessageResponse[]) => prevChat.concat([ch]));
   };
 
+  useEffect(() => {
+    console.log(chat);
+  }, [chat]);
   const tagList: JSX.Element[] = chat.map((elem) => {
     if (elem.memberId == authMember.memberId) {
       return (
@@ -42,7 +45,7 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
             {/* 이미지 수정 필요 */}
 
             <img
-              src={elem.imgSrc ? elem.imgSrc : "/img/extra.png"}
+              src={elem.profileImage ? elem.profileImage : "/img/extra.png"}
               className="size-11 object-cover"
             />
           </div>
