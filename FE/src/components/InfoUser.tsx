@@ -76,7 +76,6 @@ function InfoUser() {
       }).then((result) => {
         if (result.isConfirmed) {
           localAxios.put<MemberResponse>("/member", userInfo).then((res) => {
-            console.log("res", res.data);
             Swal.fire("회원 정보가 변경되었습니다.");
             auth.setAuthByChange(res.data);
           });

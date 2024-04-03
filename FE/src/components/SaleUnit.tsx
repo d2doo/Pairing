@@ -192,17 +192,14 @@ function SaleUnit() {
     const responseData = response.data as Category[];
     setCategories(responseData);
     setCategory(responseData[0].categoryId);
-    console.log(responseData);
+    // console.log(responseData);
   };
 
   const onChangeCategory = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    console.log("hi");
-    console.log(e);
+    // console.log(e);
     setCategory(Number(e.target.value));
   };
-  useEffect(() => {
-    console.log(category);
-  }, [category]);
+  useEffect(() => {}, [category]);
 
   const onChangeSelectedPartTypeIds = (
     selected: ValueType<{ value: number; label: string }>,
@@ -277,7 +274,7 @@ function SaleUnit() {
             if (indexMapper) {
               if (part.length > 0) {
                 const position = part[0].position;
-                console.log("pos", position, "re", indexMapper.get(position));
+                // console.log("pos", position, "re", indexMapper.get(position));
                 idx = indexMapper.get(position) || idx; // indexMapper에서 position에 대한 값이 없으면 기존 값인 idx를 사용합니다.
               }
             }
