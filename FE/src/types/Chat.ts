@@ -1,47 +1,53 @@
 import { MemberSummaryResponse } from "./Member";
 
-interface ChatResponse{
-    content:string,
-    createdAt:Date
-  }
-  
-interface ChatRoomResponse{
-    chatRoomId:number,
-    title:string,
-    memberId: string,
-    nickname: string,
-    capability: number, 
-    chatResponseDto: ChatResponse
-}
-  
-
-
-interface ChatMessageResponse{
-    chatRoomId:number,
-    chatId:number,
-    memberId:string,
-    nickname:string,
-    content:string,
-    type:string,
+interface ChatResponse {
+  content: string;
+  createdAt: Date;
 }
 
-interface UserChatRoomResponse{
-    userChatRoomId:number,
-    member:MemberSummaryResponse,
-    lastAccessTime: Date,
+interface ChatRoomResponse {
+  chatRoomId: number;
+  title: string;
+  memberId: string;
+  nickname: string;
+  imgSrc: string;
+  capability: number;
+  chatResponseDto: ChatResponse;
 }
 
-interface ChatRoomDetail{
-  chatRoomResponse: ChatRoomResponse,
-  chatList: ChatMessageResponse[],
-  userChatRoomList: UserChatRoomResponse[],
-  chatRoomProduct: ChatRoomProduct,
+interface ChatMessageResponse {
+  chatRoomId: number;
+  chatId: number;
+  memberId: string;
+  nickname: string;
+  profileImage: string;
+  content: string;
+  type: string;
 }
-interface ChatRoomProduct{
-  title:string,
-  productId:number,
+
+interface UserChatRoomResponse {
+  userChatRoomId: number;
+  member: MemberSummaryResponse;
+  lastAccessTime: Date;
 }
 
+interface ChatRoomDetail {
+  chatRoomResponse: ChatRoomResponse;
+  chatList: ChatMessageResponse[];
+  userChatRoomList: UserChatRoomResponse[];
+  chatRoomProduct: ChatRoomProduct;
+}
 
-
-  export type { ChatResponse, ChatRoomResponse,ChatMessageResponse,UserChatRoomResponse,ChatRoomDetail, ChatRoomProduct }
+interface ChatRoomProduct {
+  productId: number;
+  imgSrc: string;
+  title: string;
+}
+export type {
+  ChatResponse,
+  ChatRoomResponse,
+  ChatMessageResponse,
+  UserChatRoomResponse,
+  ChatRoomDetail,
+  ChatRoomProduct,
+};

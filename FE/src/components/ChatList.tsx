@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ChatRoomResponse } from "@/types/Chat";
 import { useAuthStore } from "@/stores/auth";
@@ -9,12 +9,13 @@ import moment from "moment";
 function ChatList() {
   const authMember = useAuthStore();
   const localAxios = useLocalAxios();
-
+  const location = useLocation();
   useEffect(() => {
     console.log("auth:", authMember);
+
     // testChatList();
     loadChatList();
-  }, []);
+  }, [location.pathname]);
 
   // const testChatList = () => {
   //   const productDto: ProductSaveRequest = {
@@ -57,7 +58,7 @@ function ChatList() {
           key={element.chatRoomId}
         >
           <img
-            src="/img/extra.png"
+            src={element.imgSrc}
             alt="profile_err"
             className="size-20 object-cover"
           />
@@ -74,7 +75,7 @@ function ChatList() {
           </div>
         </Link>
       ))}
-      
+
       {/* <Link
         to="/chat/room"
         className="flex h-24 w-full items-center justify-start space-x-3 border-b border-black1 px-4"
