@@ -1,18 +1,25 @@
 import { useMemo } from "react";
 import { QueryFunctionContext, useInfiniteQuery } from "react-query";
-import { ProductDetailResponse } from "@/types/Product.ts";
+import {
+  ProductDetailResponse,
+  ProductRequestParams,
+} from "@/types/Product.ts";
 
 interface useSearchProductQueryProps {
   rowsPerPage: number;
+  query: string;
+  params: ProductRequestParams;
   queryFn: (context?: QueryFunctionContext) => Promise<ProductDetailResponse[]>;
 }
-
-const queryKey = "searchProducts";
 
 const useSearchProductQuery = ({
   rowsPerPage,
   queryFn,
+  query,
 }: useSearchProductQueryProps) => {
+  // 탭별 구분을 주기 위함
+  const queryKey = useMemo(() => ["searchProducts", { query }], [query]);
+
   const {
     data,
     refetch,
@@ -28,8 +35,9 @@ const useSearchProductQuery = ({
         ? undefined
         : nextPage;
     },
+    cacheTime: 0,
     retry: 0,
-    refetchOnMount: false,
+    refetchOnMount: true,
     refetchOnReconnect: false,
     refetchOnWindowFocus: false,
   });
@@ -39,6 +47,8 @@ const useSearchProductQuery = ({
     if (data === undefined) return data;
     // 모든 배열을 단일 배열로 flat 처리
     const response = data.pages.flat();
+    // console.log("response: ", response);
+    // console.log(data);
     const json = response.map((item) => ({
       thumbnailUrl: item.thumbnailUrl,
       //partTypes 배열에서 position만 추출하여 category 배열로 변환
@@ -49,15 +59,8 @@ const useSearchProductQuery = ({
       productTitle: item.productTitle,
       totalPrice: item.totalPrice,
     }));
-    console.log("????");
-    console.log(fetchNextPage);
-    console.log(isFetchingNextPage);
     return json;
   }, [data]);
-
-  // const handleRefetch = () => {
-  //   refetch({ refetchPage: (page, index) => index === 0 });
-  // };
 
   return {
     products,
