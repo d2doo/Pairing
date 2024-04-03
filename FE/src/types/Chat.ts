@@ -10,6 +10,7 @@ interface ChatRoomResponse {
   title: string;
   memberId: string;
   nickname: string;
+  imgSrc: string;
   capability: number;
   chatResponseDto: ChatResponse;
 }
@@ -19,6 +20,7 @@ interface ChatMessageResponse {
   chatId: number;
   memberId: string;
   nickname: string;
+  imgSrc: string;
   content: string;
   type: string;
 }

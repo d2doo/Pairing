@@ -17,6 +17,7 @@ function ChatRoom() {
       ...prevProduct,
       productId: next.productId,
       title: next.title,
+      imgSrc: next.imgSrc,
     }));
   };
 

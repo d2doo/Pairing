@@ -57,7 +57,7 @@ function ChatList() {
           key={element.chatRoomId}
         >
           <img
-            src="/img/extra.png"
+            src={element.imgSrc}
             alt="profile_err"
             className="size-20 object-cover"
           />
@@ -74,7 +74,7 @@ function ChatList() {
           </div>
         </Link>
       ))}
-      
+
       {/* <Link
         to="/chat/room"
         className="flex h-24 w-full items-center justify-start space-x-3 border-b border-black1 px-4"

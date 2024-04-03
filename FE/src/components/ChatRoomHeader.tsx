@@ -11,8 +11,8 @@ function ChatRoomHeader(product: ChatRoomHeaderProps) {
     <>
       <div className="flex h-24 w-full items-center justify-start space-x-3 border-b border-black1 px-4">
         <img
-          src="/img/extra.png"
-          alt="profile_err"
+          src={product.product.imgSrc}
+          alt="/img/extra.png"
           className="size-20 object-cover"
         />
         <div className="w-full flex-col justify-center space-y-1">
