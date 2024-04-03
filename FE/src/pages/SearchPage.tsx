@@ -76,19 +76,22 @@ const SearchPage = () => {
         <TabsContent value="search" className="h-screen overflow-scroll">
           <div className="flex flex-col px-7 py-7">
             <div className="grid grid-cols-2 gap-x-10 gap-y-7">
-              {products?.length > 0 &&
+              {products &&
+                products?.length > 0 &&
                 products?.map((p) => {
                   return (
                     <Product
                       key={p.productId}
                       thumbnailUrl={p.thumbnailUrl}
-                      category={p.units.map((unit) => {
-                        //   console.log("unit:", unit.positions);
-                        //   console.log(unit.positions.position);
-                        return unit.positions
-                          .map((p) => p.position)
-                          .map((s) => s);
-                      })}
+                      category={p.units
+                        .map((unit) => {
+                          //   console.log("unit:", unit.positions);
+                          //   console.log(unit.positions.position);
+                          return unit.positions
+                            .map((p) => p.position)
+                            .map((s) => s);
+                        })
+                        .flat()}
                       productId={p.productId}
                       productTitle={p.productTitle}
                       totalPrice={p.totalPrice}

@@ -115,6 +115,7 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
   };
 
   const StompCallback = () => {
+    let socket = new SockJS(`${import.meta.env.VITE_API_BASE_URL}/ws`);
     stompClient.current = new Stomp.Client({
       brokerURL: `${import.meta.env.VITE_API_BASE_URL}/ws`, // 이 옵션은 SockJS와 함께 사용할 때 필요 없습니다.
       webSocketFactory: () => socket, // SockJS 소켓을 사용하여 웹소켓을 생성하는 함수를 제공합니다.
