@@ -3,6 +3,7 @@ package com.ssafy.i10a709be.domain.community.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ssafy.i10a709be.domain.community.dto.ChatMessageRequestDto;
 import com.ssafy.i10a709be.domain.community.dto.ChatMessageResponseDto;
+import com.ssafy.i10a709be.domain.community.dto.ChatMessageResponseDtov2;
 import com.ssafy.i10a709be.domain.community.entity.Chat;
 import com.ssafy.i10a709be.domain.community.repository.ChatRepository;
 import com.ssafy.i10a709be.domain.community.repository.ChatRoomRepository;
@@ -37,7 +38,7 @@ public class KafkaChatConsumerService {
                     .fileId(chatMessage.getFileId())
                     .build();
             chatRepository.save(chat);
-            simpMessagingTemplate.convertAndSend("/chat-room/"+chatMessage.getRoomId(), objectMapper.writeValueAsString( ChatMessageResponseDto.fromEntity(chat)));
+            simpMessagingTemplate.convertAndSend("/chat-room/"+chatMessage.getRoomId(), objectMapper.writeValueAsString( ChatMessageResponseDtov2.fromEntity(chat)));
 
         } catch (Exception e){
             log.info(e.getMessage());
