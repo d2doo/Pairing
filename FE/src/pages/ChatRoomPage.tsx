@@ -7,12 +7,12 @@ import { useState } from "react";
 //   product: ChatRoomProduct;
 // }
 function ChatRoom() {
-  const [ product, setProduct ]= useState<ChatRoomProduct>({
-    title: '',
-    productId: NaN
-  })
-  const handleProductChange = ( next:ChatRoomProduct) => {
-
+  const [product, setProduct] = useState<ChatRoomProduct>({
+    title: "",
+    imgSrc: "",
+    productId: NaN,
+  });
+  const handleProductChange = (next: ChatRoomProduct) => {
     setProduct((prevProduct) => ({
       ...prevProduct,
       productId: next.productId,
@@ -20,12 +20,10 @@ function ChatRoom() {
     }));
   };
 
-
   return (
-    
     <>
-      <ChatRoomHeader product={product}/>
-      <Chat parentHandler={handleProductChange}/>
+      <ChatRoomHeader product={product} />
+      <Chat parentHandler={handleProductChange} />
     </>
   );
 }
