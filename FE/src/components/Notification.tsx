@@ -70,16 +70,16 @@ function Notification(props: NotificationProps) {
                           </svg>
                         </div>
                         {/* 내용 */}
-                        <div>{props.notification?.content}</div>
+                        <div className="text-base">{props.notification?.content}</div>
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex flex-row justify-around">
+                      <div className="flex justify-around">
                         {props.notification.units &&
                           props.notification.units.map((unit, index) => (
                             <div
                               key={index}
-                              className="mt-6 rounded-md border border-gray-200"
+                              className="mt-6 rounded-md border border-gray-200 basis-1/3"
                             >
                               <img
                                 src={
@@ -103,29 +103,22 @@ function Notification(props: NotificationProps) {
                 </div>
               </AlertDialogDescription>
             </AlertDialogHeader>
-            <AlertDialogFooter className="flex flex-row justify-end">
-              <AlertDialogCancel className="w-12">
-                <Button
-                  onClick={() =>
-                    props.closehandler(props.notification.notificationId)
-                  }
-                  className="h-full bg-white"
-                >
-                  {props.notification?.notificationType == "confirm"
-                    ? "X"
-                    : "닫기"}
-                </Button>
+            <AlertDialogFooter className="flex flex-row justify-end items-center gap-2">
+              <AlertDialogCancel className="!bg-red-500 !text-white !border-2 !border-red-500 !text-sm !font-Gothic !tracking-normal !px-3 !py-2" onClick={() => {
+                props.closehandler(props.notification.notificationId);
+              }}>
+                {
+                  props.notification?.notificationType == "confirm"
+                    ? "조립 거절"
+                      : "닫기"
+                }
               </AlertDialogCancel>
-              <AlertDialogAction className="w-12">
-                <Button
-                  onClick={() =>
-                    props.openhandler(props.notification.notificationId)
-                  }
-                >
-                  {props.notification?.notificationType == "confirm"
-                    ? "O"
+              <AlertDialogAction className="!bg-blue1 !text-white !border-2 !border-blue1 !text-sm !font-Gothic !tracking-normal !px-3 !py-2" onClick={() => {
+                props.openhandler(props.notification.notificationId);
+              }}>
+                {props.notification?.notificationType == "confirm"
+                    ? "조립 수락"
                     : "읽기"}
-                </Button>
               </AlertDialogAction>
             </AlertDialogFooter>
           </AlertDialogContent>
