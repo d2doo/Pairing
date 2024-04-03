@@ -6,7 +6,7 @@ function SkeletonCard(props: { size: number }) {
     for (let i = 0; i < props.size; i++) {
       result.push(
         <div key={i} className="flex flex-col space-y-3">
-          <Skeleton className="size-32 rounded-xl" />
+          <Skeleton className="h-[125px] w-32 rounded-xl" />
           <div className="space-y-2">
             <Skeleton className="h-4 w-32" />
             <Skeleton className="h-4 w-32" />
@@ -18,7 +18,7 @@ function SkeletonCard(props: { size: number }) {
   };
 
   return (
-    <div className="flex flex-wrap px-7 py-7">
+    <div className="flex flex-wrap px-7 ">
       <div className="grid grid-cols-2 gap-x-10 gap-y-7 transition delay-700">
         {rendering()}
       </div>

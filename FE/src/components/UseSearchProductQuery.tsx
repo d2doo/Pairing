@@ -1,30 +1,24 @@
-import { useState, useMemo } from "react";
+import { useMemo } from "react";
 import { QueryFunctionContext, useInfiniteQuery } from "react-query";
-import { ProductDetailResponse } from "@/types/Product.ts";
+import {
+  ProductDetailResponse,
+  ProductRequestParams,
+} from "@/types/Product.ts";
 
 interface useSearchProductQueryProps {
   rowsPerPage: number;
-  isOnly: boolean;
-  onlyMyProduct: boolean;
+  query: string;
+  params: ProductRequestParams;
   queryFn: (context?: QueryFunctionContext) => Promise<ProductDetailResponse[]>;
 }
 
 const useSearchProductQuery = ({
   rowsPerPage,
   queryFn,
-  isOnly,
-  onlyMyProduct,
+  query,
 }: useSearchProductQueryProps) => {
-  // const [myProduct, setMyProduct] = useState(true); // 예시로 사용할 상태입니다.
-
-  const queryKey = useMemo(
-    () => ["searchProducts", { onlyMyProduct, rowsPerPage, isOnly }],
-    [onlyMyProduct, rowsPerPage, isOnly],
-  );
-  // const queryKey = useMemo(
-  //   () => ["searchProducts", { rowsPerPage, isOnly }],
-  //   [rowsPerPage, isOnly],
-  // );
+  // 탭별 구분을 주기 위함
+  const queryKey = useMemo(() => ["searchProducts", { query }], [query]);
 
   const {
     data,
@@ -41,6 +35,7 @@ const useSearchProductQuery = ({
         ? undefined
         : nextPage;
     },
+    cacheTime: 0,
     retry: 0,
     refetchOnMount: true,
     refetchOnReconnect: false,
