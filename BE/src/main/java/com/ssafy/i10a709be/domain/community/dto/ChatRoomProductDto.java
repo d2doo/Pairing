@@ -14,11 +14,13 @@ import lombok.NoArgsConstructor;
 public class ChatRoomProductDto {
     private Long productId;
     private String title;
+    private String imgSrc;
 
     public static ChatRoomProductDto fromEntity(Product product) {
         return ChatRoomProductDto.builder()
                 .productId(product.getProductId())
                 .title(product.getTitle())
+                .imgSrc(product.getUnits().get(0).getUnitImages().get(0).getFiles().getSource())
                 .build();
     }
 }
