@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { ChatRoomResponse } from "@/types/Chat";
 import { useAuthStore } from "@/stores/auth";
@@ -9,12 +9,13 @@ import moment from "moment";
 function ChatList() {
   const authMember = useAuthStore();
   const localAxios = useLocalAxios();
-
+  const location = useLocation();
   useEffect(() => {
     console.log("auth:", authMember);
+
     // testChatList();
     loadChatList();
-  }, []);
+  }, [location.pathname]);
 
   // const testChatList = () => {
   //   const productDto: ProductSaveRequest = {
