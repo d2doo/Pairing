@@ -4,6 +4,7 @@ import com.ssafy.i10a709be.domain.community.dto.*;
 import com.ssafy.i10a709be.domain.community.entity.Chat;
 import com.ssafy.i10a709be.domain.community.entity.ChatRoom;
 import com.ssafy.i10a709be.domain.community.service.ChatService;
+import com.ssafy.i10a709be.domain.product.entity.Product;
 import com.ssafy.i10a709be.domain.product.service.ProductService;
 import com.ssafy.i10a709be.domain.community.service.KafkaChatProducerService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +39,8 @@ public class ChatRestController {
         List<ChatRoomResponseDto> chatRoomResponseList = chatService.findJoinedChatRooms(memberId).stream()
                 .map( croom -> {
                     Chat c = chatService.findLatestChatByChatRoomId( croom.getChatRoomId() );
-                    return ChatRoomResponseDto.fromEntity( croom, c );
+                    Product product = productService.findProduct( croom.getProductId() );
+                    return ChatRoomResponseDto.fromEntity( croom, c, product );
                 }).toList();
         return ResponseEntity.ok(chatRoomResponseList);
     }
