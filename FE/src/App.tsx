@@ -17,7 +17,8 @@ import { useEffect } from "react";
 import { useTokenStore } from "@/stores/token.ts";
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth.ts";
-import {GoogleAuthCallback} from "@/pages/auth/GoogleAuthCallback.tsx";
+import { GoogleAuthCallback } from "@/pages/auth/GoogleAuthCallback.tsx";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const authStore = useAuthStore();
@@ -79,6 +80,7 @@ function App() {
           <Route element={<DefaultLayout />}>
             <Route path="/" element={<SaleMain />} />
           </Route>
+          <Route path="/search" element={<SearchPage />} />
         </Routes>
       </BrowserRouter>
       {/* Routing 정의 끝 */}

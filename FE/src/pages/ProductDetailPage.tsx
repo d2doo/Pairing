@@ -59,7 +59,6 @@ function ProductDetailPage() {
       `/product/${productId}`,
     );
     setItem(response.data);
-    console.log(response.data);
     const newImageList = [];
 
     for (const unit of response.data.units) {

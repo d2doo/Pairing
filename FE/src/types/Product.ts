@@ -1,6 +1,6 @@
 import { MemberSummaryResponse } from "@/types/Member.ts";
 import { Category } from "./Category";
-import { UnitFind, UnitSaveRequest } from "./Unit";
+import { UnitFind, UnitFindTwo, UnitSaveRequest } from "./Unit";
 
 interface PartType {
   partTypeId: number;
@@ -46,6 +46,17 @@ interface ProductFindResponse {
   units: UnitFind[];
 }
 
+interface ProductFindResponseTwo {
+  thumbnailUrl: string;
+  category: Category;
+  leader: MemberSummaryResponse;
+  productId: string;
+  productTitle: string;
+  totalPrice: number;
+  maxAge: number;
+  units: UnitFindTwo[];
+}
+
 interface ProudctPreview {
   thumbnailUrl: string;
   category: string[];
@@ -79,4 +90,5 @@ export type {
   ProductFindResponse,
   ProudctPreview,
   ProductRequestParams,
+  ProductFindResponseTwo,
 };

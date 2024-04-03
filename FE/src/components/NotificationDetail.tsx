@@ -45,9 +45,9 @@ function NotificationDetail(props: NotificationDetailProps) {
                             </svg>
                         </div>
                         {/* 내용 */}
-                        <div>
+                        <p>
                             {props.notification?.content}
-                        </div>
+                        </p>
                     </CardTitle>
                 </CardHeader>
                 <CardContent>

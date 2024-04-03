@@ -48,17 +48,14 @@ function ProductTypeR(props: {
   // 제품 조회는 권한이 필요 없으므로 false
   const localAxios = useLocalAxios(false);
 
-  const PARAM = props.params;
   const params = props.params;
   const ROWS_PER_PAGE = 6;
-  const [productList, setProductList] = useState<ProudctPreview[]>();
+  // const [productList, setProductList] = useState<ProudctPreview[]>();
   const [lastProductId, setLastProductId] = useState<number>(0);
 
   // 페이지에 들어오면 기존 데이터 리셋
   useEffect(() => {
     params.productId = undefined;
-    console.log("들어왔따.");
-    console.log(params);
     setLastProductId(0);
   }, [props.tabName]);
 
@@ -70,7 +67,6 @@ function ProductTypeR(props: {
       params: params,
       queryFn: () => fetchProductsData(),
     });
-  console.log(products);
   const fetchProductsData = async (): Promise<ProductDetailResponse[]> => {
     // params를 받아서 처리
     const response = await localAxios.get<ProductDetailResponse[]>(`/product`, {
@@ -93,7 +89,7 @@ function ProductTypeR(props: {
   useEffect(() => {
     // product 확인 후 마지막 proudctId 가져와서 데이터 변경
     if (products && products.length !== 0) {
-      setProductList(products); // Test
+      // setProductList(products); // Test
       const last = Number(products[products.length - 1].productId);
       setLastProductId(last);
       params.productId = last;

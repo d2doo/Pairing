@@ -92,7 +92,7 @@ const Header: React.FC<Props> = ({ title, prev }) => {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: (frame) => {
-        console.log(`connected ${auth.memberId}`, frame);
+        // console.log(`connected ${auth.memberId}`, frame);
         const dest = `/product-notification/${auth.memberId}`;
 
         stompClient.current?.subscribe(dest, async (response) => {
@@ -112,7 +112,7 @@ const Header: React.FC<Props> = ({ title, prev }) => {
       webSocketFactory: () => socket,
       reconnectDelay: 5000,
       onConnect: (frame) => {
-        console.log(`connected ${auth.memberId}`, frame);
+        // console.log(`connected ${auth.memberId}`, frame);
         const dest = `/product-notification/${auth.memberId}`;
         stompClient.current?.subscribe(dest, async (response) => {
           const res = await JSON.parse(response.body);
