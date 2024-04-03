@@ -1,0 +1,234 @@
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 5cd37beeed7d
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar"]
+ ---> Using cache
+ ---> 021097741565
+Successfully built 021097741565
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 5cd37beeed7d
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar"]
+ ---> Using cache
+ ---> 021097741565
+Successfully built 021097741565
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 5cd37beeed7d
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar"]
+ ---> Using cache
+ ---> 021097741565
+Successfully built 021097741565
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> 6fec1f90f0f4
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in 7d30bba8e66f
+ ---> Removed intermediate container 7d30bba8e66f
+ ---> 53aca896aae4
+Successfully built 53aca896aae4
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 6fec1f90f0f4
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 53aca896aae4
+Successfully built 53aca896aae4
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 6fec1f90f0f4
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 53aca896aae4
+Successfully built 53aca896aae4
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 6fec1f90f0f4
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 53aca896aae4
+Successfully built 53aca896aae4
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 6fec1f90f0f4
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 53aca896aae4
+Successfully built 53aca896aae4
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 6fec1f90f0f4
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 53aca896aae4
+Successfully built 53aca896aae4
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> 77cae9173a20
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in e577f74e341a
+ ---> Removed intermediate container e577f74e341a
+ ---> 5baa5b22d78c
+Successfully built 5baa5b22d78c
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 77cae9173a20
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 5baa5b22d78c
+Successfully built 5baa5b22d78c
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> 3065c57debbc
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in 7bb3c0b62679
+ ---> Removed intermediate container 7bb3c0b62679
+ ---> fe82f55477c1
+Successfully built fe82f55477c1
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> 38307c5d49ee
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in 69e5a9baf98e
+ ---> Removed intermediate container 69e5a9baf98e
+ ---> 0865c87a3830
+Successfully built 0865c87a3830
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> 1221b7292060
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in c1e5c23290e9
+ ---> Removed intermediate container c1e5c23290e9
+ ---> 8048f30fb65b
+Successfully built 8048f30fb65b
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> 1221b7292060
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> 8048f30fb65b
+Successfully built 8048f30fb65b
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> 07ffe52e3e80
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in 778c5d77c989
+ ---> Removed intermediate container 778c5d77c989
+ ---> 6d2c391a40df
+Successfully built 6d2c391a40df
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> deefc72a4ad9
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Running in ab512d6f896e
+ ---> Removed intermediate container ab512d6f896e
+ ---> c1ad1c3ae1db
+Successfully built c1ad1c3ae1db
+Successfully tagged backend_pairing-backend:latest
+Step 1/4 : FROM azul/zulu-openjdk:21
+ ---> a411e83fea98
+Step 2/4 : WORKDIR /app
+ ---> Using cache
+ ---> 3b8bfe14a57d
+Step 3/4 : COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+ ---> Using cache
+ ---> deefc72a4ad9
+Step 4/4 : CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]
+ ---> Using cache
+ ---> c1ad1c3ae1db
+Successfully built c1ad1c3ae1db
+Successfully tagged backend_pairing-backend:latest

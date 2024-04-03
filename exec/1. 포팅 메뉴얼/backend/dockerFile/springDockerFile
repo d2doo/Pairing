@@ -1,0 +1,13 @@
+# OpenJDK 이미지를 기반으로 합니다.
+FROM azul/zulu-openjdk:21
+
+# 작업 디렉토리를 설정합니다.
+WORKDIR /app
+
+# 빌드 컨텍스트에서 JAR 파일을 작업 디렉토리로 복사합니다.
+COPY I10A709BE-0.0.1-SNAPSHOT.jar /app/pairing-backend.jar
+
+# 컨테이너가 시작될 때 실행될 명령어를 정의합니다.
+
+# CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=rel"]
+CMD ["java", "-jar", "pairing-backend.jar", "--spring.profiles.active=main","2>&1",">","logs/configLogs.log","&"]

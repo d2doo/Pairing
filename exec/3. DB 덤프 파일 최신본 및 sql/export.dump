@@ -1,0 +1,395 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
+-- Dumped by pg_dump version 16.2
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- Data for Name: category; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.category (category_id, main_category, sub_category) FROM stdin;
+1	무선 이어폰	갤럭시 버즈
+\.
+
+
+--
+-- Data for Name: member; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.member (member_id, address, email, is_deleted, nickname, phone_number, profile_image, provider, refresh_token, score) FROM stdin;
+58014f26-5470-4937-b60d-f48fcbb9923d	\N	cqqudgjstest@naver.com	f	라이빵허	\N	\N	0	eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiNDhiZWY2MzYtZGZkNy00YmM3LTk4ZjUtNTIzMmM0MjZlYzAxIiwiaWF0IjoxNzEwODA2NTIwLCJleHAiOjE3MTE0MTEzMjB9.x67DUg4brARUkfCFT66t89lZqooj0cmWWxd0Lj9glpM	30
+7fc9b568-c668-48c2-8a17-9cfb8eb013fe	\N	amuvatest@naver.com	f	윤주짜이	\N	\N	0	\N	30
+f169be87-28db-4478-86f6-da1f7af0ba48	\N	hyuniqquetest@gmail.com	f	김다이헌	\N	\N	0	\N	30
+56745535-d39a-429f-82fb-fd6f9f0741ad	\N	amuva@naver.com	f	윤주석	\N	http://k.kakaocdn.net/dn/vjxln/btsFF1rKxLI/th9XfrvdcLx3Gy6jp0nQhK/img_640x640.jpg	0	eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiNTY3NDU1MzUtZDM5YS00MjlmLTgyZmItZmQ2ZjlmMDc0MWFkIiwiaWF0IjoxNzEyMTMxOTE3LCJleHAiOjE3MTI3MzY3MTd9.ivtwRDSFSi-HnqYB1VdGh3gg0lsX6lgBjootNj5nn2Q	30
+00e13d90-5fd7-4835-9791-9d68407e11a4	\N	dkdo1406@naver.com	f	김형중	\N	http://t1.kakaocdn.net/account_images/default_profile.jpeg.twg.thumb.R640x640	0	eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiMDBlMTNkOTAtNWZkNy00ODM1LTk3OTEtOWQ2ODQwN2UxMWE0IiwiaWF0IjoxNzEyMTMxOTY0LCJleHAiOjE3MTI3MzY3NjR9.JSVPdbakRPbS73lNzsFGzcS67A14QLk9aD2qi-1WG4A	30
+a5b29cbc-3958-4d14-b3c0-0a57a237b7d2	\N	gv9602@naver.com	f	우세훈	\N	\N	0	eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiYTViMjljYmMtMzk1OC00ZDE0LWIzYzAtMGE1N2EyMzdiN2QyIiwiaWF0IjoxNzEyMTMyMzYxLCJleHAiOjE3MTI3MzcxNjF9.v3dAl4p-ds0HLW-j0rRwaXVF-WlyEEqOHB_BsQqewHg	30
+68aea758-13fa-4abb-86f9-e373449d2c15	\N	hzxvl@naver.com	f	정지수	\N	http://k.kakaocdn.net/dn/y0GvP/btsFQSBMaur/hKp1dsbpfIzO4cny0npr6k/img_640x640.jpg	0	eyJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJFeG9kaWEiLCJ1dWlkIjoiNjhhZWE3NTgtMTNmYS00YWJiLTg2ZjktZTM3MzQ0OWQyYzE1IiwiaWF0IjoxNzEyMTMyNzM2LCJleHAiOjE3MTI3Mzc1MzZ9.9BJRcTOWlgM8OhIzW0xV6nTaSVXUZitpIkqQbxpYWkU	30
+9439527f-9215-4c18-8fc0-67774820a402	\N	seol3964@daum.net	f	김대현	\N	http://t1.kakaocdn.net/account_images/default_profile.jpeg.twg.thumb.R640x640	0	\N	30
+\.
+
+
+--
+-- Data for Name: chat_room; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.chat_room (chat_room_id, created_at, is_deleted, modified_at, capability, product_id, status, title, member_id) FROM stdin;
+1	2024-04-03 08:06:44.258101	f	2024-04-03 08:06:44.258101	3	1	active	테스트방	58014f26-5470-4937-b60d-f48fcbb9923d
+2	2024-04-03 08:15:19.822654	f	2024-04-03 08:15:19.822654	3	11	active	버즈 왼+오+케상품 합의 채팅방입니다.	9439527f-9215-4c18-8fc0-67774820a402
+3	2024-04-03 08:19:38.263183	f	2024-04-03 08:19:38.263183	3	17	active	버즈2 블루 오른쪽~상품 합의 채팅방입니다.	9439527f-9215-4c18-8fc0-67774820a402
+4	2024-04-03 08:26:58.252269	f	2024-04-03 08:26:58.252269	2	19	active	버즈 왼쪽 팔아요!! 구매 채팅방	68aea758-13fa-4abb-86f9-e373449d2c15
+\.
+
+
+--
+-- Data for Name: chat; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.chat (chat_id, created_at, is_deleted, modified_at, content, file_id, type, chat_room_id, member_id) FROM stdin;
+1	2024-04-03 08:06:45.328304	f	2024-04-03 08:06:45.328304	하이용	\N	message	1	58014f26-5470-4937-b60d-f48fcbb9923d
+2	2024-04-03 08:06:45.353161	f	2024-04-03 08:06:45.353161	하이용2	\N	message	1	58014f26-5470-4937-b60d-f48fcbb9923d
+3	2024-04-03 08:06:45.371157	f	2024-04-03 08:06:45.371157	이게 최신이면 성공인데?	\N	message	1	7fc9b568-c668-48c2-8a17-9cfb8eb013fe
+4	2024-04-03 08:17:52.986636	f	2024-04-03 08:17:52.986636	흠 얼마 생각하시나요	\N	message	2	56745535-d39a-429f-82fb-fd6f9f0741ad
+5	2024-04-03 08:20:40.182723	f	2024-04-03 08:20:40.182723	너무 비싼것 같아요	\N	message	3	00e13d90-5fd7-4835-9791-9d68407e11a4
+6	2024-04-03 08:20:43.117814	f	2024-04-03 08:20:43.117814	조금 깎죠 우리?	\N	message	3	00e13d90-5fd7-4835-9791-9d68407e11a4
+7	2024-04-03 08:20:48.249387	f	2024-04-03 08:20:48.249387	아쉽지만	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+8	2024-04-03 08:20:50.202521	f	2024-04-03 08:20:50.202521	깎을수가 없어요	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+9	2024-04-03 08:21:04.338388	f	2024-04-03 08:21:04.338388	아쉬운거죠 뭐...	\N	message	3	00e13d90-5fd7-4835-9791-9d68407e11a4
+10	2024-04-03 08:21:27.337116	f	2024-04-03 08:21:27.337116	ㅇㅇ?	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+11	2024-04-03 08:21:31.799615	f	2024-04-03 08:21:31.799615	그러게	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+12	2024-04-03 08:21:33.116819	f	2024-04-03 08:21:33.116819	내 사진이	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+13	2024-04-03 08:21:35.321376	f	2024-04-03 08:21:35.321376	ㅋㅋㅋ	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+14	2024-04-03 08:23:09.11468	f	2024-04-03 08:23:09.11468	아니 근데	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+15	2024-04-03 08:23:10.927012	f	2024-04-03 08:23:10.927012	팔기 싫은데	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+16	2024-04-03 08:23:12.021994	f	2024-04-03 08:23:12.021994	어카죠	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+17	2024-04-03 08:23:15.858347	f	2024-04-03 08:23:15.858347	아쉬운거지~	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+18	2024-04-03 08:26:27.550972	f	2024-04-03 08:26:27.550972	ㅋㅋㅋㅋ	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+19	2024-04-03 08:26:46.140907	f	2024-04-03 08:26:46.140907	ㅎㅇ	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+20	2024-04-03 08:27:00.817043	f	2024-04-03 08:27:00.817043	ㅎㅇ	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+21	2024-04-03 08:27:01.553646	f	2024-04-03 08:27:01.553646	ㅎㅇㅎㅇ	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+22	2024-04-03 08:28:18.746302	f	2024-04-03 08:28:18.746302	아직 파시나요?	\N	message	4	68aea758-13fa-4abb-86f9-e373449d2c15
+23	2024-04-03 08:28:24.602813	f	2024-04-03 08:28:24.602813	대혀나	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+24	2024-04-03 08:28:26.451496	f	2024-04-03 08:28:26.451496	대혀나	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+25	2024-04-03 08:28:27.048926	f	2024-04-03 08:28:27.048926	대혀나	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+26	2024-04-03 08:28:27.705434	f	2024-04-03 08:28:27.705434	대혀나	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+27	2024-04-03 08:28:31.51182	f	2024-04-03 08:28:31.51182	대현아대현아대현아대현아대현아	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+28	2024-04-03 08:28:33.057581	f	2024-04-03 08:28:33.057581	대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+29	2024-04-03 08:28:34.237382	f	2024-04-03 08:28:34.237382	대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+30	2024-04-03 08:28:35.767689	f	2024-04-03 08:28:35.767689	대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아대현아	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+31	2024-04-03 08:28:40.362375	f	2024-04-03 08:28:40.362375	ㅎㅇ	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+32	2024-04-03 08:28:42.105283	f	2024-04-03 08:28:42.105283	ㅋ	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+33	2024-04-03 08:28:44.645231	f	2024-04-03 08:28:44.645231	ㅋㅋ	\N	message	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+34	2024-04-03 08:28:47.973808	f	2024-04-03 08:28:47.973808	ㅋㅋㅋ	\N	message	3	9439527f-9215-4c18-8fc0-67774820a402
+\.
+
+
+--
+-- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.files (file_id, created_at, is_deleted, modified_at, type, name, source) FROM stdin;
+1	2024-04-03 08:06:45.569353	f	2024-04-03 08:06:45.569353	\N	test file	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/60b5c962-1d93-4e2e-abe7-47ac30afb1c8
+2	2024-04-03 08:06:45.600488	f	2024-04-03 08:06:45.600488	\N	test file	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/60b5c962-1d93-4e2e-abe7-47ac30afb1c8
+3	2024-04-03 08:06:45.612483	f	2024-04-03 08:06:45.612483	\N	test file	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/60b5c962-1d93-4e2e-abe7-47ac30afb1c8
+4	2024-04-03 08:11:51.422812	f	2024-04-03 08:11:51.422812	image/jpeg	app\\버즈_R.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/fd8a9226-01c7-4576-becd-64dda9852496
+5	2024-04-03 08:12:17.162571	f	2024-04-03 08:12:17.162571	image/png	app\\버즈2프로왼쪽내꺼.PNG	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/a58f6e7a-f08a-48b5-ac12-689d2955b72e
+6	2024-04-03 08:12:57.26221	f	2024-04-03 08:12:57.26221	image/jpeg	app\\rn_image_picker_lib_temp_270ffa2a-5cdd-4ce0-8e9a-5bd3f5435a04 (1).jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/00f3bc14-3df1-49d2-a88b-fc2f72cb2f1f
+7	2024-04-03 08:13:23.409894	f	2024-04-03 08:13:23.409894	image/jpeg	app\\버즈_R.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/b4db9c75-13a9-48e4-ad4e-fe5a936350f1
+8	2024-04-03 08:14:06.524025	f	2024-04-03 08:14:06.524025	image/png	app\\버즈_L.PNG	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/40446d6e-d1aa-4e4a-9bd1-96c7ad8220a9
+9	2024-04-03 08:14:06.620859	f	2024-04-03 08:14:06.620859	image/jpeg	app\\rn_image_picker_lib_temp_dba98b29-a676-431c-9fe9-c5ffc2756212 (1).jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/e3df84d4-be6c-466d-8b86-857a76e003e8
+10	2024-04-03 08:14:42.769613	f	2024-04-03 08:14:42.769613	image/jpeg	app\\8B5.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/928cb731-2b2f-4e97-a81d-842857e1a316
+11	2024-04-03 08:14:43.481264	f	2024-04-03 08:14:43.481264	image/png	app\\버즈_케이스.PNG	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/80dcb99c-e003-4ac6-8e3f-54d00ebb8e60
+12	2024-04-03 08:16:14.605795	f	2024-04-03 08:16:14.605795	image/jpeg	app\\25AB4.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/ffbd5aaa-a43c-4af7-92f1-eb330e7307fc
+13	2024-04-03 08:17:41.006486	f	2024-04-03 08:17:41.006486	image/png	app\\버즈2_L.PNG	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/2f613c33-4938-4c94-9dec-767790085c58
+14	2024-04-03 08:19:02.251133	f	2024-04-03 08:19:02.251133	image/png	app\\버즈2_R.PNG	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/851cdd8c-6709-4918-9bfb-41011596c49b
+15	2024-04-03 08:19:14.942991	f	2024-04-03 08:19:14.942991	image/jpeg	app\\rn_image_picker_lib_temp_f3cf22a5-b5af-49e0-87e4-aa292c2822eb (2) (1).jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/c9e662f9-6104-45be-baa9-d5668c6ce762
+16	2024-04-03 08:23:55.644823	f	2024-04-03 08:23:55.644823	image/jpeg	app\\20240403_165039.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/ac151375-7045-4b13-887a-60443780b628
+17	2024-04-03 08:24:43.165073	f	2024-04-03 08:24:43.165073	image/png	app\\버즈_짱구케이스.PNG	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/f36c8d6c-7779-4fc1-ba2f-1f302fcf0ab8
+18	2024-04-03 08:25:01.476481	f	2024-04-03 08:25:01.476481	image/jpeg	app\\20240403_165039.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/420ff029-d586-4b5a-831a-49f70adf95e0
+19	2024-04-03 08:25:15.198685	f	2024-04-03 08:25:15.198685	image/jpeg	app\\1712132707903.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/6f01d71e-c7eb-40fb-9183-b48125ad4dbd
+20	2024-04-03 08:25:15.609045	f	2024-04-03 08:25:15.609045	image/jpeg	app\\버즈1왼쪽.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/9e37f3ba-b7af-4a65-a798-5556f246fe32
+21	2024-04-03 08:25:46.104836	f	2024-04-03 08:25:46.104836	image/jpeg	app\\1712132707903.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/0a4dd7b8-3d4d-4e59-a78d-0ac4439ad3e2
+22	2024-04-03 08:29:27.53035	f	2024-04-03 08:29:27.53035	image/jpeg	app\\왼쪽1.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/9d00855d-0ad2-419b-adc4-0ab3ab19ee86
+23	2024-04-03 08:29:29.471591	f	2024-04-03 08:29:29.471591	image/jpeg	app\\버즈라이브 왼.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/c0fe0d5e-8916-4156-84a9-d6452bc37226
+24	2024-04-03 08:30:12.313809	f	2024-04-03 08:30:12.313809	image/jpeg	app\\오른쪽1.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/a5feeacd-e4f0-4365-8fcf-89728facef58
+25	2024-04-03 08:30:14.855005	f	2024-04-03 08:30:14.855005	image/jpeg	app\\오른쪽2.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/58bea7e2-dc74-452f-8637-f1d7ac6d0184
+26	2024-04-03 08:31:47.935039	f	2024-04-03 08:31:47.935039	image/jpeg	app\\227020887_1_1686723496_w360.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/592e3bd9-4d85-462b-a476-ca6230f8cdcb
+27	2024-04-03 08:32:11.724196	f	2024-04-03 08:32:11.724196	image/jpeg	app\\버즈2 케.jpg	https://ssafyams3.s3.ap-northeast-2.amazonaws.com/upload/c56547d7-95bf-4d88-808d-a05e60a733ab
+\.
+
+
+--
+-- Data for Name: jpatest; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.jpatest (test_id) FROM stdin;
+\.
+
+
+--
+-- Data for Name: notification; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.notification (notification_id, content, is_read, notification_type, product_id, member_id) FROM stdin;
+3	버즈 왼+오+케 상품이 생성되었습니다. 어서 합의해주세요!	t	confirm	11	00e13d90-5fd7-4835-9791-9d68407e11a4
+1	버즈 왼+오+케 상품이 생성되었습니다. 어서 합의해주세요!	t	confirm	11	9439527f-9215-4c18-8fc0-67774820a402
+2	버즈 왼+오+케 상품이 생성되었습니다. 어서 합의해주세요!	t	confirm	11	56745535-d39a-429f-82fb-fd6f9f0741ad
+4	버즈2 블루 오른쪽~ 상품이 생성되었습니다. 어서 합의해주세요!	f	confirm	17	9439527f-9215-4c18-8fc0-67774820a402
+6	버즈2 블루 오른쪽~ 상품이 생성되었습니다. 어서 합의해주세요!	t	confirm	17	56745535-d39a-429f-82fb-fd6f9f0741ad
+5	버즈2 블루 오른쪽~ 상품이 생성되었습니다. 어서 합의해주세요!	t	confirm	17	00e13d90-5fd7-4835-9791-9d68407e11a4
+7	버즈 왼쪽 팔아요!! 상품의 구매 요청이 있습니다.	t	message	19	56745535-d39a-429f-82fb-fd6f9f0741ad
+\.
+
+
+--
+-- Data for Name: part_type; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.part_type (part_type_id, "position", category_id) FROM stdin;
+1	왼쪽	1
+2	오른쪽	1
+3	케이스	1
+\.
+
+
+--
+-- Data for Name: product; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.product (product_id, created_at, is_deleted, modified_at, consumer_id, is_only, max_age, status, title, total_price, member_id) FROM stdin;
+1	2024-04-03 08:06:45.42128	f	2024-04-03 08:06:45.42128	\N	\N	1	PENDING	test1	10000	58014f26-5470-4937-b60d-f48fcbb9923d
+2	2024-04-03 08:06:45.436905	t	2024-04-03 08:06:45.436905	\N	\N	2	PENDING	test2	20000	7fc9b568-c668-48c2-8a17-9cfb8eb013fe
+3	2024-04-03 08:06:45.448846	t	2024-04-03 08:06:45.448846	\N	\N	3	PENDING	test3	30000	f169be87-28db-4478-86f6-da1f7af0ba48
+4	2024-04-03 08:06:45.459676	f	2024-04-03 08:06:45.459676	\N	\N	3	PENDING	test14	60000	58014f26-5470-4937-b60d-f48fcbb9923d
+7	2024-04-03 08:13:51.368104	f	2024-04-03 08:13:51.368104	\N	t	3	ON_SELL	버즈 라벤더 오른쪽 팔아용	33000	9439527f-9215-4c18-8fc0-67774820a402
+8	2024-04-03 08:14:22.413422	f	2024-04-03 08:14:22.413422	\N	t	5	ON_SELL	버즈 라벤더 왼쪽	36000	9439527f-9215-4c18-8fc0-67774820a402
+9	2024-04-03 08:14:38.100892	f	2024-04-03 08:14:38.100892	\N	t	0	ON_SELL	어제 산 버즈 케이스 팔아요	40000	00e13d90-5fd7-4835-9791-9d68407e11a4
+10	2024-04-03 08:15:03.89724	t	2024-04-03 08:15:19.94043	\N	t	2	ON_SELL	버즈 왼+오+케	20000	9439527f-9215-4c18-8fc0-67774820a402
+5	2024-04-03 08:12:41.966905	t	2024-04-03 08:15:19.941019	\N	t	16	ON_SELL	버즈2 프로 왼쪽 팔아요	5000	56745535-d39a-429f-82fb-fd6f9f0741ad
+6	2024-04-03 08:13:20.666874	t	2024-04-03 08:15:19.941389	\N	t	3	ON_SELL	오른쪽 버즈 팝니다!!	35000	00e13d90-5fd7-4835-9791-9d68407e11a4
+11	2024-04-03 08:15:19.814006	f	2024-04-03 08:16:05.153156	\N	f	2	ON_SELL	버즈 왼+오+케	60000	9439527f-9215-4c18-8fc0-67774820a402
+13	2024-04-03 08:17:14.463573	f	2024-04-03 08:17:14.463573	\N	t	0	ON_SELL	한번도 안 쓴 양쪽 팔아요!!!!	80000	56745535-d39a-429f-82fb-fd6f9f0741ad
+14	2024-04-03 08:18:14.221575	f	2024-04-03 08:18:14.221575	\N	t	3	ON_SELL	버즈2 왼쪽~	40000	9439527f-9215-4c18-8fc0-67774820a402
+16	2024-04-03 08:19:26.405318	t	2024-04-03 08:19:38.286705	\N	t	6	ON_SELL	버즈2 블루 오른쪽~	40000	9439527f-9215-4c18-8fc0-67774820a402
+15	2024-04-03 08:19:16.703249	t	2024-04-03 08:19:38.287831	\N	t	2	ON_SELL	왼쪽 팔아요	10000	00e13d90-5fd7-4835-9791-9d68407e11a4
+12	2024-04-03 08:15:54.012634	t	2024-04-03 08:19:38.288098	\N	t	1	ON_SELL	한달동안 사용한 케이스 팔아요	67000	56745535-d39a-429f-82fb-fd6f9f0741ad
+17	2024-04-03 08:19:38.258569	f	2024-04-03 08:20:09.178161	\N	f	6	ON_SELL	버즈2 블루 오른쪽~	117000	9439527f-9215-4c18-8fc0-67774820a402
+18	2024-04-03 08:25:07.578815	f	2024-04-03 08:25:07.578815	\N	t	13	ON_SELL	버즈 케이스 팝니다~ 커버포함	50000	9439527f-9215-4c18-8fc0-67774820a402
+20	2024-04-03 08:26:15.34923	f	2024-04-03 08:26:15.34923	\N	t	36	ON_SELL	오른쪽 버즈 팔아요 ㅎㅎ	5000	68aea758-13fa-4abb-86f9-e373449d2c15
+19	2024-04-03 08:26:01.613085	f	2024-04-03 08:26:58.281098	68aea758-13fa-4abb-86f9-e373449d2c15	t	24	ON_CONTRACT	버즈 왼쪽 팔아요!!	3000	56745535-d39a-429f-82fb-fd6f9f0741ad
+21	2024-04-03 08:29:31.388297	f	2024-04-03 08:29:31.388297	\N	t	2	ON_SELL	버즈 왼쪽 팝니다!!	30001	00e13d90-5fd7-4835-9791-9d68407e11a4
+22	2024-04-03 08:31:00.575956	f	2024-04-03 08:31:00.575956	\N	t	15	ON_SELL	오른쪽 버즈 싸게 팝니다!!!!!!!!	20000	00e13d90-5fd7-4835-9791-9d68407e11a4
+23	2024-04-03 08:32:10.426255	f	2024-04-03 08:32:10.426255	\N	t	3	ON_SELL	안녕하세요!!! 오른쪽 팔아요!!!!!!!!!!!!!!	41998	56745535-d39a-429f-82fb-fd6f9f0741ad
+24	2024-04-03 08:32:14.936116	f	2024-04-03 08:32:14.936116	\N	t	5	ON_SELL	케이스 흰색 팔아요 네고XXXX	50000	00e13d90-5fd7-4835-9791-9d68407e11a4
+\.
+
+
+--
+-- Data for Name: unit; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.unit (unit_id, created_at, is_deleted, modified_at, age, is_combinable, is_confirmed, original_product_id, price, status, unit_description, category_id, member_id, product_id) FROM stdin;
+1	2024-04-03 08:06:45.480174	f	2024-04-03 08:06:45.480174	1	t	t	1	10000	\N	테스트 유닛1	1	58014f26-5470-4937-b60d-f48fcbb9923d	4
+2	2024-04-03 08:06:45.496843	f	2024-04-03 08:06:45.496843	2	t	f	2	20000	\N	테스트 유닛2	1	7fc9b568-c668-48c2-8a17-9cfb8eb013fe	4
+3	2024-04-03 08:06:45.504948	f	2024-04-03 08:06:45.504948	3	t	f	3	30000	\N	테스트 유닛3	1	f169be87-28db-4478-86f6-da1f7af0ba48	4
+13	2024-04-03 08:19:16.703515	f	2024-04-03 08:20:09.174465	2	t	t	15	10000	미사용	싸게 팔아요.	1	00e13d90-5fd7-4835-9791-9d68407e11a4	17
+6	2024-04-03 08:13:51.368367	f	2024-04-03 08:13:51.369585	3	t	t	7	33000	미사용	갤럭시 버즈 라벤더 오른쪽 팝니다. 구매한 지 3개월 되긴 했지만 거의 사용하지 않아서 미사용 신품이나 마찬가지입니다. 깨끗해요	1	9439527f-9215-4c18-8fc0-67774820a402	7
+7	2024-04-03 08:14:22.413735	f	2024-04-03 08:14:22.414983	5	t	t	8	36000	미사용	왼쪽 팔아요.	1	9439527f-9215-4c18-8fc0-67774820a402	8
+8	2024-04-03 08:14:38.101192	f	2024-04-03 08:14:38.102424	0	t	t	9	40000	미사용	어제 지하철에서 양쪽을 다 잃어버렸어요ㅜㅜ	1	00e13d90-5fd7-4835-9791-9d68407e11a4	9
+15	2024-04-03 08:25:07.579099	f	2024-04-03 08:25:07.58011	13	t	t	18	50000	미사용	버즈 케이스 팝니다. 제가 애정하는 짱구 케이스 같이 드려요 ^^	1	9439527f-9215-4c18-8fc0-67774820a402	18
+9	2024-04-03 08:15:03.897553	f	2024-04-03 08:15:19.940204	2	t	t	10	20000	미사용	버즈 케이스 팝니다. 버즈를 여러 개 써서 케이스가 남네요.	1	9439527f-9215-4c18-8fc0-67774820a402	11
+16	2024-04-03 08:26:01.613313	f	2024-04-03 08:26:01.61406	24	t	t	19	3000	미사용	제가 오랫동안 사용해오긴 했는데 그냥 버리긴 아까워서 팝니다... 사실 분 계시나요...? 더 싸게도 가능하니 010-3141-5278로 연락주세요 ㅎㅎ..	1	56745535-d39a-429f-82fb-fd6f9f0741ad	19
+5	2024-04-03 08:13:20.667193	f	2024-04-03 08:15:39.510822	3	t	t	6	35000	미사용	오른쪽 싸게 팔아요. 네고가능	1	00e13d90-5fd7-4835-9791-9d68407e11a4	11
+4	2024-04-03 08:12:41.9677	f	2024-04-03 08:16:05.148387	16	t	t	5	5000	닳고 닳음	저의 영혼의 반쪽... 케이스 잃어버려서 팔아요 ㅠ	1	56745535-d39a-429f-82fb-fd6f9f0741ad	11
+11	2024-04-03 08:17:14.463904	f	2024-04-03 08:17:14.465573	0	f	t	13	80000	미사용	케이스를 실수로 떨궈서 망가졌네요.. 케이스 사긴 아까워서 그냥 팝니다 ㅍㅍㅍ	1	56745535-d39a-429f-82fb-fd6f9f0741ad	13
+12	2024-04-03 08:18:14.22182	f	2024-04-03 08:18:14.22298	3	t	t	14	40000	미사용	버즈2 블루 왼쪽 팝니다.	1	9439527f-9215-4c18-8fc0-67774820a402	14
+17	2024-04-03 08:26:15.349508	f	2024-04-03 08:26:15.350201	36	t	t	20	5000	많이 사용	기능엔 문제 없어요 ㅎㅎ 네고 안합니다!	1	68aea758-13fa-4abb-86f9-e373449d2c15	20
+14	2024-04-03 08:19:26.405587	f	2024-04-03 08:19:38.286488	6	t	t	16	40000	미사용	버즈2 블루 오른쪽 팝니다~ 6개월 썼지만 깨끗해요~	1	9439527f-9215-4c18-8fc0-67774820a402	17
+10	2024-04-03 08:15:54.012919	f	2024-04-03 08:19:46.028174	1	t	t	12	67000	거의 사용 안함	운동할 때 꼈는데 오늘 인터벌 돌다 잃어버렸어요 ㅠ 케이스 남아서 케이스 처분합니다.	1	56745535-d39a-429f-82fb-fd6f9f0741ad	17
+18	2024-04-03 08:29:31.388674	f	2024-04-03 08:29:31.389762	2	t	t	21	30001	조금 사용	고품질 사운드와 편안한 착용감을 제공합니다!!!!	1	00e13d90-5fd7-4835-9791-9d68407e11a4	21
+19	2024-04-03 08:31:00.576173	f	2024-04-03 08:31:00.576943	15	t	t	22	20000	미사용	버즈 오른쪽 2만원에 팔아요!!!!\n싸게 파는거니까 꼭 사주세요 ㅠㅠ	1	00e13d90-5fd7-4835-9791-9d68407e11a4	22
+20	2024-04-03 08:32:10.426579	f	2024-04-03 08:32:10.427286	3	t	t	23	41998	3개월사용	오른쪽 팔아요 ㅎㅎ 	1	56745535-d39a-429f-82fb-fd6f9f0741ad	23
+21	2024-04-03 08:32:14.936411	f	2024-04-03 08:32:14.937104	5	t	t	24	50000	미사용	케이스 흰색 팝니다. 이거 한정판이라 네고 불가능입니다.\n저도 줄서서 겨우 산거에요!!!!	1	00e13d90-5fd7-4835-9791-9d68407e11a4	24
+\.
+
+
+--
+-- Data for Name: part; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.part (part_id, created_at, is_deleted, modified_at, parttype_id, unit_id) FROM stdin;
+1	2024-04-03 08:06:45.524838	f	2024-04-03 08:06:45.524838	1	1
+2	2024-04-03 08:06:45.54377	f	2024-04-03 08:06:45.54377	2	2
+3	2024-04-03 08:06:45.554156	f	2024-04-03 08:06:45.554156	3	3
+4	2024-04-03 08:12:41.968056	f	2024-04-03 08:12:41.968056	1	4
+5	2024-04-03 08:13:20.66744	f	2024-04-03 08:13:20.66744	2	5
+6	2024-04-03 08:13:51.368639	f	2024-04-03 08:13:51.368639	2	6
+7	2024-04-03 08:14:22.413972	f	2024-04-03 08:14:22.413972	1	7
+8	2024-04-03 08:14:38.101435	f	2024-04-03 08:14:38.101435	3	8
+9	2024-04-03 08:15:03.897825	f	2024-04-03 08:15:03.897825	3	9
+10	2024-04-03 08:15:54.013136	f	2024-04-03 08:15:54.013136	3	10
+11	2024-04-03 08:17:14.46412	f	2024-04-03 08:17:14.46412	2	11
+12	2024-04-03 08:17:14.464264	f	2024-04-03 08:17:14.464264	1	11
+13	2024-04-03 08:18:14.222029	f	2024-04-03 08:18:14.222029	1	12
+14	2024-04-03 08:19:16.703776	f	2024-04-03 08:19:16.703776	1	13
+15	2024-04-03 08:19:26.405839	f	2024-04-03 08:19:26.405839	2	14
+16	2024-04-03 08:25:07.579339	f	2024-04-03 08:25:07.579339	3	15
+17	2024-04-03 08:26:01.613527	f	2024-04-03 08:26:01.613527	1	16
+18	2024-04-03 08:26:15.349749	f	2024-04-03 08:26:15.349749	2	17
+19	2024-04-03 08:29:31.388938	f	2024-04-03 08:29:31.388938	1	18
+20	2024-04-03 08:31:00.576379	f	2024-04-03 08:31:00.576379	2	19
+21	2024-04-03 08:32:10.426777	f	2024-04-03 08:32:10.426777	2	20
+22	2024-04-03 08:32:14.936624	f	2024-04-03 08:32:14.936624	3	21
+\.
+
+
+--
+-- Data for Name: unit_images; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.unit_images (id, created_at, is_deleted, modified_at, file_id, unit_id) FROM stdin;
+1	2024-04-03 08:06:45.628706	f	2024-04-03 08:06:45.628706	1	1
+2	2024-04-03 08:06:45.648039	f	2024-04-03 08:06:45.648039	2	2
+3	2024-04-03 08:06:45.655752	f	2024-04-03 08:06:45.655752	3	3
+4	2024-04-03 08:12:41.960122	f	2024-04-03 08:12:41.969464	5	4
+5	2024-04-03 08:13:20.664312	f	2024-04-03 08:13:20.668219	6	5
+6	2024-04-03 08:13:51.365931	f	2024-04-03 08:13:51.369339	7	6
+7	2024-04-03 08:14:22.411187	f	2024-04-03 08:14:22.414742	8	7
+8	2024-04-03 08:14:38.098679	f	2024-04-03 08:14:38.102156	9	8
+9	2024-04-03 08:15:03.895102	f	2024-04-03 08:15:03.89853	11	9
+10	2024-04-03 08:15:54.010856	f	2024-04-03 08:15:54.013859	10	10
+11	2024-04-03 08:17:14.460692	f	2024-04-03 08:17:14.465373	12	11
+12	2024-04-03 08:18:14.219893	f	2024-04-03 08:18:14.222773	13	12
+13	2024-04-03 08:19:16.70153	f	2024-04-03 08:19:16.704262	15	13
+14	2024-04-03 08:19:26.403518	f	2024-04-03 08:19:26.406398	14	14
+15	2024-04-03 08:25:07.577023	f	2024-04-03 08:25:07.57994	17	15
+16	2024-04-03 08:26:01.611377	f	2024-04-03 08:26:01.613906	20	16
+17	2024-04-03 08:26:15.34783	f	2024-04-03 08:26:15.35006	21	17
+18	2024-04-03 08:29:31.377716	f	2024-04-03 08:29:31.389454	23	18
+19	2024-04-03 08:29:31.379127	f	2024-04-03 08:29:31.389608	22	18
+20	2024-04-03 08:31:00.573144	f	2024-04-03 08:31:00.576715	25	19
+21	2024-04-03 08:31:00.574454	f	2024-04-03 08:31:00.576832	24	19
+22	2024-04-03 08:32:10.424764	f	2024-04-03 08:32:10.427139	26	20
+23	2024-04-03 08:32:14.934739	f	2024-04-03 08:32:14.936958	27	21
+\.
+
+
+--
+-- Data for Name: user_chat_room; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.user_chat_room (user_chat_room_id, created_at, is_deleted, modified_at, last_access_time, chat_room_id, member_id) FROM stdin;
+1	2024-04-03 08:06:45.253207	f	2024-04-03 08:06:45.253207	2024-04-03 08:06:44.258101	1	58014f26-5470-4937-b60d-f48fcbb9923d
+2	2024-04-03 08:06:45.272829	f	2024-04-03 08:06:45.272829	2024-04-03 08:06:44.258101	1	7fc9b568-c668-48c2-8a17-9cfb8eb013fe
+3	2024-04-03 08:06:45.273294	f	2024-04-03 08:06:45.273294	2024-04-03 08:06:44.258101	1	f169be87-28db-4478-86f6-da1f7af0ba48
+4	2024-04-03 08:15:19.939156	f	2024-04-03 08:15:19.939156	2024-04-03 08:15:19.822654	2	9439527f-9215-4c18-8fc0-67774820a402
+5	2024-04-03 08:15:19.939505	f	2024-04-03 08:15:19.939505	2024-04-03 08:15:19.822654	2	56745535-d39a-429f-82fb-fd6f9f0741ad
+6	2024-04-03 08:15:19.939808	f	2024-04-03 08:15:19.939808	2024-04-03 08:15:19.822654	2	00e13d90-5fd7-4835-9791-9d68407e11a4
+7	2024-04-03 08:19:38.285351	f	2024-04-03 08:19:38.285351	2024-04-03 08:19:38.263183	3	9439527f-9215-4c18-8fc0-67774820a402
+8	2024-04-03 08:19:38.285937	f	2024-04-03 08:19:38.285937	2024-04-03 08:19:38.263183	3	00e13d90-5fd7-4835-9791-9d68407e11a4
+9	2024-04-03 08:19:38.286199	f	2024-04-03 08:19:38.286199	2024-04-03 08:19:38.263183	3	56745535-d39a-429f-82fb-fd6f9f0741ad
+10	2024-04-03 08:26:58.280648	f	2024-04-03 08:26:58.280648	2024-04-03 08:26:58.252269	4	56745535-d39a-429f-82fb-fd6f9f0741ad
+11	2024-04-03 08:26:58.280901	f	2024-04-03 08:26:58.280901	2024-04-03 08:26:58.252269	4	68aea758-13fa-4abb-86f9-e373449d2c15
+\.
+
+
+--
+-- Name: category_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.category_seq', 1, true);
+
+
+--
+-- Name: chat_room_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chat_room_seq', 51, true);
+
+
+--
+-- Name: chat_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.chat_seq', 51, true);
+
+
+--
+-- Name: files_file_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.files_file_id_seq', 27, true);
+
+
+--
+-- Name: jpatest_test_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.jpatest_test_id_seq', 1, false);
+
+
+--
+-- Name: notification_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.notification_seq', 51, true);
+
+
+--
+-- Name: part_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.part_seq', 51, true);
+
+
+--
+-- Name: part_type_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.part_type_seq', 51, true);
+
+
+--
+-- Name: product_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.product_seq', 51, true);
+
+
+--
+-- Name: unit_images_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.unit_images_seq', 51, true);
+
+
+--
+-- Name: unit_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.unit_seq', 51, true);
+
+
+--
+-- Name: user_chat_room_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('public.user_chat_room_seq', 51, true);
+
+
+--
+-- PostgreSQL database dump complete
+--
+
