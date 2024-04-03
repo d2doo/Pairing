@@ -89,13 +89,49 @@ function InfoSale() {
               {/* </Tabs> */}
             </TabsList>
             <TabsContent value="전체">
-              {/* 여기가 왜 안뜨지 */}
               <div className="border-y py-6">
                 <ProductTypeR
-                  onlyMyProduct={true}
-                  productId={0}
-                  isOnly={false}
-                  memberId={auth.memberId === undefined ? "" : auth.memberId}
+                  params={{
+                    size: 6,
+                    memberId: auth.memberId,
+                  }}
+                  tabName="total"
+                />
+              </div>
+            </TabsContent>
+            <TabsContent value="판매중">
+              <div className="border-y py-6">
+                <ProductTypeR
+                  params={{
+                    size: 6,
+                    memberId: auth.memberId,
+                    productStatus: "ON_SELL",
+                  }}
+                  tabName="ON_SELL"
+                />
+              </div>
+            </TabsContent>
+            <TabsContent value="거래중">
+              <div className="border-y py-6">
+                <ProductTypeR
+                  params={{
+                    size: 6,
+                    memberId: auth.memberId,
+                    productStatus: "ON_CONTRACT",
+                  }}
+                  tabName="ON_CONTRACT"
+                />
+              </div>
+            </TabsContent>
+            <TabsContent value="판매완료">
+              <div className="border-y py-6">
+                <ProductTypeR
+                  params={{
+                    size: 6,
+                    memberId: auth.memberId,
+                    productStatus: "COMPLETE",
+                  }}
+                  tabName="COMPLETE"
                 />
               </div>
             </TabsContent>
