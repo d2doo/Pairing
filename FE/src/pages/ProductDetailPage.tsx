@@ -72,7 +72,7 @@ function ProductDetailPage() {
   };
 
   const onClickBuyRequest = async () => {
-    const response = localAxios.put(`/deal/buy/${item?.productId}`);
+    const response = await localAxios.put(`/deal/buy/${item?.productId}`);
     navigate("/chat");
     // TODO: response 핸들링해서 상태값에 따라 상품 페이지 바꿔주기
   };

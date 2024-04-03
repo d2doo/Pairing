@@ -1,5 +1,6 @@
 import KakaoLoginButtonImage from "@/assets/images/kakao-login-btn.png";
 import GoogleLoginButtonImage from "@/assets/images/google-login-btn.png";
+import { Link } from "react-router-dom";
 
 function Login() {
   const kakaoLogin = () => {
@@ -21,14 +22,14 @@ function Login() {
   return (
     <>
       <div className="justify-center">
-        <div className="mb-9 grid">
-          <a className="font-Chab text-logo text-white1 text-shadow-default">
+        <Link to={"/"} className="mb-9 grid">
+          <p className="font-Gothic text-black1 text-shadow-md">
+            pairing your way!
+          </p>
+          <p className="font-Chab text-logo text-white1 text-shadow-default">
             PAIRING
-          </a>
-          <a className="font-Gothic text-black1 text-shadow-md">
-            pairing mine, pairing yours
-          </a>
-        </div>
+          </p>
+        </Link>
 
         <button type="button" className="mb-3" onClick={kakaoLogin}>
           <img

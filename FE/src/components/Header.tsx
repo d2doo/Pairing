@@ -25,10 +25,10 @@ import {
 } from "@/components/ui/popover";
 import { NotificationResponse } from "@/types/Notification";
 
-import { BellRing, Check } from "lucide-react"
+import { BellRing, Check } from "lucide-react";
 
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -36,7 +36,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import { Label } from "@radix-ui/react-label";
 
 const Header: React.FC<Props> = ({ title, prev }) => {
@@ -45,11 +45,12 @@ const Header: React.FC<Props> = ({ title, prev }) => {
   const auth = useAuthStore();
   const stompClient = useRef<Stomp.Client | null>(null);
   // const notificationList = useRef<NotificationResponse[]>([]);
-  const [notificationList, setNotificationList] = useState<NotificationResponse[]>([]);
+  const [notificationList, setNotificationList] = useState<
+    NotificationResponse[]
+  >([]);
   const localAxios = useLocalAxios();
   const baseUrl: string = import.meta.env.VITE_API_BASE_URL;
   const send = () => {
-    // console.log("Send Message Request");
     const dest = `/send/notification`;
 
     stompClient.current?.publish({
@@ -68,11 +69,9 @@ const Header: React.FC<Props> = ({ title, prev }) => {
   const readAllNotifications = async () => {
     await localAxios.put(
       `/notification`,
-      notificationList.map(
-        (notification) => notification.notificationId,
-      ),
+      notificationList.map((notification) => notification.notificationId),
     );
-    notificationList.forEach(e => e.isRead = true);
+    notificationList.forEach((e) => (e.isRead = true));
     changeNotificationCount();
   };
 
@@ -86,10 +85,8 @@ const Header: React.FC<Props> = ({ title, prev }) => {
     //헤더 불러올 때마다 초기화
     setNotificationList([]);
     stompSetting();
-  }, [])
+  }, []);
   const stompSetting = () => {
-    console.log('hi');
-    console.log('url', `${baseUrl}/ws`);
     const socket = new SockJS(`${baseUrl}/ws`);
     stompClient.current = new Stomp.Client({
       webSocketFactory: () => socket,
@@ -100,10 +97,7 @@ const Header: React.FC<Props> = ({ title, prev }) => {
 
         stompClient.current?.subscribe(dest, async (response) => {
           const res = await JSON.parse(response.body);
-          setNotificationList((prev) => [
-            res,
-            ...prev
-          ]);
+          setNotificationList((prev) => [res, ...prev]);
         });
       },
       onDisconnect: (frame) => stompCallback(),
@@ -122,16 +116,13 @@ const Header: React.FC<Props> = ({ title, prev }) => {
         const dest = `/product-notification/${auth.memberId}`;
         stompClient.current?.subscribe(dest, async (response) => {
           const res = await JSON.parse(response.body);
-          setNotificationList((prev) => [
-            res,
-            ...prev
-          ]);
+          setNotificationList((prev) => [res, ...prev]);
         });
       },
       onDisconnect: (frame) => stompCallback(),
     });
     stompClient.current?.activate();
-  }
+  };
 
   const getNotifications = async () => {
     const res = await localAxios.get(`/notification`, {
@@ -139,49 +130,39 @@ const Header: React.FC<Props> = ({ title, prev }) => {
         memberId: auth.memberId,
       },
     });
-    // console.log( 'notification', res );
     setNotificationList((prev) => prev.concat(res.data));
-    // notificationList.current = [];
-    // res.data.map((item: NotificationResponse) => {
-    //   notificationList.current.push(item);
-    // });
-    // changeNotificationCount();
   };
 
   const onClickReadListener = async (notificationId: bigint) => {
-    const findNotification = notificationList.find(n => n.notificationId === notificationId);
+    const findNotification = notificationList.find(
+      (n) => n.notificationId === notificationId,
+    );
     await localAxios.put(
       `/notification`,
-      notificationList.map(
-        (notification) => notification.notificationId,
-      ),
+      notificationList.map((notification) => notification.notificationId),
     );
-    if (findNotification?.notificationType == 'confirm') {
+    if (findNotification?.notificationType == "confirm") {
       localAxios.post(`/deal/confirm/${findNotification.productId}`);
     }
-    // console.log('onClick', findNotification);
-  }
+  };
 
   const onClickCloseListener = (notificationId: bigint) => {
-
-    const findNotification = notificationList.find(n => n.notificationId === notificationId);
-    // console.log('close', findNotification)
-    if (!findNotification || findNotification?.notificationType == 'message') return;
+    const findNotification = notificationList.find(
+      (n) => n.notificationId === notificationId,
+    );
+    if (!findNotification || findNotification?.notificationType == "message")
+      return;
 
     localAxios.delete(`/deal/confirm/${findNotification.productId}`);
-
-  }
+  };
 
   useEffect(() => {
-
-    console.log(notificationList);
-    changeNotificationCount()
+    changeNotificationCount();
   }, [notificationList]);
 
-
   return (
-    <div className="flex h-12 w-full items-center justify-between border-b border-gray-200 px-4 font-GothicMedium text-black">
-      <div className="flex h-12 w-full items-center">
+    <div className="flex h-12 items-center justify-between border-b border-gray1 px-4 font-GothicMedium text-black">
+      <div className="flex h-12 items-center">
         {prev && (
           <button
             onClick={() => {
@@ -194,99 +175,73 @@ const Header: React.FC<Props> = ({ title, prev }) => {
         )}
         <p className="flex items-center">{title}</p>
       </div>
-      <div>
-        <div className="flex h-12 w-full items-center justify-between border-b font-GothicMedium text-base text-black1">
-          <div className="flex items-center justify-between">
-            <Popover>
-              <PopoverTrigger>
-                <p
-                  id="bell"
-                  className="material-symbols-outlined"
-                // onClick={
-                //   handleClick
-                // }
-                // onClick={() => {
-                //   const messages = notificationList.current
-                //     .map(
-                //       (notification, index) =>
-                //         `Notification ${index + 1}: ${notification.content} type: ${notification.notificationType} id: ${notification.productId}`,
-                //     )
-                //     .join("\n");
-
-                //   alert(messages);
-                //   readNotifications();
-                // }}
-                >
-                  notifications
-                </p>
-              </PopoverTrigger>
-              <PopoverContent className={cn("w-[420px]", "h-[460px]")}>
-                <Card className={cn("w-[380px]", "h-[430px]")}>
-                  <CardHeader className="">
-                    <CardTitle>알림</CardTitle>
-                    <CardDescription>아직 {notificationCount}개의 안 읽은 알림이 있습니다.</CardDescription>
-                  </CardHeader>
-                  <CardContent className="grid gap-4 h-2/3">
-                    <div className=" flex items-center space-x-4 rounded-md border p-4 bg-blue1">
-                      <BellRing className="" />
-                      <div className="flex-1 space-y-1">
-                        <p className="text-sm font-medium leading-none">
-                          여러 사용자들로부터 온 요청입니다.
+      <div className="flex h-12 items-center pt-1.5">
+        <Popover>
+          <PopoverTrigger>
+            <p id="bell" className="material-symbols-outlined">
+              notifications
+            </p>
+          </PopoverTrigger>
+          <PopoverContent className={cn("w-72", "h-100", "m-1")}>
+            <Card className={cn("w-100", "h-100")}>
+              <CardHeader>
+                <CardTitle>알림</CardTitle>
+                <CardDescription>
+                  {notificationCount}개의 안 읽은 알림이 있습니다.
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="grid h-2/3 gap-4 overflow-y-scroll">
+                <div className="items-center rounded-md border bg-background p-2 text-xs hover:bg-accent hover:text-accent-foreground ">
+                  <div className="flex-1 space-y-1">
+                    <p className="text-muted-foreground">
+                      제품 매칭 및 채팅에 대한 내용들을 담고 있습니다.
+                    </p>
+                  </div>
+                </div>
+                <div className="h-full overflow-scroll">
+                  {notificationList.map((notification) => (
+                    <div
+                      key={notification.notificationId}
+                      className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
+                    >
+                      {notification.notificationType == "confirm" ? (
+                        <GiConfirmed />
+                      ) : (
+                        <IoChatboxEllipses />
+                      )}
+                      <div className="space-y-1">
+                        <p className="text-xs font-medium leading-none">
+                          {notification.content}
                         </p>
-                        <p className="text-sm text-muted-foreground">
-                          제품 매칭 및 채팅에 대한 내용들을 담고 있습니다.
+                        <p className="text-xs text-muted-foreground">
+                          <Notification
+                            key={notification.notificationId}
+                            openhandler={onClickReadListener}
+                            closehandler={onClickCloseListener}
+                            notification={notification}
+                          />
                         </p>
                       </div>
                     </div>
-                    <div className="h-full overflow-scroll">
-                      {notificationList.map((notification) => (
-                        <div
-                          key={notification.notificationId}
-                          className="mb-4 grid grid-cols-[25px_1fr] items-start pb-4 last:mb-0 last:pb-0"
-                        >
-                          {/* <span className="flex h-2 w-2 translate-y-1 rounded-full bg-sky-500" /> */}
-                          {notification.notificationType == 'confirm' ? <GiConfirmed /> : <IoChatboxEllipses />}
-                          <div className="space-y-1">
-                            <p className="text-sm font-medium leading-none">
-                              {notification.content}
-                            </p>
-                            <p className="text-sm text-muted-foreground">
-                              <Notification key={notification.notificationId} openhandler={onClickReadListener} closehandler={onClickCloseListener} notification={notification} />
-                            </p>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </CardContent>
-                  <CardFooter>
-                    <Button className="w-full h-8" onClick={readAllNotifications}>
-                      <Check className="mr-2 w-4 h-16 text-md" /> 전부 확인하기
-                    </Button>
-                  </CardFooter>
-                </Card>
-                {/* { notificationList.map( elem => <Notification handler={onClickReadListener} notification= {elem}
-              />)} */}
-              </PopoverContent>
-            </Popover>
-            <div className="relative">
-              <Label htmlFor="bell" className="absolute top-0 right-0">
-                {notificationCount > 0 && (
-                  <div className="flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
-                    <p className="text-xs text-white">{notificationCount}</p>
-                  </div>
-                )}
-              </Label>
-            </div>
-
-            <p
-              className="material-symbols-outlined"
-              onClick={() => {
-                send();
-              }}
-            >
-              send
-            </p>
-          </div>
+                  ))}
+                </div>
+              </CardContent>
+              <CardFooter className="flex justify-center">
+                <Button className="h-8 w-1/2" onClick={readAllNotifications}>
+                  전부 확인하기
+                </Button>
+              </CardFooter>
+            </Card>
+          </PopoverContent>
+        </Popover>
+        <div className="relative">
+          <Label htmlFor="bell" className="absolute right-0 top-0">
+            {notificationCount > 0 && (
+              <div className="flex h-4 w-4 items-center justify-center rounded-full bg-red-500">
+                <p className="text-xs text-white">{notificationCount}</p>
+              </div>
+            )}
+          </Label>
         </div>
       </div>
     </div>

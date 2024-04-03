@@ -12,7 +12,7 @@ import SockJS from "sockjs-client";
 import * as Stomp from "@stomp/stompjs";
 import { useAuthStore } from "@/stores/auth.ts";
 import { useLocalAxios } from "@/utils/axios";
-import moment from 'moment'
+import moment from "moment";
 
 type ParentHandler = (next: ChatRoomProduct) => void;
 function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
@@ -25,6 +25,9 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
     setChat((prevChat: ChatMessageResponse[]) => prevChat.concat([ch]));
   };
 
+  useEffect(() => {
+    console.log(chat);
+  }, [chat]);
   const tagList: JSX.Element[] = chat.map((elem) => {
     if (elem.memberId == authMember.memberId) {
       return (
@@ -42,8 +45,7 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
             {/* 이미지 수정 필요 */}
 
             <img
-              src="/img/extra.png"
-              alt="profile_err"
+              src={elem.profileImage ? elem.profileImage : "/img/extra.png"}
               className="size-11 object-cover"
             />
           </div>
@@ -100,6 +102,7 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
       },
       onDisconnect: () => {
         socket = new SockJS(`${import.meta.env.VITE_API_BASE_URL}/ws`);
+        StompCallback();
       },
 
       // 연결에 실패했을 때 실행할 콜백 함수입니다.
@@ -109,6 +112,23 @@ function Chat({ parentHandler }: { parentHandler: ParentHandler }) {
       },
     });
     stompClient.current.activate();
+  };
+
+  const StompCallback = () => {
+    stompClient.current = new Stomp.Client({
+      brokerURL: `${import.meta.env.VITE_API_BASE_URL}/ws`, // 이 옵션은 SockJS와 함께 사용할 때 필요 없습니다.
+      webSocketFactory: () => socket, // SockJS 소켓을 사용하여 웹소켓을 생성하는 함수를 제공합니다.
+      // 연결이 활성화되었을 때 실행할 콜백 함수입니다.
+      reconnectDelay: 5000,
+      onConnect: () => {
+        const dest = `/chat-room/${roomId.roomId}`;
+        stompClient.current?.subscribe(dest, async (response) => {
+          const res = await JSON.parse(response.body);
+          updateChatting(res);
+          scrollToBottom();
+        });
+      },
+    });
   };
 
   const send = () => {
