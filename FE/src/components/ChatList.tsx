@@ -12,8 +12,6 @@ function ChatList() {
   const location = useLocation();
   useEffect(() => {
     console.log("auth:", authMember);
-
-    // testChatList();
     loadChatList();
   }, [location.pathname]);
 
@@ -48,6 +46,7 @@ function ChatList() {
     console.log(chatrooms);
     setChatList(chatrooms.data);
   };
+
 
   return (
     <>
