@@ -96,7 +96,6 @@ export default function SaleProduct() {
       }
       setComplete(newComplete);
       baseSetting(props);
-      // console.log(newComplete);
     }); // 차피 products있어도 mapper 없으면 의미 없음.
   }, []);
   // useEffect(() => {
@@ -109,13 +108,11 @@ export default function SaleProduct() {
       // console.log("mapper", mapper.current, "chart", chart);
       const pos = mapper.current[chart].position;
       setTitle(pos);
-      // console.log( pos );
       localAxios
         .get<
           UnitResponse[]
         >(`/unit?size=${size.current}&&partTypeId=${mapper.current[chart].partTypeId}`)
         .then((res) => {
-          // console.log("res", res);
           res.data.forEach((elem) => {
             setTagList((prev) => [
               ...prev,
@@ -142,10 +139,8 @@ export default function SaleProduct() {
   };
 
   const UnitCOnClickHandler = (props: UnitCProps) => {
-    // console.log("name", name);
     const nextComplete = new Map<string, boolean>(complete.entries());
     nextComplete.set(props.category, true);
-    // console.log(nextComplete);
     setComplete(nextComplete);
 
     const nextClr = [...clr];
@@ -153,13 +148,12 @@ export default function SaleProduct() {
     setClr(nextClr);
   };
   useEffect(() => {
-    console.log("clr", clr);
+    // console.log("clr", clr);
   }, [clr]);
 
   const removeCompleteAndClr = (idx: number, category: string) => {
     const nextComplete = new Map<string, boolean>(complete.entries());
     nextComplete.set(category, false);
-    // console.log(nextComplete);
     setComplete(nextComplete);
 
     const nextClr = [...clr];
@@ -188,11 +182,10 @@ export default function SaleProduct() {
         complete.get("오른쪽")
       ) {
         if (result.isConfirmed) {
-          console.log(props);
           props.product.targetUnits = clr
             .filter((x) => x.idx != props.unitprop.idx)
             .map((elem) => elem.unitId);
-          console.log("sendData: ", props.product);
+          // console.log("sendData: ", props.product);
           const res = await localAxios.put(
             `/product/compose/${props.unitprop.unitId}`,
             props.product,
