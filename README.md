@@ -32,25 +32,22 @@
 ## 1. 프로젝트 주요 기능
 
 ### 메인 페이지
+![mainpage](/uploads/9bcd06615ca3cdb25c2a5e112ce8c45f/mainpage.PNG)
 
-
-### 로그인
-
-
-### 마이페이지
-
+### 로그인 & 마이페이지
+![login & mypage](/uploads/685fc2c584e5fcc6a117f342b8d34c66/login.gif)
 
 ### 개별 상품 등록
-
+![product](/uploads/4e8ea549d0fbf16ea7e646491e8403b6/product.gif)
 
 ### 조합 상품 등록
+![combine](/uploads/8d6dc7892d41253151defd45d47c3784/last.gif)
 
-
-### 개별 상품, 조홥 상품 조회
-
+### 개별 상품, 조합 상품 조회
+![search](/uploads/a8388dba094fe18552a8d981875f05e2/search.gif)
 
 ### 거래 채팅
-
+![search](/uploads/f8d7f09b916ebe5207b2e068f0aa1ea7/chat.PNG)
 
 ### 
 
