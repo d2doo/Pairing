@@ -38,7 +38,7 @@ function ChatList() {
   };
 
   return (
-    <>
+    <div className="h-full overflow-y-scroll">
       {chatList.map((element) => (
         <Link
           to={`/chat/room/${element.chatRoomId}`}
@@ -65,7 +65,7 @@ function ChatList() {
           </div>
         </Link>
       ))}
-    </>
+    </div>
   );
 }
 
