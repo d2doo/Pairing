@@ -97,7 +97,7 @@
 
 빌드 및 배포는 다음 파일 참조
 
-[Infra](./exec/포팅_메뉴얼.md)
+[Infra](https://lab.ssafy.com/s10-blockchain-contract-sub2/S10P22A709/-/blob/main/exec/1.%20%ED%8F%AC%ED%8C%85%20%EB%A9%94%EB%89%B4%EC%96%BC/%ED%8F%AC%ED%8C%85%EB%A9%94%EB%89%B4%EC%96%BC.pdf?ref_type=heads)
 
 # 추가 정보
 
